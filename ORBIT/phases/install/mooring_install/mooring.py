@@ -492,7 +492,7 @@ class MooringSystem(Cargo):
             self.anchor = kwargs['anchors'][kwargs['anchors']['turbine_id'] == i]
 
             # Calculate number of lines for this specific turbine
-            self.num_lines = len(self.rope)  # One line per rope
+            self.num_lines = max([len(self.chain), len(self.rope)])
             self.line_mass = self.chain['mass'].sum() + self.rope['mass'].sum()
             self.anchor_mass = self.anchor['mass'].sum()
             
