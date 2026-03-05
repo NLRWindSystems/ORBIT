@@ -486,10 +486,16 @@ class MooringSystem(Cargo):
             self.anchor_type = anchor_type
 
         elif self.design_class == 'custom':
+            # Map iterator i to actual turbine_id
+            unique_turbine_ids = sorted(kwargs['anchors']['turbine_id'].unique())
+            if i >= len(unique_turbine_ids):
+                raise ValueError(f"Iterator i={i} exceeds number of unique turbine_ids ({len(unique_turbine_ids)})")
+            actual_turbine_id = unique_turbine_ids[i]
+            
             # Filter DataFrames for this turbine
-            self.chain = kwargs['chains'][kwargs['chains']['turbine_id'] == i]
-            self.rope = kwargs['ropes'][kwargs['ropes']['turbine_id'] == i]
-            self.anchor = kwargs['anchors'][kwargs['anchors']['turbine_id'] == i]
+            self.chain = kwargs['chains'][kwargs['chains']['turbine_id'] == actual_turbine_id]
+            self.rope = kwargs['ropes'][kwargs['ropes']['turbine_id'] == actual_turbine_id]
+            self.anchor = kwargs['anchors'][kwargs['anchors']['turbine_id'] == actual_turbine_id]
 
             # Calculate number of lines for this specific turbine
             self.num_lines = max([len(self.chain), len(self.rope)])
@@ -543,7 +549,7 @@ class Anchor(Cargo):
     """Single Anchor Cargo Component."""
 
     def __init__(self, i, anchors=None, **kwargs):
-        """Creates an instance of MooringSystem."""
+        """Creates an instance of Anchor."""
 
         self.anchors = anchors
         anchor = self.anchors.iloc[i]
