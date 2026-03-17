@@ -323,6 +323,9 @@ class GravityBasedInstallation(InstallPhase):
     def forward_substructures_to_assembly_storage(
         self, SubstructureAssemblyLine
     ):
+        """Move the substructures to the assembly storage area until ready for
+        assembly.
+        """
         while True:
             # Wait until there is both:
             # - an item in wet_storage
@@ -333,7 +336,6 @@ class GravityBasedInstallation(InstallPhase):
             ):
                 item = yield self.wet_storage.get()
                 yield self.assembly_storage.put(item)
-                # submit action log item saying what happened "moved from wet to sub assembly storage"
                 SubstructureAssemblyLine.submit_action_log(
                     "Move GBF from Wet Storage to Assembly Storage", 0
                 )

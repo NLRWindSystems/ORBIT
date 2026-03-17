@@ -182,7 +182,7 @@ class ProjectManager:
 
         self.run_all_design_phases(design_phases, **kwargs)
 
-        if isinstance(install_phases, (list, set)):
+        if isinstance(install_phases, list | set):
             self.run_multiple_phases_in_serial(install_phases, **kwargs)
 
         elif isinstance(install_phases, dict):
@@ -876,7 +876,7 @@ class ProjectManager:
         start = self.phase_starts[target]
         elapsed = self.phase_times[target]
 
-        if isinstance(perc, (int, float)):
+        if isinstance(perc, int | float):
 
             if (perc < 0.0) or (perc > 1.0):
                 raise ValueError(
@@ -959,7 +959,7 @@ class ProjectManager:
 
         for k, v in phases.items():
 
-            if isinstance(v, (int, float, str)):
+            if isinstance(v, int | float | str):
                 defined[k] = v
 
             elif isinstance(v, tuple) and len(v) == 2:
@@ -1055,7 +1055,7 @@ class ProjectManager:
             "supply_chain_capex": self.supply_chain_capex,
             "supply_chain_capex_kw": self.supply_chain_capex_per_kw,
             "onshore_substation_capex": self.onshore_substation_capex,
-            "onshore_substation_capex_kw": self.onshore_substation_capex_per_kw,
+            "onshore_substation_capex_kw": self.onshore_substation_capex_per_kw,  # noqa: E501
         }
 
         if include_logs:
@@ -1572,7 +1572,9 @@ class ProjectManager:
 
     @property
     def onshore_substation_capex(self):
-        """Returns the onshore substation CapEx if available in 'ElectricalDesign', otherwise 0."""
+        """Returns the onshore substation CapEx if available in
+        'ElectricalDesign', otherwise 0.
+        """
         if "ElectricalDesign" in self.phases:
             try:
                 return self.phases["ElectricalDesign"].detailed_output[

@@ -128,7 +128,7 @@ class MooringSystemDesign(DesignPhase):
                 _key,
             ),
         )
-        if isinstance(mooring_line_cost_rate, (int, float)):
+        if isinstance(mooring_line_cost_rate, int | float):
             mooring_line_cost_rate = [mooring_line_cost_rate] * 3
 
         if fit <= 0.09:
