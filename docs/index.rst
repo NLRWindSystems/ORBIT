@@ -1,32 +1,3 @@
-.. sidebar:: Documentation
-
-   :ref:`Introduction <intro>`
-      A quick introduction to the project.
-
-   :ref: `Installation and Contribution <installation>`
-      How to install and contribute to ORBIT.
-
-   :ref:`Tutorial <tutorial>`
-      Basic tutorial for working with ORBIT.
-
-   :ref:`Examples <examples>`
-      Advanced examples and real world validation cases.
-
-   :ref:`API Reference <api>`
-      Detailed description of ORBIT's API.
-
-   :ref:`Methodology <methods>`
-      References and descriptions of the underlying engineering models.
-
-   :ref:`Publications <publications>`
-      Publications related to ORBIT.
-
-   :ref:`Changelog <changelog>`
-      ORBIT Changelog
-
-   :ref:`Team <team>`
-      List of authors and contributors.
-
 ORBIT
 =====
 
