@@ -5,16 +5,16 @@ ORBIT Team
 
 Authors
 -------
-- Jake Nunemaker (NREL)
-- Matt Shields (NREL)
-- Rob Hammond (NREL)
-- Patrick Duffy (NREL)
-- Nick Riccobono (NREL)
-- Daniel Mulas Hernando (NREL)
+- Jake Nunemaker (NLR)
+- Matt Shields (NLR)
+- Rob Hammond (NLR)
+- Patrick Duffy (NLR)
+- Nick Riccobono (NLR)
+- Daniel Mulas Hernando (NLR)
 
 Maintainer
 -----------
-- Nick Riccobono (NREL)
+- Nick Riccobono (NLR)
 
 
 .. Contributors

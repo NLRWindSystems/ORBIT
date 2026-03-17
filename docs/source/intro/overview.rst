@@ -1,7 +1,7 @@
 ORBIT
 =====
 
-ORBIT is a tool developed by the National Renewable Energy Lab (NREL) for
+ORBIT is a tool developed by the National Laboratory of the Rockies (NLR) for
 performing process-based bottom up installation and cost modeling for the
 offshore wind balance of system process. It is intended to be used for tradeoff
 studies, installation logistics research, and for modeling overall balance of
@@ -11,7 +11,7 @@ default values if they wish.
 
 The primary structure of ORBIT relies on the :ref:`Project Manager <managertoc>`
 to intrepret the user specified configuration. Refer to the
-`library/project/config <https://github.com/WISDEM/ORBIT/tree/master/library/project/config>`.
+`library/project/config <https://github.com/NLRWindSystems/ORBIT/tree/master/library/project/config>`.
 The ``ProjectManager`` calls ``DesignPhase`` to include all the wind farm components that
 comprise the balance of system, then it calls ``InstallationPhase`` to schedule all the installation
 processes for each component. Available design phases can be found :ref:`here <design_phases>` and

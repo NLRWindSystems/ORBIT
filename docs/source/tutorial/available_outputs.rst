@@ -49,7 +49,7 @@ Soft CapEx (``project.soft_capex``) represents additional project level costs
 associated with commissioning, decommissioning and financing of the project.
 The cost factors can be input in the ``project_parameters`` subdict of an ORBIT
 configuration. The default cost factors for these categories are derived from the
-`2018 Cost of Wind Energy Review <https://www.nrel.gov/docs/fy20osti/74598.pdf>`_.
+`2018 Cost of Wind Energy Review <https://www.nlr.gov/docs/fy20osti/74598.pdf>`_.
 
 Project CapEx
 -------------

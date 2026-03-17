@@ -12,19 +12,19 @@ Unreleased
 - Adds a general layout ``DataFrame`` creation method as ``ArraySystemDesign.create_layout_df()`` that
   is called by the ``save_layout`` method to maintain backwards compatibility, but opens up the ability
   gather the layout without saving it to a file.
-- Updated default `soft_capex` factors. `PR #201 <https://github.com/WISDEM/ORBIT/pull/201>`_
+- Updated default `soft_capex` factors. `PR #201 <https://github.com/NLRWindSystems/ORBIT/pull/201>`_
     - `construction_insurance_factor` updated from 0.115 to 0.0207 based on industry benchmarking, resulting in higher construction insurance costs.
     - `interest_during_construction` updated from 4.4% to 6.5% based on financial assumptions from the 2025 Annual Technology Baseline (ATB), increasing construction financing costs.
     - `decommissioning_factor` updated from 0.175 to 0.2 based on industry benchmarking, leading to higher decommissioning costs than in previous versions.
-- Updated default `project_capex` values. `PR #201 <https://github.com/WISDEM/ORBIT/pull/201>`_
+- Updated default `project_capex` values. `PR #201 <https://github.com/NLRWindSystems/ORBIT/pull/201>`_
     - `site_auction_price` increased from 100M to 105M USD to account for rent fees before operation.
     - `site_assessment_cost`, `construction_plan_cost`, and `installation_plan_cost` increased from 50M, 1M, and 0.25M USD to 200M, 25M, and 25M USD, respectively.
     - Total `project_capex` excluding `site_auction_price` now sums to 250M USD, aligning with DevEx recommendations based on industry benchmarking.
     - These updates lead to higher default total project costs than in previous versions.
-- Included onshore substation costs in BOS CapEx and project breakdown. `PR #201 <https://github.com/WISDEM/ORBIT/pull/201>`_
+- Included onshore substation costs in BOS CapEx and project breakdown. `PR #201 <https://github.com/NLRWindSystems/ORBIT/pull/201>`_
     - The `ElectricalDesign` module previously calculated onshore substation costs but did not include them in `capex_breakdown` or `bos_capex`.
     - These costs are now incorporated when `ElectricalDesign` is used, resulting in higher `bos_capex`, `soft_capex`, and `total_capex` than in prior versions.
-- Cable configuration file updates. `PR #201 <https://github.com/WISDEM/ORBIT/pull/201>`_
+- Cable configuration file updates. `PR #201 <https://github.com/NLRWindSystems/ORBIT/pull/201>`_
     - Added a new dynamic cable configuration file for floating cases: `library/cables/XLPE_1200mm_220kV_dynamic.yaml`.
     - Updated cost values for `library/cables/XLPE_630mm_66kV.yaml` and `library/cables/XLPE_630mm_66kV_dynamic.yaml` based on industry benchmarking.
     - All cable cost updates are expressed in 2024 USD for consistency with other library configuration files.
@@ -44,7 +44,7 @@ Unreleased
 
 1.2.1
 -----
-- Removed `wisdem_api.py` because WISDEM now uses orbit as a pip installed package.
+- Removed `wisdem_api.py` because NLRWindSystems now uses orbit as a pip installed package.
 - Added Python 3.12 and 3.13 to the workflow files.
 - Moved matplotlib as an optional dependency
 
@@ -53,7 +53,7 @@ Unreleased
 - New cable ``library/cables/XLPE_1200mm_220kV.yaml`` Is a 220kV cable that can carry ~400MW of HVAC power.
 - Fixed frozen python-benedict version
     - ``ParametricManager`` can still use '.' as a keypath separator (no change to user inputs) and is compatible with latest python-benedict
-- Updated various default costs to 2024 USD. `PR #187 <https://github.com/WISDEM/ORBIT/pull/187>`_
+- Updated various default costs to 2024 USD. `PR #187 <https://github.com/NLRWindSystems/ORBIT/pull/187>`_
     - Cost rates for different models were determined by benchmarking the costs through industry outreach,
       along with adjustments based on commodity prices, inflation, and labor indices.
     - ORBIT assumes a procurement year of 2024 in the files:
@@ -63,14 +63,14 @@ Unreleased
         - ``library/vessels/*`` shows all the vessels with updated `day_rate`
     - Added ``defaults/costs_by_procurement_year.csv`` which provides the default costs for other procurement year,
       but in 2024 USD.
-- Bug Fix: Characteristic Impedance calculation correction. `Issue #186 <https://github.com/WISDEM/ORBIT/issues/186>`_
+- Bug Fix: Characteristic Impedance calculation correction. `Issue #186 <https://github.com/NLRWindSystems/ORBIT/issues/186>`_
     - There were some documentation typos and a units error in the calculation, where mH (10^-3) was divided by nF (10^-9)
     - Updated several tests with new values that correlate to the latest cable power capacity
-- Updated WISDEM API (`wisdem_api.py`)
+- Updated NLRWindSystems API (`wisdem_api.py`)
     - Match some variable names and inputs that have diverged over time.
-    - Caught turbine_capex double count in WISDEM when using `total_capex` from ORBIT.
+    - Caught turbine_capex double count in NLRWindSystems when using `total_capex` from ORBIT.
     - Updated some tests.
-- Enhanced ``ProjectManager``: `PR #177 <https://github.com/WISDEM/ORBIT/pull/177>`_
+- Enhanced ``ProjectManager``: `PR #177 <https://github.com/NLRWindSystems/ORBIT/pull/177>`_
     - Improvements made to `soft_capex` calculations because previous versions
      used default `$/kW` values from the 2018 Cost of Wind Energy Review unless provided by
      the user. Those default values are out of date and do not scale with the size of the
@@ -93,7 +93,7 @@ New features
       specify to customize the mooring system. By default, this design uses
       catenary mooring lines and suction pile anchors. The new semitaut mooring
       lines use interpolation to calculate the geometry and cost based on
-      (Cooperman et al. 2022, https://www.nrel.gov/docs/fy22osti/82341.pdf).
+      (Cooperman et al. 2022, https://www.nlr.gov/docs/fy22osti/82341.pdf).
     - See ``5. Example Floating Project`` for more details.
 - New ``ElectricalDesign``:
     - Now has HVDC or HVAC transmission capabilities.
@@ -244,7 +244,7 @@ Improvements
   dictionary named ``processes`` in the config.
 - Revised ``prep_for_site_operations`` and related processes to allow for
   dynamically positioned vessels.
-- Updated WISDEM API to include floating functionality.
+- Updated NLRWindSystems API to include floating functionality.
 
 0.5.0
 -----
@@ -337,12 +337,12 @@ Improvements
   ``ExportCableInstallation``.
 - Overhauled test suite and associated library.
 - Bugfix in ``CableCarousel``.
-- Expanded WISDEM Fixed API.
+- Expanded NLRWindSystems Fixed API.
 
 0.3.2
 -----
 
-- Initial release of fixed substructure WISDEM API
+- Initial release of fixed substructure NLRWindSystems API
 - Material cost for monopiles and transition pieces added to ``MonopileDesign``
 - Updated ``ProjectManager`` to allow user to override default ``DesignPhase``
   results

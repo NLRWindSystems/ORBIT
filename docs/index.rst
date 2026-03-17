@@ -34,7 +34,7 @@ Overview
 --------
 
 The Offshore Renewables Balance of system and Installation Tool (ORBIT) is a
-model developed by the National Renewable Energy Lab (NREL) to study
+model developed by the National Laboratory of the Rockies (NLR) to study
 the cost and times associated with Offshore Wind Balance of System (BOS)
 processes.
 
@@ -54,5 +54,5 @@ License
 -------
 
 Apache 2.0. Please see the
-`repository <https://github.com/WISDEM/ORBIT/blob/master/LICENSE>`_ for
+`repository <https://github.com/NLRWindSystems/ORBIT/blob/master/LICENSE>`_ for
 license information.

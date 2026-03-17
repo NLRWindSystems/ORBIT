@@ -4,9 +4,9 @@ calculating results.
 """
 
 __author__ = ["Jake Nunemaker"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = ["jake.nunemaker@nrel.gov"]
+__email__ = ["jake.nunemaker@nlr.gov"]
 
 
 import re
@@ -670,7 +670,7 @@ class ProjectManager:
 
         if phase.installation_capex:
             self.installation_costs[name] = phase.installation_capex
-        
+
         return time, logs
 
     def get_phase_class(self, phase):
@@ -746,8 +746,6 @@ class ProjectManager:
         self.detailed_outputs = self.merge_dicts(
             self.detailed_outputs, phase.detailed_output
         )
-
-        
 
     def run_multiple_phases_in_serial(self, phase_list, **kwargs):
         """
@@ -1269,7 +1267,7 @@ class ProjectManager:
             unique, counts = np.unique(
                 arr["progress"][dig == i], return_counts=True
             )
-            summary[i] = dict(zip(unique, counts))
+            summary[i] = dict(zip(unique, counts, strict=False))
 
         return summary
 
@@ -1447,7 +1445,7 @@ class ProjectManager:
                 outputs[name] = cost
 
         outputs["Onshore Substation"] = self.onshore_substation_capex
-        
+
         outputs["Turbine"] = self.turbine_capex
 
         outputs["Soft"] = self.soft_capex
@@ -1497,7 +1495,11 @@ class ProjectManager:
     def bos_capex(self):
         """Returns total balance of system CapEx."""
 
-        return self.system_capex + self.installation_capex + self.onshore_substation_capex
+        return (
+            self.system_capex
+            + self.installation_capex
+            + self.onshore_substation_capex
+        )
 
     @property
     def bos_capex_per_kw(self):
@@ -1573,22 +1575,23 @@ class ProjectManager:
         """Returns the onshore substation CapEx if available in 'ElectricalDesign', otherwise 0."""
         if "ElectricalDesign" in self.phases:
             try:
-                return self.phases["ElectricalDesign"].detailed_output["export_system"]["onshore_substation_costs"]
+                return self.phases["ElectricalDesign"].detailed_output[
+                    "export_system"
+                ]["onshore_substation_costs"]
             except KeyError:
                 return 0
         return 0
 
     @property
     def onshore_substation_capex_per_kw(self):
-        """Returns the onshore substation CapEx/kW.
-        """
+        """Returns the onshore substation CapEx/kW."""
         if "ElectricalDesign" in self.phases:
             try:
                 return self.onshore_substation_capex / (self.capacity * 1000)
             except KeyError:
                 return None
         return None
-        
+
     @property
     def overnight_capex(self):
         """Returns the overnight capital cost of the project."""
@@ -1983,7 +1986,7 @@ class ProjectProgress:
         turbines = self.chunk_max(_turbines, per_string)
         num_turbines = list(self.chunk_len(_turbines, per_string))
 
-        data = list(zip(strings, subs, turbines))
+        data = list(zip(strings, subs, turbines, strict=False))
 
         return [max(el) for el in data], num_turbines
 

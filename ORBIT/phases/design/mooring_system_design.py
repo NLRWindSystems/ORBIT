@@ -1,11 +1,11 @@
 """`MooringSystemDesign` and related functionality."""
 
 __author__ = "Jake Nunemaker, Becca Fuchs"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Nicholas Riccobono"
 __email__ = (
-    "jake.nunemaker@nrel.gov, rebecca.fuchs@nrel.gov,"
-    "nicholas.riccobono@nrel.gov"
+    "jake.nunemaker@nlr.gov, rebecca.fuchs@nlr.gov,"
+    "nicholas.riccobono@nlr.gov"
 )
 
 from math import sqrt
@@ -15,11 +15,11 @@ from scipy.interpolate import interp1d
 from ORBIT.phases.design import DesignPhase
 
 """
-[1] Maness et al. 2017, NREL Offshore Balance-of-System Model.
-https://www.nrel.gov/docs/fy17osti/66874.pdf
+[1] Maness et al. 2017, NLR Offshore Balance-of-System Model.
+https://www.nlr.gov/docs/fy17osti/66874.pdf
 
 [2] Cooperman et al. (2022), Assessment of Offshore Wind Energy Leasing Areas
-for Humboldt and Morry Bay. https://www.nrel.gov/docs/fy22osti/82341.pdf
+for Humboldt and Morry Bay. https://www.nlr.gov/docs/fy22osti/82341.pdf
 """
 
 
@@ -158,7 +158,7 @@ class MooringSystemDesign(DesignPhase):
         Returns the mooring line length and mass.
 
         SemiTaut model based on:
-        https://github.com/NREL/MoorPy/blob/dev/moorpy/MoorProps_default.yaml
+        https://github.com/NLR/MoorPy/blob/dev/moorpy/MoorProps_default.yaml
 
         TODO: Improve TLP line length and mass
 

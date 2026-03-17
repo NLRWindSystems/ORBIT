@@ -1,7 +1,7 @@
 """Provides the `ElectricalDesign` class."""
 
 __author__ = ["Sophie Bredenkamp"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = ""
 __email__ = []
 
@@ -12,8 +12,8 @@ import numpy as np
 from ORBIT.phases.design._cables import CableSystem
 
 """
-[1] Maness et al. 2017, NREL Offshore Balance-of-System Model.
-https://www.nrel.gov/docs/fy17osti/66874.pdf
+[1] Maness et al. 2017, NLR Offshore Balance-of-System Model.
+https://www.nlr.gov/docs/fy17osti/66874.pdf
 """
 
 

@@ -6,9 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "orbit-nrel"
 dynamic = ["version"]
 authors = [
-  {name = "Nick Riccobono", email = "nicholas.riccobono@nrel.gov"},
-  {name = "Rob Hammond", email = "rob.hammond@nrel.gov"},
-  {name = "Jake Nunemaker", email = "jacob.nunemaker@nrel.gov"},
+  {name = "Nick Riccobono", email = "nicholas.riccobono@nlr.gov"},
+  {name = "Rob Hammond", email = "rob.hammond@nlr.gov"},
+  {name = "Jake Nunemaker", email = "jacob.nunemaker@nlr.gov"},
 ]
 readme = {file = "README.rst", content-type = "text/x-rst"}
 description = "Offshore Renewables Balance of system and Installation Tool"
@@ -52,10 +52,10 @@ classifiers = [
 ]
 
 [project.urls]
-source = "https://github.com/WISDEM/ORBIT"
-documentation = "https://wisdem.github.io/ORBIT/"
-issues = "https://github.com/WISDEM/ORBIT/issues"
-changelog = "https://github.com/WISDEM/ORBIT/blob/main/docs/source/changelog.rst"
+source = "https://github.com/NLRWindSystems/ORBIT"
+documentation = "https://nlrwindsystems.github.io/ORBIT/"
+issues = "https://github.com/NLRWindSystems/ORBIT/issues"
+changelog = "https://github.com/NLRWindSystems/ORBIT/blob/main/docs/source/changelog.rst"
 
 [project.optional-dependencies]
 dev = [

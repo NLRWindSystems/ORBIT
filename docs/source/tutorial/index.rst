@@ -8,5 +8,5 @@ usage of ORBIT through ``ProjectManager`` and available configurations. For
 backround on the project and Offshore Balance of System modeling, please see
 the :ref:`introduction <intro>`. For more advanced examples and real world
 validation cases, please see the
-`examples <https://github.com/WISDEM/ORBIT/tree/dev/examples>`_ section on
+`examples <https://github.com/NLRWindSystems/ORBIT/tree/dev/examples>`_ section on
 GitHub.

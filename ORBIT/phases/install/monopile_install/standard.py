@@ -1,9 +1,9 @@
 """`MonopileInstallation` class and related processes."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 import numpy as np
@@ -223,7 +223,7 @@ class MonopileInstallation(InstallPhase):
             for x in range(len(self.feeders))
         ]
 
-        for assigned, feeder in zip(assignments, self.feeders):
+        for assigned, feeder in zip(assignments, self.feeders, strict=False):
             shuttle_items_to_queue_wait(
                 feeder,
                 port=self.port,
