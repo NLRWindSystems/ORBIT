@@ -64,11 +64,20 @@ dev = [
   "isort",
   "pytest",
   "pytest-cov",
-  "sphinx",
-  "sphinx-rtd-theme",
   "ruff",
 ]
 plot = ["matplotlib"]
+
+docs = [
+  "jupyter-book>=1,<2",
+  "myst-nb>=0.16",
+  "myst-parser>=0.17",
+  "linkify-it-py>=2",
+  "sphinx-autodoc-typehints",
+  "sphinxcontrib-autoyaml",
+  "sphinxcontrib-bibtex>=2.4",
+  "sphinxcontrib-spelling>=7",
+]
 
 [tool.setuptools]
 include-package-data = true
