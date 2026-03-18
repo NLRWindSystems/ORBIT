@@ -54,7 +54,6 @@ parts:
     - file: source/api/phases/install/GravityBasedInstallation
 - caption: Methodology
   chapters:
-  - file: source/methods/index
   - file: source/methods/ProjectManager
   - file: source/methods/ParametricManager
   - file: source/methods/DesignPhase
