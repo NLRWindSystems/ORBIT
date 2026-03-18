@@ -1,5 +1,5 @@
 (export-design-api)=
-# Export System Design API
+# Export System Design
 
 For detailed methodology, please see
 {doc}`Export System Design <../../../methods/design/ExportSystemDesign>`.

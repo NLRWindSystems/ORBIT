@@ -1,5 +1,5 @@
 (export-install-api)=
-# Export Cabling System Installation API
+# Export Cabling System Installation
 
 For detailed methodology, please see
 {doc}`Export Cable Installation Methodology <../../../methods/install/ExportCableInstall>`.

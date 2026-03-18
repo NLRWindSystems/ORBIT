@@ -1,5 +1,5 @@
 (turbine-install-api)=
-# Turbine Installation API
+# Turbine Installation
 
 For detailed methodology, please see
 {doc}`Turbine Installation Methodology <../../../methods/install/TurbineInstall>`.

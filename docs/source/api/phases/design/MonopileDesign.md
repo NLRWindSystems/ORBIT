@@ -1,5 +1,5 @@
 (monopile-design-api)=
-# Monopile Design API
+# Monopile Design
 
 For detailed methodology, please see {doc}`Monopile Design <../../../methods/design/MonopileDesign>`.
 

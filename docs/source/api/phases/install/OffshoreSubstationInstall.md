@@ -1,5 +1,5 @@
 (oss-install-api)=
-# Offshore Substation Installation API
+# Offshore Substation Installation
 
 For detailed methodology, please see
 {doc}`Offshore Substation Installation Methodology <../../../methods/install/OffshoreSubstationInstall>`.

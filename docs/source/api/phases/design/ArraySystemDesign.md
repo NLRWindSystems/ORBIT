@@ -1,5 +1,5 @@
 (array-design-api)=
-# Array System Design API
+# Array System Design
 
 For detailed methodology, please see
 {doc}`Array System Design <../../../methods/design/ArraySystemDesign>`.

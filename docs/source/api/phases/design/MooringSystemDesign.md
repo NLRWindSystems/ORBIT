@@ -1,5 +1,5 @@
 (mooring-design-api)=
-# Mooring System Design API
+# Mooring System Design
 
 For detailed methodology, please see
 {doc}`Mooring System Design <../../../methods/design/MooringSystemDesign>`.

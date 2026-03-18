@@ -1,5 +1,5 @@
 (mooring-install-api)=
-# Mooring System Installation API
+# Mooring System Installation
 
 For detailed methodology, please see
 {doc}`Mooring System Installation Methodology <../../../methods/install/MooringSystemInstallation>`.

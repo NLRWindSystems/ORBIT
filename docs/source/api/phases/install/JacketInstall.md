@@ -1,5 +1,5 @@
 (jacket-install-api)=
-# Jacket Installation API
+# Jacket Installation
 
 For detailed methodology, please see
 {doc}`Jacket Installation Methodology <../../../methods/install/JacketInstall>`.

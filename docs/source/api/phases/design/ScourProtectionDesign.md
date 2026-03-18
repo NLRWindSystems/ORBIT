@@ -1,5 +1,5 @@
 (scour-protection-design-api)=
-# Scour Protection Design API
+# Scour Protection Design
 
 For detailed methodology, please see
 {doc}`Scour Protection Design <../../../methods/design/ScourProtectionDesign>`.

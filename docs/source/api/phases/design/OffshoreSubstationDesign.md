@@ -1,5 +1,5 @@
 (oss-design-api)=
-# Offshore Substation Design API
+# Offshore Substation Design
 
 For detailed methodology, please see
 {doc}`Offshore Substation Design <../../../methods/design/OffshoreSubstationDesign>`.

@@ -1,5 +1,5 @@
 (scour-protection-install-api)=
-# Scour Protection Installation API
+# Scour Protection Installation
 
 For detailed methodology, please see
 {doc}`Scour Protection Installation Methodology <../../../methods/install/ScourProtectionInstall>`.

@@ -1,5 +1,5 @@
 (spar-design-api)=
-# Spar Design API
+# Spar Design
 
 For detailed methodology, please see
 {doc}`Spar Design <../../../methods/design/SparDesign>`.

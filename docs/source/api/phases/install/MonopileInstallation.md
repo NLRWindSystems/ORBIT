@@ -1,5 +1,5 @@
 (monopile-install-api)=
-# Monopile Installation API
+# Monopile Installation
 
 For detailed methodology, please see
 {doc}`Monopile Installation Methodology <../../../methods/install/MonopileInstall>`.

@@ -1,5 +1,5 @@
 (semi-submersible-design-api)=
-# Semi-Submersible Design API
+# Semi-Submersible Design
 
 For detailed methodology, please see
 {doc}`Semi-Submersible Design <../../../methods/design/SemiSubmersibleDesign>`.
