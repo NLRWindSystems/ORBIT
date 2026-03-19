@@ -6,11 +6,9 @@ root: index
 parts:
 - caption: Getting Started
   chapters:
-  - file: source/intro/index
-    sections:
-    - file: source/intro/overview
-    - file: source/intro/bos
-  - file: source/installation/index
+  - file: source/getting_started/overview
+  - file: source/getting_started/bos
+  - file: source/getting_started/install
 - caption: User Guide
   chapters:
   - file: source/tutorial/index

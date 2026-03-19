@@ -1,5 +1,5 @@
-ORBIT
-=====
+(orbit-intro)=
+# Model Overview
 
 ORBIT is a tool developed by the National Laboratory of the Rockies (NLR) for
 performing process-based bottom up installation and cost modeling for the
@@ -9,17 +9,18 @@ system costs. Each module captures the main drivers of installation time and
 cost in a highly customizable framework, allowing the user to override any
 default values if they wish.
 
-The primary structure of ORBIT relies on the :ref:`Project Manager <managertoc>`
+The primary structure of ORBIT relies on the [Project Manager](#project-manager-methods)
 to intrepret the user specified configuration. Refer to the
-`library/project/config <https://github.com/NLRWindSystems/ORBIT/tree/master/library/project/config>`.
-The ``ProjectManager`` calls ``DesignPhase`` to include all the wind farm components that
-comprise the balance of system, then it calls ``InstallationPhase`` to schedule all the installation
-processes for each component. Available design phases can be found :ref:`here <design_phases>` and
-installation phases can be found :ref:`here <install>`. Details about the design
-and installation phases are presented throughout this documents page.
+[library/project/config](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config).
+The `ProjectManager` calls `DesignPhase` to include all the wind farm components that
+comprise the balance of system, then it calls `InstallationPhase` to schedule all the installation
+processes for each component. Available design phases and their helper functionality can be found
+in the [design phases methodology documentation](#design-methods) and
+installation phases can be found in the [installation phases methodology documentation](#install-methods).
+Details about the design and installation phases are presented throughout this documents page.
 
-Design Phase
-------------
+## Design Phase
+
 ORBIT is very modular by design to allow a user to define an offshore wind
 plant in many different configurations and simulate its design and
 installation. Modules in ORBIT represent the design of different components for
@@ -29,9 +30,8 @@ installation, etc.). The modularity will allow for novel technologies or
 installation strategies to be easily introduced and compared with baseline
 methodologies as the industry develops.
 
+## Installation Phases
 
-Installation Phases
--------------------
 In ORBIT, each installation phase of an offshore wind project development is
 defined by a series of discrete processes that represent the installation of a
 component. Durations and respective costs of each of these processes are then
@@ -44,10 +44,10 @@ framework, where each process must satisfy operational constraints (weather or
 vessel interactions) before it proceeds. In this way, weather delays can be
 accounted for in the installation process, and the associated impact on project
 risk and construction phase sequencing can be determined. The DES framework of
-ORBIT is built using the python package `SimPy <https://simpy.readthedocs.io/en/latest/>`_.
+ORBIT is built using the python package [SimPy](https://simpy.readthedocs.io/en/latest/).
 
-Library
--------
+## Library
+
 A library directory includes data/specifications on cables, vessels, ports, turbines, and example
 projects in the form of yaml files. Users can copy and modify or create entirely new yaml files
 to customize their project. By sticking to the same file structure, users simply have to update the
