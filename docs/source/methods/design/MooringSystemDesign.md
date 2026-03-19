@@ -1,16 +1,18 @@
 (mooring-design-methods)=
 # Mooring System Design Methodology
 
-For details of the code implementation, please see
-{doc}`Mooring System Design API <../../api/phases/design/MooringSystemDesign>`.
+For details of the code implementation, please see the
+[Mooring System Design API documentation](#mooring-design-api).
 
 ## Overview
 
 The mooring system design module in ORBIT is based on previous modeling
-efforts undertaken by NLR, [^maness2017]. The technical documentation for
-this tool can be found `here <https://www.nlr.gov/docs/fy17osti/66874.pdf>_`.
+efforts undertaken by NLR, {cite:t}`maness2017BOS`. The technical documentation for
+this tool can be found [here](https://www.nlr.gov/docs/fy17osti/66874.pdf)`.
 
 ## References
 
-[^maness2017]: Michael Maness, Benjamin Maples, Aaron Smith,
-    NLR Offshore Balance-of-System Model, 2017
+```{bibliography}
+:style: unsrtalpha
+:filter: docname in docnames
+```

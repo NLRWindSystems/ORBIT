@@ -70,11 +70,3 @@ Default Assumptions:
 :style: unsrtalpha
 :filter: docname in docnames
 ```
-
-[^footnote-1]: Det Norske Veritas AS. (2014, May). Design of Offshore Wind Turbine
-    Structures. Retrieved from
-    <https://rules.dnvgl.com/docs/pdf/DNV/codes/docs/2014-05/Os-J101.pdf>
-
-[^footnote-2]: Draft Construction and Operations Plan for Vineyard Wind Project Appendices.
-    Retrieved from
-    <https://www.boem.gov/sites/default/files/renewable-energy-program/State-Activities/MA/Vineyard-Wind/Vineyard-Wind-COP-Volume-III-Appendix-III-K.pdf>

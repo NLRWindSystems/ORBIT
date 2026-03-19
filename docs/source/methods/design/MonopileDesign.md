@@ -1,13 +1,13 @@
 (monopile-design-methods)=
 # Monopile Design Methodology
 
-For details of the code implementation, please see
-{doc}`Monopile Design API <../../api/phases/design/MonopileDesign>`.
+For details of the code implementation, please see the
+[Monopile Design API documentation](#monopile-design-api).
 
 ## Overview
 
-This module is based on initial pile dimension calculations from Arany (2017)
-[^arany2017]. Pile dimensions are chosen to withstand the bending moment from
+This module is based on initial pile dimension calculations from {cite:t}`arany2017design`.
+Pile dimensions are chosen to withstand the bending moment from
 the 50-year Extreme Operation Gust (EOG). This corresponds to wind scenario
 U-3 in Section 2.2.1. This module is not intended to capture the complexities
 of a full engineering design study for monopiles, but rather broadly capture
@@ -32,18 +32,12 @@ water depth at site and $z_{hub}$ is the hub height of the turbine. The
 derivation of $F_{wind,EOG}$ can be seen in detail in the
 [ORBIT technical documentation](https://www.nlr.gov/docs/fy20osti/77081.pdf).
 
-Initial pile dimensions are then calculated using Arany (2017) [^arany2017],
-API (2005) [^api2005], and Poulos and Davis (1980) [^poulosdavis1980].
+Initial pile dimensions are then calculated using {cite:t}`arany2017design`,
+{cite:t}`api2000`, and {cite:t}`poulos1980pile`.
 
 ## References
 
-[^arany2017]: Laszlo Arany, S. Bhattacharya, John Macdonald,
-    S.J. Hogan, Design of monopiles for offshore wind turbines in 10
-    steps, Soil Dynamics and Earthquake Engineering,
-    Volume 92, 2017, Pages 126-152, ISSN 0267-7261,
-
-[^api2005]: API, 2005, Recommended Practice for Planning, Designing and
-    Constructing Fixed Offshore Platforms - Working Stress Design, Pages 68-71
-
-[^poulosdavis1980]: Poulos and Davis, 1980, Pile foundation analysis and
-    design. Rainbow-Bridge Book Co.
+```{bibliography}
+:style: unsrtalpha
+:filter: docname in docnames
+```
