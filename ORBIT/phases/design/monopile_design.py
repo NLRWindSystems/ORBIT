@@ -113,7 +113,7 @@ class MonopileDesign(DesignPhase):
         Solves system of equations for the required pile diameter to satisfy
         the 50 year extreme operating gust moment. Using the result from the
         diameter equation, calculates the wall thickness and the required
-        embedment length and other important sizing parameters.
+        embedment length and other important sizing parameters [1]_.
 
         Parameters
         ----------
@@ -143,9 +143,9 @@ class MonopileDesign(DesignPhase):
 
         References
         ----------
-        This class was adapted from [#arany2017]_.
+        This class was adapted from [1]_.
 
-        .. [#arany2017] Laszlo Arany, S. Bhattacharya, John Macdonald,
+        .. [1] Laszlo Arany, S. Bhattacharya, John Macdonald,
            S.J. Hogan, Design of monopiles for offshore wind turbines in 10
            steps, Soil Dynamics and Earthquake Engineering,
            Volume 92, 2017, Pages 126-152, ISSN 0267-7261,

@@ -208,7 +208,8 @@ class ArraySystemDesign(CableSystem):
         Calculates the required full and partial string design.
 
         .. note:: For custom layouts this is to provide guidance on the number
-        of strings.
+            of strings.
+
         """
 
         self._compute_maximum_turbines_per_cable()

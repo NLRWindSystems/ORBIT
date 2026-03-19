@@ -1,20 +1,14 @@
 (monopile-install-api)=
 # Monopile Installation
 
-For detailed methodology, please see
-{doc}`Monopile Installation Methodology <../../../methods/install/MonopileInstall>`.
+For detailed methodology, please see the
+[Monopile Installation methodology documentation](#monopile-install-methods)
 
 ```{eval-rst}
 .. automodule:: ORBIT.phases.install.monopile_install.standard
    :members:
    :exclude-members: extract_vessel_specs
 
-.. automodule:: ORBIT.phases.install.monopile_install._common
-   :members:
-
-.. automodule:: ORBIT.phases.install.monopile_install._single_wtiv
-   :members:
-
-.. automodule:: ORBIT.phases.install.monopile_install._wtiv_with_feeders
+.. automodule:: ORBIT.phases.install.monopile_install.common
    :members:
 ```

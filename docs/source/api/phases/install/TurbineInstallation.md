@@ -1,20 +1,14 @@
 (turbine-install-api)=
 # Turbine Installation
 
-For detailed methodology, please see
-{doc}`Turbine Installation Methodology <../../../methods/install/TurbineInstall>`.
+For detailed methodology, please see the
+[Turbine Installation methodology documentation](#turbine-install-methods)
 
 ```{eval-rst}
 .. automodule:: ORBIT.phases.install.turbine_install.standard
    :members:
    :exclude-members: extract_vessel_specs
 
-.. automodule:: ORBIT.phases.install.turbine_install._common
-   :members:
-
-.. automodule:: ORBIT.phases.install.turbine_install._single_wtiv
-   :members:
-
-.. automodule:: ORBIT.phases.install.turbine_install._wtiv_with_feeders
+.. automodule:: ORBIT.phases.install.turbine_install.common
    :members:
 ```

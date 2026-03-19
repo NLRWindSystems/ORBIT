@@ -37,9 +37,9 @@ class ElectricalDesign(CableSystem):
         Total length of cable required to trasmit power.
     total_mass : float
         Total mass of cable required to transmit power.
-    sections_cables : np.ndarray, shape: (`num_cables, )
+    sections_cables : np.ndarray, shape: (`num_cables`, )
         An array of `cable`.
-    sections_lengths : np.ndarray, shape: (`num_cables, )
+    sections_lengths : np.ndarray, shape: (`num_cables`, )
         An array of `length`.
 
     """
