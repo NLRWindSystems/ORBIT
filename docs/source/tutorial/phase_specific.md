@@ -1,3 +1,4 @@
+(phases-config-tutorial)=
 # Phase Specific Configurations
 
 By default, `ProjectManager.compile_input_dict()` returns the minimum

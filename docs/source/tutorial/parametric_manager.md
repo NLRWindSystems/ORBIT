@@ -1,5 +1,4 @@
-(parametric)=
-
+(parametric-manager-tutorial)=
 # ParametricManager
 
 `ParametricManager` is used to run simple parametric studies in ORBIT

@@ -1,5 +1,4 @@
-(design-modules)=
-
+(design-phase-tutorial)=
 # Design Modules
 
 There are two types of modules within ORBIT, design and installation.

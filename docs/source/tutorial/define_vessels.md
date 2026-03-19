@@ -1,3 +1,4 @@
+(vessels-tutorial)=
 # Vessels and Cable Definitions
 
 Most installation modules require individual vessels, cables or turbines to be
@@ -8,7 +9,7 @@ helper libraries included with ORBIT that allow vessels/cables to be defined
 elsewhere and referenced with their name. By default, these libraries are
 located at:
 
-```
+```bash
 /path/to/orbit/library/cables/
 /path/to/orbit/library/vessels/
 /path/to/orbit/library/turbines/
@@ -83,11 +84,11 @@ perform any crane operations. If a vessel is configured that can't complete an
 operation in a phase, a `MissingComponent` error will be raised. The
 following subcomponents and their use cases are available to be configured:
 
-- `'vessel_specs'` - General vessel parameters including day rate.
-- `'transport_specs'` - Transit related parameters and constraints.
-- `'storage_specs'` - Storage related parameters. Required to transport items
+- `vessel_specs` - General vessel parameters including day rate.
+- `transport_specs` - Transit related parameters and constraints.
+- `storage_specs` - Storage related parameters. Required to transport items
   on deck.
-- `'jacksys_specs'` - Jacking system related parameters. Currently required
+- `jacksys_specs` - Jacking system related parameters. Currently required
   for all fixed substructure and turbine installations.
-- `'crane_specs'` - Crane related parameters and constraints. Required for
+- `crane_specs` - Crane related parameters and constraints. Required for
   any offshore lifts.

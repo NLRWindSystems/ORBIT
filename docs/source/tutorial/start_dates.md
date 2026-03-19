@@ -1,3 +1,4 @@
+(start-dates-tutorial)=
 # Phase Start Dates
 
 ## Default Configuration
@@ -35,7 +36,7 @@ Installation phases can also be defined with optional start dates that will
 determine which portion of the weather file to use and will affect the sequence
 of outputs. This feature also allows phases to overlap if required.
 
-```
+```python
 {
    ...
 
@@ -57,7 +58,7 @@ be raised.
 The starting point of the phases can also be indexed by the location in the
 weather time series:
 
-```
+```python
 {
    ...
 
@@ -87,7 +88,7 @@ Phases can also be defined to start at a percentage completed for a different
 phase. For example, the following config could be used to have the installation
 of the turbines start when the monopiles are 50% installed:
 
-```
+```python
 {
    ...
 

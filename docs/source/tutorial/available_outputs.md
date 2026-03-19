@@ -1,3 +1,4 @@
+(outputs-tutorial)=
 # Available Outputs
 
 `ProjectManager` is used to run a collection of ORBIT modules representing a

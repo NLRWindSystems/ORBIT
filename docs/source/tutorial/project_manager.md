@@ -1,5 +1,4 @@
-(manager)=
-
+(project-manager-tutorial)=
 # ProjectManager
 
 `ProjectManager` is the primary system for interacting with ORBIT. It
@@ -114,5 +113,5 @@ installation phases will use this time series.
 ## Design Modules
 
 For a more detailed description of design modules and the interaction with
-installation modules, please see the {ref}`Design Phases <design_modules>`
+installation modules, please see the [design phases tutorial](#design-phase-tutorial)
 documentation.

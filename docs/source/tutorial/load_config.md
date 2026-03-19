@@ -1,8 +1,9 @@
+(config-tutorial)=
 # Working with ORBIT Modules and Projects
 
 ORBIT is made up of many different modules representing the design and
 installation of offshore wind components. Each module can be ran indepenently
-or within a project using {ref}`ProjectManager <manager>`. Modules and
+or within a project using [`ProjectManager`](#project-manager-tutorial). Modules and
 projects are configured with a set of nested dictionaries.
 
 ## Running Individual Modules
@@ -90,4 +91,4 @@ notation and the standard yaml routine does not.
 
 ## Running Multiple Phases
 
-To run multiple phases, see the {ref}`ProjectManager <manager>` documentation.
+To run multiple phases, see the [`ProjectManager` tutorial](#project-manager-tutorial).
