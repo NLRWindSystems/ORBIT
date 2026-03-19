@@ -146,6 +146,8 @@ where *k* is the current year and *n* is the total number of years in `spend_sch
 (`construction_insurance_capex` + `commissioning_capex` + `decommissioning_capex`+
 `procurement_contingency_capex` + `installation_contingency_capex` + `turbine_capex` + `bos_capex`)
 
+## References
+
 ```{bibliography}
 :style: unsrtalpha
 :filter: docname in docnames
