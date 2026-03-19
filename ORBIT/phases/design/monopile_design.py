@@ -143,8 +143,6 @@ class MonopileDesign(DesignPhase):
 
         References
         ----------
-        This class was adapted from [1]_.
-
         .. [1] Laszlo Arany, S. Bhattacharya, John Macdonald,
            S.J. Hogan, Design of monopiles for offshore wind turbines in 10
            steps, Soil Dynamics and Earthquake Engineering,
