@@ -10,7 +10,7 @@ trends but are not intended to be used for actual designs.
 ### Fixed-Bottom
 
 - [Monopile](#monopile-design-api)
-- [Jacket](#jacket-design-api) (TBD...)
+<!-- - [Jacket](#jacket-design-api) (TBD...) -->
 - [Scouring Protection](#scour-protection-design-api)
 
 ### Floating

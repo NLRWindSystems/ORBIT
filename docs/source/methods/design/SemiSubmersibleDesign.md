@@ -1,4 +1,4 @@
-(semi-sub-design-methods)=
+(semi-submersible-design-methods)=
 # Semi-Submersible Design Methodology
 
 For details of the code implementation, please see the

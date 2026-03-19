@@ -34,7 +34,7 @@ $length = (d + distance_\text{landfall} + distance_\text{interconnection} * (1 +
 The result of this design module ({py:attr}`design_result`) is a list of cable
 sections and their lengths and masses that represent the export cable system.
 This result can then be passed to the
-[export cable installation module](#export-cable-methods)
+[export cable installation module](#export-install-methods)
 to simulate the installation of the system.
 
 ## Process Diagrams

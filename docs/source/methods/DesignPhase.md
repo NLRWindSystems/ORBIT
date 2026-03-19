@@ -9,7 +9,7 @@ the model.
 ### Fixed-Bottom
 
 - [Monopile](#monopile-design-methods)
-- [Jacket](#jacket-design-methods) (TBD...)
+<!-- - [Jacket](#jacket-design-methods) (TBD...) -->
 - [Scouring Protection](#scour-protection-design-methods)
 
 ### Floating
