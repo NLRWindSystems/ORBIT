@@ -3,6 +3,12 @@
 
 ## Unreleased
 
+- The existing documentation has been converted from a Sphinx-based setup to a Jupyter Book v1 build
+  to create more easily modifiable documentation components and integrate better code examples
+  directly into the documentation site.
+
+## 1.2.5
+
 - Allow for a Pandas DataFrame to be passed directly to the `CustomArraySystemDesign.layout_data`
   configuration input.
 - Move the matplotlib import from the import section of `/ORBIT/phases/design/array_system_design.py`
