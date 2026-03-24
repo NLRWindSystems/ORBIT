@@ -62,7 +62,7 @@ dev = [
   "pre-commit",
   "black",
   "isort",
-  "pytest",
+  "pytest>=9",
   "pytest-cov",
   "sphinx",
   "sphinx-rtd-theme",
