@@ -13,6 +13,7 @@ parts:
   chapters:
   - file: source/tutorial/index
     sections:
+    - file: source/tutorial/1. Introduction
     - file: source/tutorial/load_config
     - file: source/tutorial/project_manager
     - file: source/tutorial/design_phases
@@ -82,5 +83,5 @@ parts:
 - caption: About
   chapters:
   - file: publications
-  - file: source/changelog
+  - file: source/CHANGELOG
   - file: source/team
