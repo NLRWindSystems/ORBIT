@@ -17,3 +17,17 @@ from .export_system_design import ExportSystemDesign
 from .mooring_system_design import MooringSystemDesign
 from .scour_protection_design import ScourProtectionDesign
 from .semi_submersible_design import SemiSubmersibleDesign
+
+design_phases = [
+    "MonopileDesign",
+    "ScourProtectionDesign",
+    "SparDesign",
+    "SemiSubmersibleDesign",
+    "MooringSystemDesign",
+    "ArraySystemDesign",
+    "CustomArraySystemDesign",
+    "ElectricalDesign",
+    "ExportSystemDesign",
+    "OffshoreSubstationDesign",
+    "OffshoreFloatingSubstationDesign",
+]

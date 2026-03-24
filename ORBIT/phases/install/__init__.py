@@ -20,3 +20,17 @@ from .quayside_assembly_tow import (
     GravityBasedInstallation,
 )
 from .scour_protection_install import ScourProtectionInstallation
+
+install_phases = [
+    "MonopileInstallation",
+    "JacketInstallation",
+    "ScourProtectionInstallation",
+    "GravityBasedInstallation",
+    "MooredSubInstallation",
+    "MooringSystemInstallation",
+    "TurbineInstallation",
+    "ArrayCableInstallation",
+    "ExportCableInstallation",
+    "OffshoreSubstationInstallation",
+    "FloatingSubstationInstallation",
+]
