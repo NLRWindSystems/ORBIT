@@ -6,6 +6,8 @@
 - The existing documentation has been converted from a Sphinx-based setup to a Jupyter Book v1 build
   to create more easily modifiable documentation components and integrate better code examples
   directly into the documentation site.
+- The `save_config` function is now compatible with the `ProjectManager.config` object, allowing
+  for direct saving without user modification.
 
 ## 1.2.5
 
