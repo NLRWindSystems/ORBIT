@@ -25,10 +25,11 @@ of modeling the design and then installation of the monopile, leading to the int
 To get started, we first import the required imports that will be used in this demonstration.
 
 ```{code-cell} ipython3
+from pathlib import Path
 from copy import deepcopy
 from pprint import pprint
 
-from ORBIT import ProjectManager
+from ORBIT import ProjectManager, load_config, save_config
 from ORBIT.phases.design import MonopileDesign, design_phases
 from ORBIT.phases.install import MonopileInstallation, install_phases
 ```
@@ -112,7 +113,7 @@ In the example below, the `site` inputs have been removed. The following inputs 
 ```{code-cell} ipython3
 :tags: [raises-exception]
 
-config_error = deepcopy(config)
+config_error = deepcopy(design_config)
 _ = config_error.pop("site")
 
 failed_monopile_design = MonopileDesign(config_error)
@@ -215,6 +216,24 @@ print(f"Total Installation Cost: ${monopile_install.installation_capex / 1e6:,.2
 print(monopile_install.config.dump())
 ```
 
+### Loading and Saving Configurations
+
+In addition to writing dictionaries in a script or Notebook file, ORBIT also provides the
+`load_config` and `save_config` functions to load and save configurations for easier scenario
+management. In the following example, we demonstrate a hypothetical workflow loading, updating, and
+saving a new monopile design configuration.
+
+```python
+design_config = load_config("path/to/monopile_design.yaml")
+
+...  # calculate additional properties of the monopile and update the configuration
+
+save_config(design_config, "path/to/new_monopile_design.yaml")
+```
+
+Other use cases could be for creating input templates for project configurations, such
+as those used by `ProjectManager` in the next section.
+
 ## Syncing Design and Installation with `ProjectManager`
 
 `ProjectManager` is the primary system for interacting with ORBIT. It provides the ability to
@@ -258,4 +277,22 @@ print(f"{'Project Capex':>30}: {project.bos_capex / 1e6:6,.2f} M")
 
 for category, cost in project.capex_breakdown.items():
     print(f"{category:>30}: {cost / 1e6:6,.2f} M")
+```
+
+To continue with the previous subsection's demonstration, we can also save the final configuration
+in one combined file, so the project could be reloaded and rerun in the future.
+
+```{code-cell} ipython3
+config_fn = Path("monopile_demo.yaml").resolve()
+save_config(project.config, config_fn)
+
+config = load_config(config_fn)
+project = ProjectManager(config)
+project.run()
+
+print(f"{'Project Capex':>30}: {project.bos_capex / 1e6:6,.2f} M")
+for category, cost in project.capex_breakdown.items():
+    print(f"{category:>30}: {cost / 1e6:6,.2f} M")
+
+config_fn.unlink()  # delete the demo file
 ```
