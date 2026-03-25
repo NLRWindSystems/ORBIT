@@ -76,17 +76,17 @@ For the sake of illustration we will provide only the required inputs, as shown 
 ```{code-cell} ipython3
 # Filling out the config for a simple fixed bottom project:
 design_config = {
-    'site': {
-        'depth': 25,
-        'mean_windspeed': 9.5,
+    "site": {
+        "depth": 25,
+        "mean_windspeed": 9.5,
     },
-    'plant': {
-        'num_turbines': 50,
+    "plant": {
+        "num_turbines": 50,
     },
-    'turbine': {
-        'rotor_diameter': 220,
-        'hub_height': 120,
-        'rated_windspeed': 13,
+    "turbine": {
+        "rotor_diameter": 220,
+        "hub_height": 120,
+        "rated_windspeed": 13,
     }
 }
 ```
@@ -108,7 +108,7 @@ within the configuration. This error message used dot-notation to show the struc
 dictionary. Each "." represents a lower level in the dictionary such that `site.depth` means the "site" subdictionary is missing the "depth" key, value pair.
 
 In the example below, the `site` inputs have been removed. The following inputs will be missing:
-`['site.depth', 'site.mean_windspeed']`
+`["site.depth", "site.mean_windspeed"]`
 
 ```{code-cell} ipython3
 :tags: [raises-exception]
@@ -128,23 +128,23 @@ also align with the annual [NLR Cost of Wind Energy Review](https://github.com/N
 
 ```{code-cell} ipython3
 design_config = {
-    'site': {
-        'depth': 25,
-        'mean_windspeed': 9.5,
+    "site": {
+        "depth": 25,
+        "mean_windspeed": 9.5,
     },
-    'plant': {
-        'num_turbines': 50,
+    "plant": {
+        "num_turbines": 50,
     },
-    'turbine': {
-        'rotor_diameter': 220,
-        'hub_height': 120,
-        'rated_windspeed': 13,
+    "turbine": {
+        "rotor_diameter": 220,
+        "hub_height": 120,
+        "rated_windspeed": 13,
     },
 
     # Overriding of the design cost defaults, both in $USD/tonne
-    'monopile_design': {
-        'monopile_steel_cost': 3500,
-         'tp_steel_cost': 4500,
+    "monopile_design": {
+        "monopile_steel_cost": 3500,
+         "tp_steel_cost": 4500,
     }
 }
 
@@ -163,22 +163,22 @@ the monopile but not the transition piece, the "monopile" dictionary can be adde
 
 ```{code-cell} ipython3
 design_config_custom = {
-    'site': {
-        'depth': 25,
-        'mean_windspeed': 9.5,
+    "site": {
+        "depth": 25,
+        "mean_windspeed": 9.5,
     },
-    'plant': {
-        'num_turbines': 50,
+    "plant": {
+        "num_turbines": 50,
     },
-    'turbine': {
-        'rotor_diameter': 220,
-        'hub_height': 120,
-        'rated_windspeed': 13,
+    "turbine": {
+        "rotor_diameter": 220,
+        "hub_height": 120,
+        "rated_windspeed": 13,
     },
-    'monopile': {
-        'type': 'Monopile',
-        'mass': 800,
-        'length': 100,
+    "monopile": {
+        "type": "Monopile",
+        "mass": 800,
+        "length": 100,
     },
 }
 
@@ -268,12 +268,12 @@ project_config["feeder"] = "example_feeder"
 project_config["num_feeders"] = 2
 project_config["site"] = install_config["site"]
 project_config["turbine"]["turbine_rating"] = 12
-project_config['design_phases'] = ['MonopileDesign']
-project_config['install_phases'] = ['MonopileInstallation']
+project_config["design_phases"] = ["MonopileDesign"]
+project_config["install_phases"] = ["MonopileInstallation"]
 
 project = ProjectManager(project_config)
 project.run()
-print(f"{'Project Capex':>30}: {project.bos_capex / 1e6:6,.2f} M")
+print(f"{"Project Capex":>30}: {project.bos_capex / 1e6:6,.2f} M")
 
 for category, cost in project.capex_breakdown.items():
     print(f"{category:>30}: {cost / 1e6:6,.2f} M")
@@ -290,7 +290,7 @@ config = load_config(config_fn)
 project = ProjectManager(config)
 project.run()
 
-print(f"{'Project Capex':>30}: {project.bos_capex / 1e6:6,.2f} M")
+print(f"{"Project Capex":>30}: {project.bos_capex / 1e6:6,.2f} M")
 for category, cost in project.capex_breakdown.items():
     print(f"{category:>30}: {cost / 1e6:6,.2f} M")
 
