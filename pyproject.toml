@@ -55,7 +55,7 @@ classifiers = [
 source = "https://github.com/NLRWindSystems/ORBIT"
 documentation = "https://nlrwindsystems.github.io/ORBIT/"
 issues = "https://github.com/NLRWindSystems/ORBIT/issues"
-changelog = "https://github.com/NLRWindSystems/ORBIT/blob/main/docs/source/changelog.rst"
+changelog = "https://github.com/NLRWindSystems/ORBIT/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -133,7 +133,6 @@ target-version = "py310"
 exclude = [
   ".git",
   "__pycache__",
-  "docs/source/conf.py",
   "old",
   "build",
   "dist",

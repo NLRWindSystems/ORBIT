@@ -6,77 +6,77 @@ root: index
 parts:
 - caption: Getting Started
   chapters:
-  - file: source/getting_started/overview
-  - file: source/getting_started/bos
-  - file: source/getting_started/install
+  - file: getting_started/overview
+  - file: getting_started/bos
+  - file: getting_started/install
 - caption: User Guide
   chapters:
-  - file: source/tutorial/index
+  - file: tutorial/index
     sections:
-    - file: source/tutorial/introduction
-    - file: source/tutorial/project_manager
-    - file: source/tutorial/available_outputs
-    - file: source/tutorial/parametric_manager
-  - file: source/examples
+    - file: tutorial/introduction
+    - file: tutorial/project_manager
+    - file: tutorial/available_outputs
+    - file: tutorial/parametric_manager
+  - file: examples
 - caption: API Reference
   chapters:
-  - file: source/api/ProjectManager
-  - file: source/api/ParametricManager
-  - file: source/api/DesignPhase
+  - file: api/ProjectManager
+  - file: api/ParametricManager
+  - file: api/DesignPhase
     sections:
-    - file: source/api/phases/design/MonopileDesign
-    - file: source/api/phases/design/ScourProtectionDesign
-    - file: source/api/phases/design/CableHelpers
-    - file: source/api/phases/design/ArraySystemDesign
-    - file: source/api/phases/design/ExportSystemDesign
-    - file: source/api/phases/design/ElectricalDesign
-    - file: source/api/phases/design/OffshoreSubstationDesign
-    - file: source/api/phases/design/SemiSubmersibleDesign
-    - file: source/api/phases/design/SparDesign
-    - file: source/api/phases/design/MooringSystemDesign
-  - file: source/api/InstallPhase
+    - file: api/phases/design/MonopileDesign
+    - file: api/phases/design/ScourProtectionDesign
+    - file: api/phases/design/CableHelpers
+    - file: api/phases/design/ArraySystemDesign
+    - file: api/phases/design/ExportSystemDesign
+    - file: api/phases/design/ElectricalDesign
+    - file: api/phases/design/OffshoreSubstationDesign
+    - file: api/phases/design/SemiSubmersibleDesign
+    - file: api/phases/design/SparDesign
+    - file: api/phases/design/MooringSystemDesign
+  - file: api/InstallPhase
     sections:
-    - file: source/api/phases/install/MonopileInstallation
-    - file: source/api/phases/install/JacketInstall
-    - file: source/api/phases/install/ScourProtectionInstall
-    - file: source/api/phases/install/TurbineInstallation
-    - file: source/api/phases/install/ArrayCableInstall
-    - file: source/api/phases/install/ExportCableInstall
-    - file: source/api/phases/install/OffshoreSubstationInstall
-    - file: source/api/phases/install/MooredSubInstallation
-    - file: source/api/phases/install/MooringSystemInstallation
-    - file: source/api/phases/install/GravityBasedInstallation
+    - file: api/phases/install/MonopileInstallation
+    - file: api/phases/install/JacketInstall
+    - file: api/phases/install/ScourProtectionInstall
+    - file: api/phases/install/TurbineInstallation
+    - file: api/phases/install/ArrayCableInstall
+    - file: api/phases/install/ExportCableInstall
+    - file: api/phases/install/OffshoreSubstationInstall
+    - file: api/phases/install/MooredSubInstallation
+    - file: api/phases/install/MooringSystemInstallation
+    - file: api/phases/install/GravityBasedInstallation
 - caption: Methodology
   chapters:
-  - file: source/methods/ProjectManager
-  - file: source/methods/ParametricManager
-  - file: source/methods/DesignPhase
+  - file: methods/ProjectManager
+  - file: methods/ParametricManager
+  - file: methods/DesignPhase
     sections:
-    - file: source/methods/design/MonopileDesign
-    - file: source/methods/design/ScourProtectionDesign
-    - file: source/methods/design/CableHelpers
-    - file: source/methods/design/ArraySystemDesign
-    - file: source/methods/design/ExportSystemDesign
-    - file: source/methods/design/ElectricalDesign
-    - file: source/methods/design/OffshoreSubstationDesign
-    - file: source/methods/design/SemiSubmersibleDesign
-    - file: source/methods/design/SparDesign
-    - file: source/methods/design/MooringSystemDesign
-  - file: source/methods/InstallPhase
+    - file: methods/design/MonopileDesign
+    - file: methods/design/ScourProtectionDesign
+    - file: methods/design/CableHelpers
+    - file: methods/design/ArraySystemDesign
+    - file: methods/design/ExportSystemDesign
+    - file: methods/design/ElectricalDesign
+    - file: methods/design/OffshoreSubstationDesign
+    - file: methods/design/SemiSubmersibleDesign
+    - file: methods/design/SparDesign
+    - file: methods/design/MooringSystemDesign
+  - file: methods/InstallPhase
     sections:
-    - file: source/methods/install/MonopileInstall
-    - file: source/methods/install/JacketInstall
-    - file: source/methods/install/ScourProtectionInstall
-    - file: source/methods/install/TurbineInstall
-    - file: source/methods/install/ArrayCableInstall
-    - file: source/methods/install/ExportCableInstall
-    - file: source/methods/install/OffshoreSubstationInstall
-    - file: source/methods/install/MooredSubInstallation
-    - file: source/methods/install/MooringSystemInstallation
-    - file: source/methods/install/GravityBasedInstallation
-  - file: source/methods/CommonCost
+    - file: methods/install/MonopileInstall
+    - file: methods/install/JacketInstall
+    - file: methods/install/ScourProtectionInstall
+    - file: methods/install/TurbineInstall
+    - file: methods/install/ArrayCableInstall
+    - file: methods/install/ExportCableInstall
+    - file: methods/install/OffshoreSubstationInstall
+    - file: methods/install/MooredSubInstallation
+    - file: methods/install/MooringSystemInstallation
+    - file: methods/install/GravityBasedInstallation
+  - file: methods/CommonCost
 - caption: About
   chapters:
   - file: publications
-  - file: source/CHANGELOG
-  - file: source/team
+  - file: CHANGELOG
+  - file: team
