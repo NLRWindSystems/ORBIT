@@ -88,12 +88,12 @@ class DynamicPositioning:
 
     def extract_dp_specs(self, dp_specs):
         """
-        Extracts and defines jacking system specifications.
+        Extracts and defines dynamic positioning system specifications.
 
         Parameters
         ----------
-        jacksys_specs : dict
-            Dictionary containing jacking system specifications.
+        dp_specs : dict
+            Dictionary containing dynamic positioning system specifications.
         """
 
         self.dp_class = dp_specs.get("class", 1)
