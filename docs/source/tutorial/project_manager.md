@@ -19,11 +19,16 @@ configure and run one or multiple models at a time, allowing the user to customi
 needs of a specific project.
 
 ```{code-cell} ipython3
+from pathlib import Path
 from pprint import pprint
 
 import pandas as pd
 
 from ORBIT import ProjectManager
+
+# Ensure the correct examples directory is used when running this in docs or in examples
+here = Path(".").resolve()
+example_dir = here.parents[2] / "examples" if here.stem == "tutorial" else here
 ```
 
 ## Compiling Input Requirements Dynamically
@@ -157,4 +162,65 @@ the installation timing to ensure unrealistic conditions have not been modeled.
 ### Defining Start Dates
 
 Instead of defining the `install_phases` as a list of strings for each phase, a dictionary of the
-phase's class name and the string starting date should be provided.
+phase's class name and the string starting date should be provided. In the following example
+configuration (derived from
+[`examples/configs/example_fixed_project.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/examples/configs/example_fixed_project.yaml)) for a complete wind power plant, we can see how each
+of the phases are staggered based on an imagined idealized starting date.
+
+```{code-cell} ipython3
+config = {
+    "design_phases": [
+        "MonopileDesign",
+        "ScourProtectionDesign",
+        "ArraySystemDesign",
+        "ExportSystemDesign",
+        "OffshoreSubstationDesign",
+    ],
+    "install_phases": {
+        "MonopileInstallation": "04/01/2000",
+        "TurbineInstallation": "6/15/2000",
+        "ArrayCableInstallation": "08/01/2000",
+        "OffshoreSubstationInstallation": "08/01/2000",
+        "ScourProtectionInstallation": "08/01/2000",
+        "ExportCableInstallation": "08/15/2000",
+    },
+    "turbine": "12MW_generic",
+    "project_parameters": {"turbine_capex": 1500},
+    "site": {
+        "depth": 22.5,
+        "distance": 124,
+        "distance_to_landfall": 35,
+        "mean_windspeed": 9,
+    },
+    "plant": {
+        "layout": "grid",
+        "num_turbines": 50,
+        "row_spacing": 7,
+        "substation_distance": 1,
+        "turbine_spacing": 7,
+    },
+    "array_system_design": {"cables": ["XLPE_630mm_33kV", "XLPE_400mm_33kV"]},
+    "export_system_design": {
+        "cables": "XLPE_500mm_132kV",
+        "percent_added_length": 0.0,
+        "landfall": {"interconnection_distance": 3, "trench_length": 2},
+    },
+    "scour_protection_design": {"cost_per_tonne": 40, "scour_protection_depth": 1},
+    "OffshoreSubstationInstallation": {
+        "feeder": "example_heavy_feeder",
+        "num_feeders": 1,
+    },
+    "wtiv": "example_wtiv",
+    "spi_vessel": "example_scour_protection_vessel",
+    "oss_install_vessel": "example_heavy_lift_vessel",
+    "array_cable_install_vessel": "example_cable_lay_vessel",
+    "export_cable_bury_vessel": "example_cable_lay_vessel",
+    "export_cable_install_vessel": "example_cable_lay_vessel",
+}
+
+weather_fn = example_dir.parent / "library/weather/"
+# weather = pd.read_csv()
+
+project = ProjectManager(config)
+project.run()
+```
