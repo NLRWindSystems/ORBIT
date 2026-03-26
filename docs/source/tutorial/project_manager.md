@@ -23,6 +23,7 @@ from pathlib import Path
 from pprint import pprint
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from ORBIT import ProjectManager
 
@@ -177,12 +178,12 @@ config = {
         "OffshoreSubstationDesign",
     ],
     "install_phases": {
-        "MonopileInstallation": "04/01/2000",
-        "TurbineInstallation": "6/15/2000",
-        "ArrayCableInstallation": "08/01/2000",
-        "OffshoreSubstationInstallation": "08/01/2000",
-        "ScourProtectionInstallation": "08/01/2000",
-        "ExportCableInstallation": "08/15/2000",
+        "MonopileInstallation": "04/01/2020",
+        "TurbineInstallation": "05/01/2020",
+        "ArrayCableInstallation": "08/01/2020",
+        "OffshoreSubstationInstallation": "08/01/2020",
+        "ScourProtectionInstallation": "03/01/2021",
+        "ExportCableInstallation": "08/15/2020",
     },
     "turbine": "12MW_generic",
     "project_parameters": {"turbine_capex": 1500},
@@ -211,6 +212,8 @@ config = {
         "num_feeders": 1,
     },
     "wtiv": "example_wtiv",
+    "feeder": "example_heavy_feeder",
+    "num_feeders": 2,
     "spi_vessel": "example_scour_protection_vessel",
     "oss_install_vessel": "example_heavy_lift_vessel",
     "array_cable_install_vessel": "example_cable_lay_vessel",
@@ -218,9 +221,64 @@ config = {
     "export_cable_install_vessel": "example_cable_lay_vessel",
 }
 
-weather_fn = example_dir.parent / "library/weather/"
-# weather = pd.read_csv()
-
 project = ProjectManager(config)
 project.run()
+```
+
+Now, we can make a quick visualization to see how the start timing plays out. Notice how the
+monopile and turbine installations overlap yet there is only a single WTIV assigned to the site. In
+practice this should not be possible, but is helpful to highlight why care is needed when
+configuring phase timing.
+
+```{code-cell} ipython3
+df = pd.DataFrame.from_dict(project.phase_dates).T
+df.start = pd.to_datetime(df.start)
+df.end = pd.to_datetime(df.end)
+df.sort_values("start")
+
+fig = plt.figure(figsize=(10, 4))
+ax = fig.add_subplot(111)
+
+ax.barh(y=df.index, width=df.end - df.start, left=df.start);
+
+ax.grid(axis="x")
+ax.set_axisbelow(True)
+ax.set_xlim(pd.to_datetime("2020-03"), pd.to_datetime("2021-05"))
+fig.tight_layout()
+```
+
+### Phase Dependent Timing
+
+The other method to configure installation phase timing is to define dependent phase completion
+rates. For instance, instead of providing `"TurbineInstallation": "05/01/2020"`, we could simply
+wait until 30% of the monopiles are installed by providing ``"TurbineInstallation": ("MonopileInstallation", 0.3)`. Below, we rely on dependencies instead of dates for nearly all
+phases and show the results. Note, that mixed date and dependency inputs are allowed.
+
+```{code-cell} ipython3
+dependent_starts = {
+    "MonopileInstallation": "04/01/2020",
+    "TurbineInstallation": ("MonopileInstallation", 0.3),
+    "ArrayCableInstallation": ("TurbineInstallation", 0.25),
+    "OffshoreSubstationInstallation": "08/01/2020",
+    "ScourProtectionInstallation": ("ArrayCableInstallation", 0.8),
+    "ExportCableInstallation": ("OffshoreSubstationInstallation", 1),
+}
+config["install_phases"] = dependent_starts
+project = ProjectManager(config)
+project.run()
+
+df = pd.DataFrame.from_dict(project.phase_dates).T
+df.start = pd.to_datetime(df.start)
+df.end = pd.to_datetime(df.end)
+df.sort_values("start")
+
+fig = plt.figure(figsize=(10, 4))
+ax = fig.add_subplot(111)
+
+ax.barh(y=df.index, width=df.end - df.start, left=df.start);
+
+ax.grid(axis="x")
+ax.set_axisbelow(True)
+ax.set_xlim(pd.to_datetime("2020-03"), pd.to_datetime("2021-05"))
+fig.tight_layout()
 ```
