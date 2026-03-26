@@ -1,117 +1,141 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.19.1
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 (project-manager-tutorial)=
-# ProjectManager
+# `ProjectManager` Deep Dive
 
-`ProjectManager` is the primary system for interacting with ORBIT. It
-provides the ability to configure and run one or multiple modules at a time,
-allowing the user to customize ORBIT to fit the needs of a specific project.
-It also provides a helper method to detail what inputs are required to run the
-desired configuration. The example below shows how to import
-`ProjectManager`, configure a simple project with two phases, and return the
-required configuration parameters.
+`ProjectManager` is the primary system for interacting with ORBIT. It provides the ability to
+configure and run one or multiple models at a time, allowing the user to customize ORBIT to fit the
+needs of a specific project.
 
-```python
+```{code-cell} ipython3
+from pprint import pprint
+
+import pandas as pd
+
 from ORBIT import ProjectManager
+```
 
+## Compiling Input Requirements Dynamically
+
+To better understand the input requirements for designing and installing multiple turbine subsystems,
+`ProjectManager` provides the `compile_input_dict()` method that will generate the expected
+configuration of each provided phase in a single configuration dictionary. The example below shows
+how to configure a simple project with a design and multiple installation phases, and return the required configuration parameters.
+
+```{code-cell} ipython3
 phases = [
-    "MonopileDesign",       # Returns monopile sizing given site information
-    "MonopileInstallation"  # Simulates the installation of monopiles
+    "MonopileDesign",
+    "MonopileInstallation",
+    "TurbineInstallation",
 ]
 
 expected_config = ProjectManager.compile_input_dict(phases)
-expected_config
-
->>>
-
-{
-    'site': {
-        'depth': 'm',
-        'mean_windspeed': 'm/s'
-    },
-
-    'turbine': {
-        'rotor_diameter': 'm',
-        'hub_height': 'm',
-        'rated_windspeed': 'm/s'
-    },
-
-    'monopile_design': {'air_density': 'kg/m3 (optional)',
-                  'load_factor': 'float (optional)',
-                  'material_factor': 'float (optional)',
-                  'monopile_density': 'kg/m3 (optional)',
-                  'monopile_modulus': 'Pa (optional)',
-                  'monopile_steel_cost': 'USD/t (optional)',
-                  'monopile_tp_connection_thickness': 'm (optional)',
-                  'soil_coefficient': 'N/m3 (optional)',
-                  'tp_steel_cost': 'USD/t (optional)',
-                  'transition_piece_density': 'kg/m3 (optional)',
-                  'transition_piece_length': 'm (optional)',
-                  'transition_piece_thickness': 'm (optional)',
-                  'turb_length_scale': 'm (optional)',
-                  'weibull_scale_factor': 'float (optional)',
-                  'weibull_shape_factor': 'float (optional)',
-                  'yield_stress': 'Pa (optional)'},
-    ...
-
-    'design_phases': ['MonopileDesign'],
-    'install_phases': ['MonopileInstallation']
-}
+pprint(expected_config)
 ```
 
-`expected_config` contains all parameters that are required to run the
-`MonopileDesign` and `MonopileInstallation` phases (as well as the optional
-ones in the `monopile_design` sub dictionary). The returned dictionary can
-now be filled out and the model can be ran:
+Using the results of the `expected_config`, the following configuration is now created to minimally
+define a project running only the scouring protection and monopile phases for design and
+installation.
 
-```python
-...
-
+```{code-cell} ipython3
 config = {
-    'site': {
-        'depth': 20,
-        'mean_windspeed': 9.5,
+    "site": {
+        "depth": 20,
+        "distance": 50,
+        "mean_windspeed": 9.5,
     },
-
-    'turbine': {
-        'rotor_diameter': 205,
-        'hub_height': 125,
-        'rated_windspeed': 11
+    "plant": {
+        "num_turbines": 50,
     },
-
-    'monopile_design': {},
-
-    'design_phases': ['MonopileDesign'],
-    'install_phases': ['MonopileInstallation']
+    "turbine": {
+        "rotor_diameter": 205,
+        "hub_height": 125,
+        "rated_windspeed": 11,
+    },
+    "wtiv": "example_wtiv",
+    "design_phases": ["MonopileDesign"],
+    "install_phases": ["MonopileInstallation", "TurbineInstallation"],
 }
 
 project = ProjectManager(config)
 project.run()
-
-# .design_results returns the results of all design phases that were ran
-project.design_results
-
->>>
-
-{
-    'monopile': {
-        'diameter': 7.11,            # m
-        'thickness': 0.078,          # m
-        'embedment_length': 55.84,   # m
-        'length': 85.84,             # m
-        'mass': 640.57,              # t
-        'deck_space': 5.58,          # m2
-        'type': 'Monopile'
-    }
-}
 ```
 
-:::{note}
-To include weather in the simulation, pass an hourly pandas DataFrame into
-`ProjectManager`. Eg. `ProjectManager(config, weather=weather_df)`. All
-installation phases will use this time series.
-:::
+## Weather Profiles
 
-## Design Modules
+To include wind and wave conditions in the simulation for vessel and port constraints, pass an
+hourly pandas DataFrame to `ProjectManager` using the `weather` keyword argument. All installation
+phases will now use this time series to account for weather delays.
 
-For a more detailed description of design modules and the interaction with
-installation modules, please see the [design phases tutorial](#design-phase-tutorial)
-documentation.
+```python
+weather = pd.read_csv(
+    "path/to/library/weather/example_weather.csv",
+    parse_dates=["datetime"]
+).set_index("datetime")
+
+project = ProjectManager(config, weather=weather_df)
+```
+
+## Accessing Individual Models
+
+The `ProjectManager` provides a dictionary-based attribute `phases` that allows users to access the
+design or installation class for custom results gathering or model inspection. Using the previously
+run project, we now directly access the monopile design costs.
+
+```{code-cell} ipython3
+monopile_design_cost = project.phases["MonopileDesign"].total_cost
+print(f"Total Monopile Cost: ${monopile_design_cost / 1e6:,.2f} M")
+```
+
+## Phase-Specific Configurations
+
+As was seen in [inputs compilation demonstration](#compiling-input-requirements-dynamically),
+`ProjectManager` compiles the minimum required configuration, combining the same parameter that is
+needed for multiple phases into one input. This isn't always a desired outcome as there are cases
+when inputs need to be different for each phase. For example, the `distance_to_shore` parameter may
+be different for each installation phase if different ports are used to stage monopiles and turbines
+or the installations may use different installation vessels.
+
+In these cases, it is necessary to define phase specific input parameters using the phase's name as
+the dictionary key. Below, we can see how we model a differing staging port where a separate WTIV
+will be used with its much further port distance.
+
+Please note that phase-specific configurations will always override their general counterparts.
+
+```python
+config = {
+    "site": {
+        "depth": 20,
+        "distance": 50,
+        "mean_windspeed": 9.5,
+    },
+    "plant": {
+        "num_turbines": 50,
+    },
+    "turbine": {
+        "rotor_diameter": 205,
+        "hub_height": 125,
+        "rated_windspeed": 11,
+    },
+    "TurbineInstallation": {
+        "wtiv": "other_wtiv",
+        "site": {
+            "distance": 100,
+        },
+    },
+    "wtiv": "example_wtiv",
+    "design_phases": ["MonopileDesign"],
+    "install_phases": ["MonopileInstallation", "TurbineInstallation"],
+}
+```

@@ -13,11 +13,10 @@ parts:
   chapters:
   - file: source/tutorial/index
     sections:
-    - file: source/tutorial/1. Introduction
-    - file: source/tutorial/load_config
+    - file: source/tutorial/introduction
     - file: source/tutorial/project_manager
+    - file: source/tutorial/load_config
     - file: source/tutorial/design_phases
-    - file: source/tutorial/phase_specific
     - file: source/tutorial/available_outputs
     - file: source/tutorial/start_dates
     - file: source/tutorial/define_vessels
