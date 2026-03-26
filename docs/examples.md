@@ -1,11 +1,11 @@
 (examples)=
 # Examples
 
-There are several example interactive notebooks located in the
-[ORBIT repository](https://github.com/NLRWindSystems/ORBIT/tree/main/examples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NLRWindSystems/ORBIT/main?urlpath=%2Fdoc%2Ftree%2Fexamples)
 
-For information on running Jupyter notebooks, please see this
-[Dataquest Jupyter notebook tutorial](https://www.dataquest.io/blog/jupyter-notebook-tutorial/).
+All examples can be found as Jupyter Notebook versions in the
+[ORBIT repository examples folder](https://github.com/NLRWindSystems/ORBIT/tree/main/examples) and
+can be run on [Binder](https://mybinder.org/v2/gh/NLRWindSystems/ORBIT/main?urlpath=%2Fdoc%2Ftree%2Fexamples).
 
 ## Example and Tutorials Execution Status
 
