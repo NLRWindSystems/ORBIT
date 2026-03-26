@@ -273,8 +273,8 @@ to turbine and cable configuration files, these should be stored in the YAML for
 
 - `vessel_specs` - General vessel parameters including day rate.
   - `day_rate`: Daily cost to operate the vessel, $USD/day.
-  - `min_draft`:
-  - `overall_length`:
+  - `min_draft`: Minimum distance between the waterline and the bottom of the hull, m.
+  - `overall_length`: Length of the vessel, m.
   - `mobilization_days`: Number days required to mobilize the vessel to site.
   - `mobilization_mult`: Mobilization multiplier applied to `day_rate`.
   - Any other custom input that will override logistics defaults.
