@@ -265,6 +265,52 @@ folder. Below is the expected folder structure of the library. I
 ├── results
 ```
 
+## Vessels
+
+All installation models rely on at least one vessel to perform the installation routines. Similar
+to turbine and cable configuration files, these should be stored in the YAML format in the
+`vessels` library folder. Below are the
+
+- `vessel_specs` - General vessel parameters including day rate.
+  - `day_rate`: Daily cost to operate the vessel, $USD/day.
+  - `min_draft`:
+  - `overall_length`:
+  - `mobilization_days`: Number days required to mobilize the vessel to site.
+  - `mobilization_mult`: Mobilization multiplier applied to `day_rate`.
+  - Any other custom input that will override logistics defaults.
+- `transport_specs` - Transit related parameters and constraints.
+  - `transit_speed`: Average transiting speed, km/h.
+  - `max_waveheight`: Maximum operational wave height, m/s.
+  - `max_windspeed`: Maximum operational wind speed, m/s.
+- `storage_specs` - Storage related parameters. Required to transport items
+  on deck.
+  - `max_cargo`: Maximum cargo capacity, metric tonnes.
+  - `max_deck_load`: Maximum capacity to be loaded on deck, metric tonnes per square meter, $t/m^2$.
+  - `max_deck_space`: Maximum amount of space on deck for loading components, $m^2$.
+- `cable_storage`: Array and export cable carousel storage parameters.
+  - `max_mass`: Maximum mass of the cable carousel, in metric tonnes.
+- `spi_specs`: Scouring protection installation vessel storage parameters.
+  - `max_cargo_mass`: Maximum mass allowed to be loaded for a single trip, in metric tonnes.
+- `jacksys_specs`: Jacking system related parameters. Currently required
+  for all fixed substructure and turbine installations.
+  - `leg_length`: Length of the jackup vessel's legs, m.
+  - `air_gap`: Distance between sea level and the vessel bottom when fully jacked up, m.
+  - `leg_pen`: How far the leg penetrates the sea floor for stability, m.
+  - `max_depth`: Maxium water depth, m.
+  - `max_extension`: Maximum leg extension, m.
+  - `speed_below_depth`: Jackup speed when leg extension has not reached the sea floor, m/min
+  - `speed_above_depth`: Jackup speed after the leg has reached the sea floor and the vessel is
+    being raised above sea level, m/min.
+- `dynamic_positioning_specs`: Dynamic positioning related parameters
+  - `class`: integer of the dynamic positioning class.
+- `crane_specs` - Crane related parameters and constraints. Required for
+  any offshore lifts.
+  - `max_lift`: Maximum mass that can be lifted, metric tonnes.
+  - `max_hook_height`: Maximum height the hook can be raised, m.
+  - `max_windspeed`: Maximum operational windspeed, m/s.
+  - `crane_rate`: Crane lift rate, m/h.
+
+
 ## Syncing Design and Installation with `ProjectManager`
 
 `ProjectManager` is the primary system for interacting with ORBIT. It provides the ability to
