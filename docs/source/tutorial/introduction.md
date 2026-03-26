@@ -199,7 +199,7 @@ logistics.
 
 Using the output from the above example, we can add further configurations. Note that ORBIT provides
 a series of default vessls in `library/vessels/` to support all possible installation strategies.
-For more details on vessel configurations, please see the [vessels tutorial](#vessels-tutorial).
+For more details on vessel configurations, please see the [vessels section](#vessels).
 
 ```{code-cell} ipython3
 install_config = deepcopy(monopile_design_result)
@@ -350,8 +350,7 @@ project_config["install_phases"] = ["MonopileInstallation"]
 
 project = ProjectManager(project_config)
 project.run()
-print(f"{"Project Capex":>30}: {project.bos_capex / 1e6:6,.2f} M")
-
+print(f"{'Project Capex':>30}: {project.bos_capex / 1e6:6,.2f} M")
 for category, cost in project.capex_breakdown.items():
     print(f"{category:>30}: {cost / 1e6:6,.2f} M")
 ```
@@ -367,7 +366,7 @@ config = load_config(config_fn)
 project = ProjectManager(config)
 project.run()
 
-print(f"{"Project Capex":>30}: {project.bos_capex / 1e6:6,.2f} M")
+print(f"{'Project Capex':>30}: {project.bos_capex / 1e6:6,.2f} M")
 for category, cost in project.capex_breakdown.items():
     print(f"{category:>30}: {cost / 1e6:6,.2f} M")
 

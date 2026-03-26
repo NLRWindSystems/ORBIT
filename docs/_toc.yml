@@ -15,11 +15,7 @@ parts:
     sections:
     - file: source/tutorial/introduction
     - file: source/tutorial/project_manager
-    - file: source/tutorial/load_config
-    - file: source/tutorial/design_phases
     - file: source/tutorial/available_outputs
-    - file: source/tutorial/start_dates
-    - file: source/tutorial/define_vessels
     - file: source/tutorial/parametric_manager
   - file: source/examples
 - caption: API Reference

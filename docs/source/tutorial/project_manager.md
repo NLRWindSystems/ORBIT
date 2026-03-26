@@ -51,8 +51,9 @@ pprint(expected_config)
 ```
 
 Using the results of the `expected_config`, the following configuration is now created to minimally
-define a project running only the scouring protection and monopile phases for design and
-installation.
+define a project running only the monopile phases for design and installation, and the turbine
+installation phase. Note that the turbine is a copy of the
+[12MW generic turbine from ORBIT library](https://github.com/NLRWindSystems/ORBIT/tree/main/library/turbines/12MW_generic.yaml).
 
 ```{code-cell} ipython3
 config = {
@@ -65,9 +66,28 @@ config = {
         "num_turbines": 50,
     },
     "turbine": {
+        "name": "12MW Generic Turbine",
         "rotor_diameter": 205,
         "hub_height": 125,
         "rated_windspeed": 11,
+        "blade": {
+            "deck_space": 385,
+            "length": 107,
+            "type": "Blade",
+            "mass": 54,
+        },
+        "nacelle": {
+            "deck_space": 203,
+            "type": "Nacelle",
+            "mass": 604,
+        },
+        "tower": {
+            "deck_space": 50.24,
+            "sections": 2,
+            "type": "Tower",
+            "length": 132,
+            "mass": 399,
+        },
     },
     "wtiv": "example_wtiv",
     "design_phases": ["MonopileDesign"],
@@ -130,9 +150,28 @@ config = {
         "num_turbines": 50,
     },
     "turbine": {
+        "name": "12MW Generic Turbine",
         "rotor_diameter": 205,
         "hub_height": 125,
         "rated_windspeed": 11,
+        "blade": {
+            "deck_space": 385,
+            "length": 107,
+            "type": "Blade",
+            "mass": 54,
+        },
+        "nacelle": {
+            "deck_space": 203,
+            "type": "Nacelle",
+            "mass": 604,
+        },
+        "tower": {
+            "deck_space": 50.24,
+            "sections": 2,
+            "type": "Tower",
+            "length": 132,
+            "mass": 399,
+        },
     },
     "TurbineInstallation": {
         "wtiv": "other_wtiv",
