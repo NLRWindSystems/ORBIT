@@ -78,5 +78,5 @@ parts:
 - caption: About
   chapters:
   - file: publications
-  - file: CHANGELOG
+  - file: ../CHANGELOG
   - file: team
