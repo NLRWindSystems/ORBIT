@@ -234,6 +234,37 @@ save_config(design_config, "path/to/new_monopile_design.yaml")
 Other use cases could be for creating input templates for project configurations, such
 as those used by `ProjectManager` in the next section.
 
+## Using A Data Library
+
+ORBIT makes use of its own
+[internal library](https://github.com/NLRWindSystems/ORBIT/tree/main/library) when a user-provided
+library path is not provided (i.e. a value isn't provide so the default `None` is used in
+`ProjectManager(config, library_path=None)`). When a value is provided, user library files will be
+searched for first, and the default library will be checked for any unfound files.
+
+This is made visible in the [installation phases section](#installation-phases) where the value
+"example_wtiv" is provided to the "wtiv" key. When the configuration is loaded, `ProjectManager`
+will attempt to find the `example_wtiv.yaml` file in the ORBIT default library under the `vessels/`
+folder. Below is the expected folder structure of the library. I
+
+```console
+# /path/to/library/
+├── defaults         <- Top-level default data
+├── project
+│   ├── config       <- Configuration dictionary repository
+│   ├── port         <- Port specific data setttings
+│   ├── plant        <- Wind farm specific data setttings
+│   ├── site         <- Project site data settings
+│   ├── development  <- Project development cost settings
+├── cables           <- Cable data files: array cables, export cables
+├── substructures    <- Substructure data files: monopiles, jackets, etc.
+├── turbines         <- Turbine data files
+├── vessels          <- Vessel data files
+│   ├── defaults     <- Default data related to vessel tasks
+├── weather          <- Weather profiles
+├── results
+```
+
 ## Syncing Design and Installation with `ProjectManager`
 
 `ProjectManager` is the primary system for interacting with ORBIT. It provides the ability to

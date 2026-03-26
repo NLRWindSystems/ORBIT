@@ -139,3 +139,22 @@ config = {
     "install_phases": ["MonopileInstallation", "TurbineInstallation"],
 }
 ```
+
+## Phase Timing
+
+By default, all phases will run in the order they are defined in both the `design_phases` and
+`install_phases`. When a weather profile is provided, all phases will start at the beginning of the
+weather profile. To more realistically simulate the timing of installations, phase start dates
+can be customized to start at a specific date, or be reliant on the completion status of a dependent
+phase. The next two subsections will detail how both of these work, and can be used together.
+
+:::{warning}
+ORBIT does not have any safety mechanisms to avoid inappropriate installation overlaps, i.e.,
+installing turbines before the monopiles have been fully installed, so it is important to check
+the installation timing to ensure unrealistic conditions have not been modeled.
+:::
+
+### Defining Start Dates
+
+Instead of defining the `install_phases` as a list of strings for each phase, a dictionary of the
+phase's class name and the string starting date should be provided.
