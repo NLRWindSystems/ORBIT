@@ -19,7 +19,7 @@ and it shows the `Class`, `attribute_name`, `units`, and the cost value in 2024 
 future releases, these costs will adjust based on the market indices so any user
 can be sure that the common costs in their model is not outdated.
 
-:::{figure} ../../images/cost_by_procurement.png
+:::{figure} ../imagesimages/cost_by_procurement.png
 :align: center
 
 Cost by Procurement Year. Note that values are inflated from the procurement year USD to 2024 USD using CPI

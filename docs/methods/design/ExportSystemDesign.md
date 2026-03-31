@@ -39,4 +39,4 @@ to simulate the installation of the system.
 
 ## Process Diagrams
 
-![Export cable design process diagram](../../../images/process_diagrams/ExportSystemDesign.png)
+![Export cable design process diagram](../../images/process_diagrams/ExportSystemDesign.png)

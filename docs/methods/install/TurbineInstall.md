@@ -103,12 +103,12 @@ following table.
 
 ### Single WTIV Installation
 
-![Single WTIV turbine installation proceess diagrame](../../../images/process_diagrams/turbine_single_wtiv.png)
+![Single WTIV turbine installation proceess diagrame](../../images/process_diagrams/turbine_single_wtiv.png)
 
 ### WTIV with Feeder Barges Installation
 
-![WTIV with feeder barges turbine installation proceess diagrame](../../../images/process_diagrams/turbine_wtiv_with_feeders.png)
+![WTIV with feeder barges turbine installation proceess diagrame](../../images/process_diagrams/turbine_wtiv_with_feeders.png)
 
 ### Component Installation
 
-![Component installation proceess diagrame](../../../images/process_diagrams/turbine_install.png)
+![Component installation proceess diagrame](../../images/process_diagrams/turbine_install.png)

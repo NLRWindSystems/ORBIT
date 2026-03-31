@@ -20,7 +20,7 @@ string and the substation. This figure is also an example of a
 go into more detail of the key steps in building out the array cabling system.
 
 (grid-no-partial)=
-:::{figure} ../../../images/examples/full_grid_example.png
+:::{figure} ../../images/examples/full_grid_example.png
 :align: left
 :width: 35%
 
@@ -28,7 +28,7 @@ Grid layout with no partial strings.
 :::
 
 (ring-partial)=
-:::{figure} ../../../images/examples/partial_ring_example.png
+:::{figure} ../../images/examples/partial_ring_example.png
 :align: right
 :width: 35%
 
@@ -42,10 +42,10 @@ Ring layout with 1 partial string
 :class: grid grid-cols-2
 
 (grid-no-partial)=
-![Grid layout with no partial strings.](../../../images/examples/full_grid_example.png)
+![Grid layout with no partial strings.](../../images/examples/full_grid_example.png)
 
 (ring-partial)=
-![Ring layout with 1 partial string.](../../../images/examples/partial_ring_example.png)
+![Ring layout with 1 partial string.](../../images/examples/partial_ring_example.png)
 
 Comparison of a grid layout with no partial strings ([](#grid-no-partial)) and a ring layout with
 a partial string ([](#ring-partial))
@@ -160,4 +160,4 @@ and stored in the {py:attr}`design_result`, which can be utilized by the
 
 ## Process Diagrams
 
-![Array cable design process diagram](../../../images/process_diagrams/ArraySystemDesign.png)
+![Array cable design process diagram](../../images/process_diagrams/ArraySystemDesign.png)

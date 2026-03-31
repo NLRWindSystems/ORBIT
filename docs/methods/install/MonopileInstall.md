@@ -130,13 +130,13 @@ For grouted connections, the WTIV performs these tasks:
 
 ### Single WTIV Installation
 
-![Single WTIV monopile installation process diagrame](../../../images/process_diagrams/monopile_single_wtiv.png)
+![Single WTIV monopile installation process diagrame](../../images/process_diagrams/monopile_single_wtiv.png)
 
 (monopile-install-feeders-process)=
 ### WTIV with Feeder Barges Installation
 
-![WTIV with feeders monopile installation process diagrame](../../../images/process_diagrams/monopile_wtiv_with_feeders.png)
+![WTIV with feeders monopile installation process diagrame](../../images/process_diagrams/monopile_wtiv_with_feeders.png)
 
 ### Component Installation
 
-![Monopile component installation process diagrame](../../../images/process_diagrams/monopile_install.png)
+![Monopile component installation process diagrame](../../images/process_diagrams/monopile_install.png)

@@ -84,4 +84,4 @@ Coming soon!
 
 ## Process Diagrams
 
-![Export cable installation process diagram](../../../images/process_diagrams/ExportCableInstall.png)
+![Export cable installation process diagram](../../images/process_diagrams/ExportCableInstall.png)

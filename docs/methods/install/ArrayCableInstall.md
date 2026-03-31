@@ -119,4 +119,4 @@ Coming soon!
 
 ## Process Diagrams
 
-![Array cable installation process diagram](../../../images/process_diagrams/ArrayCableInstall.png)
+![Array cable installation process diagram](../../images/process_diagrams/ArrayCableInstall.png)
