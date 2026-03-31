@@ -81,14 +81,59 @@ section.
 - `npv_details`: include the `cash_flow`, `monthly_revenue`, and `monthly_expenses`, if `True`.
 
 ```{code-cell} ipython3
-pprint(project.outputs)
+pprint(project.outputs())
 ```
 
 ## CapEx
 
-The two main outputs of ORBIT are the system CapEx (the total cost of procuring the configured
-subsystems) and the installation CapEx (the total cost of installing the subsystems). The following
-sections will demonstrate these metrics and their breakdowns.
+This section will start from the total CapEx, and work backwards demonstrating how to access
+the various CapEx breakouts and breakdowns.
+
+### Total CapEx
+
+The `total_capex` is the sum of the BOS, soft, and project CapEx numbers (details in following
+sections). This represents the complete project costs including all upfront costs, financing,
+procurement and installation of BOS subsystems and the procurement costs of the turbines.
+
+:::{note}
+ORBIT doesn't explicity model the procurement of turbines, however the Turbine CapEx is included
+within `project.total_capex`. To configure the cost of the turbines, `turbine_capex` can be passed
+into the `project_parameters` section of an ORBIT configuration.
+:::
+
+```{code-cell} ipython3
+print(f"Total CapEx (millions, USD): {project.total_capex / 1e6:,.2f}")
+print(f"Total CapEx (USD) per kW: {project.total_capex_per_kw:,.2f}")
+```
+
+### Categorical CapEx Breakdowns
+
+The `capex_breakdown` property provides a dictionary of all the procurement, installation, soft,
+and project costs associated with a project. Below we will print out the dictionary keys and
+the values in millions USD.
+
+```{code-cell} ipython3
+for name, capex in project.capex_breakdown.items():
+    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD)")
+```
+
+Like in the previous examples, the `capex_breakdown_per_kw` will provide each category's associated
+costs as a capacity normalized value.
+
+```{code-cell} ipython3
+for name, capex in project.capex_breakdown_per_kw.items():
+    print(f"{name:>35}: ${capex:8,.2f} (USD/kW)")
+```
+
+### BOS CapEx
+
+The balance-of-system (BOS) CapEx (`bos_capex`) is the sum of the system and installation CapEx,
+and is one of the core outputs of the ORBIT module.
+
+```{code-cell} ipython3
+print(f"BOS CapEx (millions, USD): {project.bos_capex / 1e6:,.2f}")
+print(f"BOS CapEx (USD) per kW: {project.bos_capex_per_kw:,.2f}")
+```
 
 ### System CapEx
 
@@ -134,40 +179,17 @@ for name, capex in project.installation_costs.items():
     print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD)")
 ```
 
-### Categorical CapEx
+### Turbine CapEx
 
-The `capex_breakdown` property provides a dictionary of all the procurement, installation, soft,
-and project costs associated with a project. Below we will print out the dictionary keys and
-the values in millions USD.
-
-```{code-cell} ipython3
-for name, capex in project.capex_breakdown.items():
-    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD)")
-```
-
-Like in the previous examples, the `capex_breakdown_per_kw` will provide each category's associated
-costs as a capacity normalized value.
+The `turbine_capex` is directly derived from the user inputs, and if none are provided, it is
+assumed to be $1,300 USD/kW.
 
 ```{code-cell} ipython3
-for name, capex in project.capex_breakdown_per_kw.items():
-    print(f"{name:>35}: ${capex:8,.2f} (USD/kW)")
+print(f"Turbine CapEx (millions, USD): {project.turbine_capex / 1e6:,.2f}")
+print(f"Turbine CapEx (USD) per kW: {project.turbine_capex_per_kw:,.2f}")
 ```
 
-## BOS CapEx
-
-The balance-of-system CapEx (available as `project.bos_capex`) is the sum of
-the system and installation capex numbers and is one of the core outputs of the
-ORBIT module.
-
-## Soft CapEx
-
-Soft CapEx (`project.soft_capex`) represents additional project level costs
-associated with commissioning, decommissioning and financing of the project.
-The cost factors can be input in the `project_parameters` subdict of an ORBIT
-configuration. The default cost factors for these categories are derived from the
-[2018 Cost of Wind Energy Review](https://www.nlr.gov/docs/fy20osti/74598.pdf).
-
-## Project CapEx
+### Project CapEx
 
 Project CapEx (`project.project_capex`) includes the costs associated with
 the lease area, the development of the construction operations plan and any
@@ -175,19 +197,92 @@ environmental review and other upfront project costs. There are default values
 for all of these subcategories, however the values can also be overridden in the
 `project_parameters` subdict.
 
-## Total CapEx
+```{code-cell} ipython3
+print(f"Turbine CapEx (millions, USD): {project.project_capex / 1e6:,.2f}")
+print(f"Turbine CapEx (USD) per kW: {project.project_capex_per_kw:,.2f}")
+```
 
-Total CapEx (`project.total_capex`) is the sum of the BOS, Soft and Project
-CapEx numbers. This represents complete project costs including all upfront
-costs, financing, procurement and installation of BOS subsystems and the
-procurement costs of the turbines.
+### Soft CapEx
 
-:::{note}
-ORBIT doesn't explicity model the procurement of turbines, however the
-Turbine CapEx is included within `project.total_capex`. To configure the
-cost of the turbines, `turbine_capex` can be passed into the
-`project_parameters` subdict of an ORBIT config. The default is \$1300/kW.
-:::
+Soft CapEx (`project.soft_capex`) represents additional project level costs
+associated with commissioning, decommissioning and financing of the project.
+The cost factors can be input in the `project_parameters` subdict of an ORBIT
+configuration. The default cost factors for these categories are derived from the
+[2018 Cost of Wind Energy Review](https://www.nlr.gov/docs/fy20osti/74598.pdf).
+
+```{code-cell} ipython3
+print(f"Soft CapEx (millions, USD): {project.soft_capex / 1e6:,.2f}")
+print(f"Soft CapEx (USD) per kW: {project.soft_capex_per_kw:,.2f}")
+```
+
+The soft CapEx can also be broken down using both the `soft_capex_breakdown` and the `capex_detailed_soft_capex_breakdown`, which also provide a capacity-noramlized variation by adding
+`_per_kw` to the end of either (not shown in this demonstration). The primary difference (as shown
+below) is that the `capex_detailed_soft_capex_breakdown` metric provides the capex breakdown with
+the additional soft capex breakdown.
+
+```{code-cell} ipython3
+for name, capex in project.soft_capex_breakdown.items():
+    print(f"{name:>35}: ${capex / 1e6:8,.2f} (millions,USD)")
+```
+
+```{code-cell} ipython3
+for name, capex in project.capex_detailed_soft_capex_breakdown.items():
+    print(f"{name:>35}: ${capex / 1e6:8,.2f} (millions,USD)")
+```
+
+The soft CapEx values are also available as independent values:
+
+- `construction_insurance_capex`
+- `commissioning_capex`
+- `decommissioning_capex`
+- `procurement_contingency_capex`
+- `installation_contingency_capex`
+- `construction_financing_capex`
+
+```{code-cell} ipython3
+print(f"Construction Insurance CapEx (millions, USD): {project.construction_insurance_capex() / 1e6:,.2f}")
+print(f"Commissioning CapEx (millions, USD): {project.commissioning_capex() / 1e6:,.2f}")
+print(f"Decommissioning CapEx (millions, USD): {project.decommissioning_capex() / 1e6:,.2f}")
+print(f"Procurement Contingency CapEx (millions, USD): {project.procurement_contingency_capex() / 1e6:,.2f}")
+print(f"Installation Contingency CapEx (millions, USD): {project.installation_contingency_capex() / 1e6:,.2f}")
+print(f"Construction Financing CapEx (millions, USD): {project.construction_financing_capex() / 1e6:,.2f}")
+```
+
+```{code-cell} ipython3
+print(f"Soft CapEx (millions, USD): {project.construction_insurance_capex / 1e6:,.2f}")
+```
+
+### All Other CapEx Categories
+
+#### Supply Chain CapEx
+
+The supply chain CapEx (`supply_chain_capex`) directly captures the user-provided
+`supply_chain_capex` from the `project_parameters` section of the project configuration. This
+value should encompass any project-level investements in supply chain development, port upgrade,
+community benefit agreements, fisheries mitigation funds, community or research initiatives, and
+US-built vessels.
+
+```{code-cell} ipython3
+print(f"Supply Chain CapEx (millions, USD): {project.supply_chain_capex / 1e6:,.2f}")
+print(f"Supply Chain CapEx (USD) per kW: {project.supply_chain_capex_per_kw:,.2f}")
+```
+
+#### Onshore Substation CapEx
+
+The CapEx associated with onshore substation as prescribed by the `ElectricalDesign`
+
+```{code-cell} ipython3
+print(f"Turbine CapEx (millions, USD): {project.turbine_capex / 1e6:,.2f}")
+print(f"Turbine CapEx (USD) per kW: {project.turbine_capex_per_kw:,.2f}")
+```
+
+#### Overnight CapEx
+
+The `overnight_capex` provides the overnight capital cost (system and turbine CapEx) of the project.
+
+```{code-cell} ipython3
+print(f"Overnight CapEx (millions, USD): {project.overnight_capex / 1e6:,.2f}")
+```
 
 ## Actions
 
