@@ -1254,7 +1254,9 @@ class ProjectManager:
 
     @property
     def progress_summary(self):
-        """Returns a summary of progress by month."""
+        """Returns a summary of the number of completed component installations
+        by month.
+        """
 
         arr = np.array(
             self.progress_logs, dtype=[("progress", "U32"), ("time", "i4")]
@@ -1268,6 +1270,11 @@ class ProjectManager:
                 arr["progress"][dig == i], return_counts=True
             )
             summary[i] = dict(zip(unique, counts, strict=False))
+
+        summary = {
+            k: {str(_k): int(_v) for _k, _v in v.items()}
+            for k, v in summary.items()
+        }
 
         return summary
 
