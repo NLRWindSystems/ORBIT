@@ -36,7 +36,7 @@ from ORBIT import ProjectManager, load_config
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[2] / "examples" if here.stem == "tutorial" else here
+example_dir = here.parents[1] / "examples" if here.stem == "tutorial" else here
 
 config = load_config(example_dir / "configs/example_fixed_project.yaml")
 project = ProjectManager(config)
@@ -67,7 +67,7 @@ Below is brief example showing the basic project parameterizations that are avai
 print(f"Number of turbines: {project.num_turbines}")
 print(f"Turbine Rating: {project.turbine_rating:.2f}")
 print(f"Project Capacity (MW): {project.capacity:,.2f}")
-print(f"Project Installation Time (days): {project.project_time / 24:,.1f})
+print(f"Project Installation Time (days): {project.project_time / 24:,.1f}")
 ```
 
 ## All Outputs At Once
@@ -108,7 +108,7 @@ costs are summarized by each modeled or input system.
 
 ```{code-cell} ipython3
 for name, capex in project.system_costs.items():
-    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD))
+    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD)")
 ```
 
 ### Installation Capex
@@ -131,7 +131,7 @@ keys and the values in millions USD.
 
 ```{code-cell} ipython3
 for name, capex in project.installation_costs.items():
-    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD))
+    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD)")
 ```
 
 ### Categorical CapEx
@@ -142,7 +142,7 @@ the values in millions USD.
 
 ```{code-cell} ipython3
 for name, capex in project.capex_breakdown.items():
-    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD))
+    print(f"{name:>35}: ${capex / 1e6:6,.2f} (millions, USD)")
 ```
 
 Like in the previous examples, the `capex_breakdown_per_kw` will provide each category's associated
@@ -150,7 +150,7 @@ costs as a capacity normalized value.
 
 ```{code-cell} ipython3
 for name, capex in project.capex_breakdown_per_kw.items():
-    print(f"{name:>35}: ${capex:6,.2f} (USD/kW))
+    print(f"{name:>35}: ${capex:8,.2f} (USD/kW)")
 ```
 
 ## BOS CapEx
