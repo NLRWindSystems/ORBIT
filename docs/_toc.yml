@@ -11,7 +11,7 @@ parts:
   - file: getting_started/install
 - caption: User Guide
   chapters:
-  - file: tutorials/indexb
+  - file: tutorials/index
     sections:
     - file: tutorials/introduction
     - file: tutorials/project_manager
@@ -21,7 +21,7 @@ parts:
     sections:
     - file: topical_guides/fixed_substructures
     - file: topical_guides/floating_substructures
-    - file: topical_guides/custom_array_layout
+    - file: topical_guides/custom_array
     - file: topical_guides/hvdc_hvac_export
     - file: topical_guides/cable_installations
 - caption: API Reference
