@@ -105,10 +105,7 @@ hourly pandas DataFrame to `ProjectManager` using the `weather` keyword argument
 phases will now use this time series to account for weather delays.
 
 ```{code-cell} ipython3
-weather = pd.read_csv(
-    example_dir / "data/example_weather.csv",
-
-).set_index("datetime")
+weather = pd.read_csv(example_dir / "data/example_weather.csv").set_index("datetime")
 
 project = ProjectManager(config, weather=weather)
 project.run()
