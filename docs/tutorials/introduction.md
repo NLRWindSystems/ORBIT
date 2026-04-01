@@ -234,6 +234,7 @@ save_config(design_config, "path/to/new_monopile_design.yaml")
 Other use cases could be for creating input templates for project configurations, such
 as those used by `ProjectManager` in the next section.
 
+(library-tutorial)=
 ## Using A Data Library
 
 ORBIT makes use of its own
@@ -309,7 +310,6 @@ to turbine and cable configuration files, these should be stored in the YAML for
   - `max_hook_height`: Maximum height the hook can be raised, m.
   - `max_windspeed`: Maximum operational windspeed, m/s.
   - `crane_rate`: Crane lift rate, m/h.
-
 
 ## Syncing Design and Installation with `ProjectManager`
 
