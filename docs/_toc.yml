@@ -17,7 +17,13 @@ parts:
     - file: tutorial/project_manager
     - file: tutorial/available_outputs
     - file: tutorial/parametric_manager
-  - file: examples
+  - file: examples/index
+    sections:
+  - file: fixed_substructures
+  - file: floating_substructures
+  - file: custom_array_layout
+  - file: hvdc_hvac_export
+  - file: cable_installations
 - caption: API Reference
   chapters:
   - file: api/ProjectManager
