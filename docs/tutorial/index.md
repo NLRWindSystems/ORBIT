@@ -1,6 +1,6 @@
-(tutorial)=
+(tutorials)=
 
-# Tutorial
+# Tutorials
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NLRWindSystems/ORBIT/main?urlpath=%2Fdoc%2Ftree%2Fexamples)
 

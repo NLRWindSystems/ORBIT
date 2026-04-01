@@ -29,7 +29,7 @@ from ORBIT import ProjectManager
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[2] / "examples" if here.stem == "tutorial" else here
+example_dir = here.parents[1] / "examples" if here.stem == "tutorial" else here
 ```
 
 ## Compiling Input Requirements Dynamically
@@ -104,13 +104,14 @@ To include wind and wave conditions in the simulation for vessel and port constr
 hourly pandas DataFrame to `ProjectManager` using the `weather` keyword argument. All installation
 phases will now use this time series to account for weather delays.
 
-```python
+```{code-cell} ipython3
 weather = pd.read_csv(
-    "path/to/library/weather/example_weather.csv",
-    parse_dates=["datetime"]
+    example_dir / "data/example_weather.csv",
+
 ).set_index("datetime")
 
-project = ProjectManager(config, weather=weather_df)
+project = ProjectManager(config, weather=weather)
+project.run()
 ```
 
 ## Accessing Individual Models
