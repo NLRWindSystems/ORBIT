@@ -286,6 +286,7 @@ ax.set_xlim(pd.to_datetime("2020-03"), pd.to_datetime("2021-05"))
 fig.tight_layout()
 ```
 
+(phase-dependent-timing)=
 ### Phase Dependent Timing
 
 The other method to configure installation phase timing is to define dependent phase completion

@@ -70,6 +70,17 @@ print(f"Project Capacity (MW): {project.capacity:,.2f}")
 print(f"Project Installation Time (days): {project.project_time / 24:,.1f}")
 ```
 
+### Event Timing
+
+The `installation_time` provides the sum total installation time of all phases, in hours, without
+accounting for timing overlaps, whereas the `project_days` provides the total number of days between
+the start and completion of the project.
+
+```{code-cell} ipython3
+print(f"Total Installation Time: {project.installation_time / 24:.0f} days")
+print(f"Total Elapsed Time: {project.project_days} days")
+```
+
 ## All Outputs At Once
 
 The `outputs`  method provides a dictionary mapping all the major project costs and timing details
@@ -247,11 +258,6 @@ print(f"Procurement Contingency CapEx (millions, USD): {project.procurement_cont
 print(f"Installation Contingency CapEx (millions, USD): {project.installation_contingency_capex() / 1e6:,.2f}")
 print(f"Construction Financing CapEx (millions, USD): {project.construction_financing_capex() / 1e6:,.2f}")
 ```
-
-```{code-cell} ipython3
-print(f"Soft CapEx (millions, USD): {project.construction_insurance_capex / 1e6:,.2f}")
-```
-
 ### All Other CapEx Categories
 
 #### Supply Chain CapEx
@@ -284,61 +290,140 @@ The `overnight_capex` provides the overnight capital cost (system and turbine Ca
 print(f"Overnight CapEx (millions, USD): {project.overnight_capex / 1e6:,.2f}")
 ```
 
-## Actions
-
-A list of every step taken during the installation modules is available at
-`project.actions`. The best way to view, sort and save these results is as
-a pandas DataFrame. A few example use cases are presented below.
-
-```python
-import pandas as pd
-df = pd.DataFrame(project.actions)
-
-# Sort by a specific phase
-df.loc[df["phase"]=="MonopileInstallation"]
-
-# Group by vessel and action to see where each vessel spent the most time
-df.groupby(["vessel", "action"]).sum()["duration"]
-
-# Save results to 'csv'
-df.to_csv("filename.csv")
-```
-
 ## Logging
 
-`progress_logs`
-`progress_summary`
-`actions`
+The installation logs can produced in varying details from high-level phase start and end dates, and
+all the way down to the detailed installation logics. This section will go through the methods
+provided to access these data and demonstrate some simple ways of displaying it conveniently.
 
-`phase_dates`
-`installation_time`
-`project_days`
+### Installation Progress
 
+The `progress_summary` provides an aggregated view of the `progress_logs` to show the number
+of completed component installations for each month in the simulation.
 
-## Detailed Outputs
+```{code-cell} ipython3
+pprint(project.progress_summary)
+```
 
-More detailed results from individual phases are available at
-`project.detailed_outputs`.
+The `project_logs` provides a list of the when a component installation was completed using the
+total number of hours since the start of the simulation.
+
+As an example, this looks like the following:
+
+```python
+[
+    ('Offshore Substation', 88.0925357142857),
+    ('Turbine', 97.7933333333333),
+    ('Substructure', 130.14586018219498),
+    ('Substructure', 147.89172036438998),
+    ('Turbine', 150.18666666666658),
+    ...
+]
+```
+
+### Phase timing
+
+The `phase_dates` provides access to the starting and ending time of each installation phase as
+a dictionary. In the following example, we will convert this data into a Pandas DataFrame with
+datetime formatting, and produce a Gantt chart to highlight where the phases occur relative to
+each other.
+
+```{code-cell} ipython3
+df = pd.DataFrame.from_dict(project.phase_dates).T
+df.start = pd.to_datetime(df.start)
+df.end = pd.to_datetime(df.end)
+df = df.sort_values("start", ascending=False)
+df
+```
+
+Below, we can see the installation timing is not quite realistic given the WTIV is used for the
+monopile, turbine, and OSS installations and the cabling vessel is used for both the array and
+export cabling installations. For both vessels, there should not be overlapping installations
+unless multiple vessels are made available for these actions.
+
+```{code-cell} ipython3
+fig = plt.figure(figsize=(10, 4))
+ax = fig.add_subplot(111)
+
+ax.barh(y=df.index, width=df.end - df.start, left=df.start);
+
+annotation = (
+    f"Total Installation Time: {project.installation_time / 24:.0f} days\n"
+    f"Total Elapsed Time: {project.project_days} days"
+)
+ax.text(
+    pd.to_datetime("2010-05-06"), 3, annotation,
+    bbox={"boxstyle": "square", "fc": (0.9, 0.9, 0.9, 0.9), "linewidth": 0.5},
+    ha="left", va="center", size=12,
+)
+
+ax.grid(axis="x")
+ax.set_axisbelow(True)
+ax.set_xlim(pd.to_datetime("2009-12"), pd.to_datetime("2010-10"))
+fig.tight_layout()
+```
+
+### Detailed Event Timing
+
+The `actions` property provides access to a JSON-style list of every step taken during the
+installation simulation. It is highly recommended to convert this to a Pandas DataFrame or similar
+for inspection. Below, we will walk through some basic filtering of these data.
+
+```{code-cell} ipython3
+df = pd.DataFrame(project.actions)
+df.head()
+```
+
+Using the data frame we can filter produce vessel timing summaries for a single phase or a single
+vessel, or any combination of vessels and phases. Below is a demonstration of filtering the time
+spent in various activities during the monopile installation. From an operational standpoint, this
+provides insight into what actions take the longest or cost the most, and can provide a means to
+identify room for innovation or process efficiencies. Please see the
+[project manager phase timing tutorial](#phase-dependent-timing) for more information about
+customizing timing dependencies.
+
+```{code-cell} ipython3
+mp_install = df.loc[df.phase.eq("MonopileInstallation")]
+mp_vessel_summary = (
+    mp_install[["agent", "action", "duration", "cost"]]
+    .groupby(["agent", "action"])
+    .sum()
+    .style
+    .format("{:,.2f}")
+)
+mp_vessel_summary
+```
 
 ## Cash Flow and Net Present Value
 
-`ProjectManager` also includes a basic cash flow and net present value model.
-The project must have the array system, export system and the substation
-installation modules configured for this model to be applicable. The model will
-find the point in the project logs where the substation and export system
-installations were completed and where each array system string was installed.
-When all three of these conditions are met, the project can begin to generate
-energy and produce revenue. The revenue generation is then superimposed on the
-monthly spend of the installation modules for the `project.cash_flow`.
+The `ProjectManager` includes a basic cash flow and net present value (NPV) model. The project must
+have the array, export, and substation installation models configured for this model to be
+applicable. The model will find the point in the project logs where the substation and export
+cable installations were completed and where each completed string of array cables was installed.
+When all three of these conditions are met, the project can begin to generate energy and produce
+revenue. The revenue generation is then superimposed on the monthly spend of the installation
+models for the `project.cash_flow`. Please note this assumes a fixed operational expenditure (OpEx).
 
-The net present value of the project can then be calculated and is available at
-`project.npv`. The underlying financial assumptions for this model are also
-contained within the `project_parameters` subdict of the ORBIT configuration.
+The NPV of the project can then be calculated and is available through `npv`. The underlying
+financial assumptions for this model are also contained within the `project_parameters` section of
+the ORBIT configuration.
 
-### Estimated Operational Costs
+```{code-cell} ipython3
+print(f"NPV: ${project.npv / 1e6:,.2f} (millions, USD)")
+```
 
-`monthly_opex`
-`monthly_expenses`
-`monthly_revenue`
-`cash_flow`
-`npv`
+Below, we highlight the first 12 months of the project cash flow. In the 10th month we can see that
+there are no more installation costs, and the project produces the same values for each field
+until the end of the project.
+
+```{code-cell} ipython3
+pd.concat(
+    [
+        pd.DataFrame(project.monthly_opex.values(), columns=["monthly_opex"]),
+        pd.DataFrame(project.monthly_expenses.values(), columns=["monthly_expenses"]),
+        pd.DataFrame(project.monthly_revenue.values(), columns=["monthly_revenue"]),
+        pd.DataFrame(project.cash_flow.values(), columns=["cash_flow"]),
+    ],
+    axis=1
+).head(12).style.format("{:,.2f}")
+```
