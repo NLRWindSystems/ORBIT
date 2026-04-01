@@ -19,11 +19,11 @@ parts:
     - file: tutorial/parametric_manager
   - file: examples/index
     sections:
-  - file: fixed_substructures
-  - file: floating_substructures
-  - file: custom_array_layout
-  - file: hvdc_hvac_export
-  - file: cable_installations
+    - file: examples/fixed_substructures
+    - file: examples/floating_substructures
+    - file: examples/custom_array_layout
+    - file: examples/hvdc_hvac_export
+    - file: examples/cable_installations
 - caption: API Reference
   chapters:
   - file: api/ProjectManager
