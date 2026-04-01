@@ -11,19 +11,19 @@ parts:
   - file: getting_started/install
 - caption: User Guide
   chapters:
-  - file: tutorial/index
+  - file: tutorials/indexb
     sections:
-    - file: tutorial/introduction
-    - file: tutorial/project_manager
-    - file: tutorial/available_outputs
-    - file: tutorial/parametric_manager
-  - file: examples/index
+    - file: tutorials/introduction
+    - file: tutorials/project_manager
+    - file: tutorials/available_outputs
+    - file: tutorials/parametric_manager
+  - file: topical_guides/index
     sections:
-    - file: examples/fixed_substructures
-    - file: examples/floating_substructures
-    - file: examples/custom_array_layout
-    - file: examples/hvdc_hvac_export
-    - file: examples/cable_installations
+    - file: topical_guides/fixed_substructures
+    - file: topical_guides/floating_substructures
+    - file: topical_guides/custom_array_layout
+    - file: topical_guides/hvdc_hvac_export
+    - file: topical_guides/cable_installations
 - caption: API Reference
   chapters:
   - file: api/ProjectManager
