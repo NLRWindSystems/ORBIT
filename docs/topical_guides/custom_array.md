@@ -116,7 +116,9 @@ dictionary, so let's dissect this file:
    - Each turbine should have a reference to its substation in the `substation_id` column.
      - In this example, there is one substaion, so all of the values are "DOW_OSS".
    - `string` and `order` should be 0-indexed for their ordering and not skip any numbers.
-     - In this example, the strings are ordered in clock-wise order starting from the string with turbines labeled with an "A" in the [Call to Mariners](http://dudgeonoffshorewind.co.uk/news/notices/Dudgeon%20-%20Notice%20to%20Mariners%20wk25.pdf)
+     - In this example, the strings are ordered in clock-wise order starting from the string with
+       turbines labeled with an "A" in the
+       [Call to Mariners](http://dudgeonoffshorewind.co.uk/news/notices/Dudgeon%20-%20Notice%20to%20Mariners%20wk25.pdf)
    - The ordering on a string should travel from substation to the farthest end of the cable
 
 Below is the how the Dudgeon layout has been configured.
@@ -129,71 +131,70 @@ df.sort_values(by=["String", "Order"])
 (case_1)=
 ## Case 1: Needing to know what to collect
 
-Here we know that we need to have a csv created to input all the data but need to see what data is necessary to collect.
+In this first case, we assume little knowledge of what data are required for the CSV, and walk
+through generating a sample CSV. We will use the
+[`library/cables/example_custom_array_no_data.csv`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_no_data.csv)
+configuration for this example.
 
-
-First, we need to load in the configuration dictionary. Then, we will create a "starter" file that can be filled in for a new project, which will be saved in the "library".
+First, we need to load in the configuration dictionary. Then, we will create a starter file in
+the `<library_path>/project/config/plant` folder that can be filled in for a new project, which will be saved in the initialized library folder.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_no_data")
 pprint(config)
-print()
 
 array = CustomArraySystemDesign(config)
-save_path = array.config["array_system_design"]["location_data"]
-array.create_project_csv(save_path)
+save_name = array.config["array_system_design"]["location_data"]
+array.create_project_csv(save_name, folder="plant")
 ```
 
-#### Let's take a look at the data to see what it output
+There are a few items worth noting in the layout:
 
-**NOTE**:
- 1. The offshore substation (row 0) is indicated via the `id` and `substation_id` columns being equal
- 2. For substaions only the `id`, `substation_id`, `name`, `latitued`, and `longitude` are required
- 3. `cable_length` and `bury_speed` are optional columns for turbines
- 4. `string` and `order` are filled out to maximize the length of a string given the cable(s) provided so in this case we can have up to 6 turbines in a string. **These are also, very importantly, starting their numbering with 0.**
-
-```{code-cell} ipython3
-dudgeon_array_no_data = pd.read_csv("../library/cables/dudgeon_array_no_data.csv")
-```
+1. The offshore substation (row 0) is indicated via the `id` and `substation_id` columns being equal
+2. For substaions only the `id`, `substation_id`, `name`, `latitude`, and `longitude` are required
+3. `cable_length` and `bury_speed` are optional columns for turbines
+4. `string` and `order` are filled out to maximize the length of a string given the cable(s)
+   provided, which translates to a maximum of 5 turbines in a string.
+5. The string and cable numbering are 0-indexed, so the numbering system starts with 0.
 
 ```{code-cell} ipython3
+dudgeon_array_no_data = pd.read_csv(library_path / f"project/plant/{save_name}.csv")
 dudgeon_array_no_data
 ```
 
-```{code-cell} ipython3
-
-```
-
 (case_2)=
-## Case 2: Standard straight-line distance for cable lengths
+## Case 2: Straight-Line Distance for Cable Lengths
 
-Here we have the turbine and offshore substation locations that were extracted from the data source in the header but nothing specific regarding the actual cable lengths or the cable burial speeds for each section.
+We have the turbine and offshore substation locations that were extracted from the Call to Mariners
+referenced in the [Dudgeon Wind Farm Overview](#dudgeon-windfarm). However there is not any
+information regarding the actual cable lengths or the cable burial speeds for each section. As such,
+we will demonstrate using the standard straight-line distance and default cable burying rates.
+
+This case will rely on the
+[`library/cables/example_custom_array_simple.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_simple.yaml) configuration.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_simple")
 pprint(config)
 ```
 
+The below figure demonstrates the meaning of the straight-line distance between two points.
+
 ```{code-cell} ipython3
 array = CustomArraySystemDesign(config)
 array.run()
-```
-
-#### Let's take a look at the data to see what it output
-
-**NOTE**: Here the cable length and bury speed are still set to 0 to indicate that they are unknown
-
-```{code-cell} ipython3
 array.plot_array_system(show=True)
 ```
 
-#### It should be noted here that the the latitude and longitude here are WGS-84 decimal coordinates
+Here the cable length and bury speed are still set to 0 to indicate that they are unknown, which
+will tell the installation phase to use either ORBIT's defaults or the vessel's settings. Notice
+that the latitude and longitude here are WGS-84 decimal coordinates.
 
 ```{code-cell} ipython3
 array.location_data
 ```
 
-#### Now let's look at the cost for this cabling setup by each type of cable as well as the total cost
+For later comparison, we'll show the cabling costs for the straight-line cabling assumption.
 
 ```{code-cell} ipython3
 print(f"{'Cable Type':<16}|  {'Cost in USD':>15}")
