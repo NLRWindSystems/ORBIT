@@ -9,6 +9,11 @@
 - The `save_config` function is now compatible with the `ProjectManager.config` object, allowing
   for direct saving without user modification.
 
+## 1.2.6
+
+- Implements `create_layout_df` for the `CustomArraySystemDesign` model to ensure
+  compatibility with workflows relying on the layout generation tools.
+
 ## 1.2.5
 
 - Allow for a Pandas DataFrame to be passed directly to the `CustomArraySystemDesign.layout_data`
