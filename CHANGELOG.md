@@ -8,6 +8,8 @@
   directly into the documentation site.
 - The `save_config` function is now compatible with the `ProjectManager.config` object, allowing
   for direct saving without user modification.
+- Fixes a bug in `CustomArraySystemDesign.create_project_csv()` where the output file location does
+  not adjust to the user's `folder` input.
 
 ## 1.2.6
 
