@@ -7,6 +7,7 @@ __email__ = "rob.hammond@nrel.gov"
 
 
 import warnings
+from copy import deepcopy
 from collections import OrderedDict
 
 import numpy as np
@@ -1129,3 +1130,39 @@ class CustomArraySystemDesign(ArraySystemDesign):
             for name in self.cables
         }
         return cables
+
+    def create_layout_df(self) -> pd.DataFrame:
+        """Creates a Pandas DataFrame layout.
+
+        Returns
+        -------
+        pd.DataFrame
+            The wind farm layout returned back in its original form.
+        """
+        layout_df = deepcopy(self.location_data)
+        substation_cols = [
+            "substation_id",
+            "substation_name",
+            "substation_latitude",
+            "substation_longitude",
+        ]
+        substations = (
+            layout_df[substation_cols]
+            .drop_duplicates()
+            .rename(
+                columns={
+                    col: col.replace("substation_", "")
+                    for col in layout_df.columns
+                }
+            )
+        )
+        layout_df = layout_df.drop(columns=substation_cols).rename(
+            columns={
+                col: col.replace("turbine_", "") for col in layout_df.columns
+            }
+        )
+        layout_df = (
+            pd.concat((layout_df, substations))
+            .reset_index(drop=True)
+            .fillna("")
+        )

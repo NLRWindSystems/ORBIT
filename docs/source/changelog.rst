@@ -3,8 +3,13 @@
 ORBIT Changelog
 ===============
 
-Unreleased
-----------
+1.2.6
+-----
+- Implements `create_layout_df` for the `CustomArraySystemDesign` model to ensure
+  compatibility with workflows relying on the layout generation tools.
+
+1.2.5
+-----
 - Allow for a Pandas DataFrame to be passed directly to the ``CustomArraySystemDesign.layout_data``
   configuration input.
 - Move the matplotlib import from the import section of ``/ORBIT/phases/design/array_system_design.py``
