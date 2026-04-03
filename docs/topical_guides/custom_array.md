@@ -205,44 +205,51 @@ print(f"{'Total':<16}| ${array.total_cable_cost:>15,.2f}")
 ```
 
 (case_3)=
-## Case 3: Distance-based "coordinate" system
+## Case 3: Distance-based coordinate system
 
-In this case, we will consider each turbine and substation on a distance-based "coordinate" system where the longitude and latitude are the longitudinal (x direction) and latitudinal (y direction) **distances**, in kilometers, from a common reference point. We are still using the Dudgeon data, but the distances were computed outside of this example and the details are not be included.
+In this case, we will consider each turbine and substation on a distance-based coordinate system
+where the longitude and latitude are the longitudinal (x direction) and latitudinal (y direction)
+**distances**, in kilometers, from a common reference point. We are still using the Dudgeon data,
+but the distances were computed outside of this example and the details are not be included.
 
-Below, we can see that the input file is still encoded in the exact same manner as [Case 2](#case_2), but latitude and longitude are relative distances and not proper coordinates.
+:::{important}
+For distance-based coordinate systems, all points should be be positive, meaning the reference point
+should either be both west and south of the farm itself, or at the west-most and south-most point.
+:::
+
+Below, we can see that the input file
+[`library/cables/dudgeon_distance_based.csv`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/dudgeon_distance_based.csv)
+is still encoded in the exact same manner as [Case 2](#case_2), but latitude and longitude are
+relative distances and not proper coordinates.
 
 ```{code-cell} ipython3
-df = pd.read_csv("../library/cables/dudgeon_distance_based.csv", index_col=False).fillna("")
+df = pd.read_csv(library_path / "cables/dudgeon_distance_based.csv", index_col=False).fillna("")
 df
 ```
 
-#### For this case we also add the `distance` argument to the `array_system_design` and set it to `True` to indicate we are dealing with distances.
+Using the distance-based location data requires us to set `distance` to True in the
+`array_system_design` section of the configuration. This change is shown below in the
+[`library/cables/example_custom_array_simple_distance_based.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_simple_distance_based.yaml) configuration.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_simple_distance_based")
 pprint(config)
 ```
 
-#### OR we can create the flag in the function call.
-
-**Note:** the configuration dictionary will always override this setting.
+Alternatively, we can set the `distance=True` when calling the `CustomArraySystemDesign`, however
+the configuration dictionary's setting will override this input to allow for project-level
+configurations to run as expected. Below, we can see some of the cable lengths differ slightly due
+to the methodology of converting the WGS-84coordinates to relative points, however the spacing is
+maintained, and we can see that this is still the Dudgeon windfarm.
 
 ```{code-cell} ipython3
 array_distance = CustomArraySystemDesign(config, distance=True)
 array_distance.run()
-```
-
-#### Let's take a look at the data to see what it output
-
-While some of the cable lengths may be slightly different, the spacing is still maintained, and we can see that this is the Dudgeon windfarm.
-
-```{code-cell} ipython3
 array_distance.plot_array_system(show=True)
 ```
 
-#### Now let's look at the cost for this cabling setup by each type of cable as well as the total cost and compare it to the previous case
-
-While there is a minor difference, this difference is small in comparison to the total project cost and errs in a more conservative direction.
+Overall, the cabling cost is highly similar, with the difference being attributed to the method
+to convert the WGS-84 coordiantes to relative coordinates.
 
 ```{code-cell} ipython3
 print(f"{'Cable Type':<16} | {'Cost in USD (lat,lon)':>20} | {'Cost in USD (dist_lat,dist_lon)':>15}")
@@ -252,25 +259,25 @@ for (cable1, cost1), (cable2, cost2) in zip(array.cost_by_type.items(), array_di
 print(f"{'Total':<16} | ${array.total_cable_cost:>20,.2f} | ${array_distance.total_cable_cost:>15,.2f}")
 ```
 
-```{code-cell} ipython3
-
-```
-
 (case_4)=
-## Case 4: We want to account for some additions to the cable lengths due to exclusion zones
+## Case 4: Site-Wide Cable Length Modifications
 
-This can be done with the `"average_exclusion_percent"` keyword in the configuration that can be seen below.
+To account for exclusion zones from rocky soil or other seabed conditions, we use the
+`average_exclusion_percent` input in the `array_system_design` configuration section. This exclusion
+will be applied to all cable sections, so it's important to account for this when modeling
+additional cable lengths.
 
-**Note:**
- 1. There is an average  exclusion and is applied to each of the cable sections
- 2. The plot won't change because it will not have details on the new paths so we'll only demonstrate the cost changes (a 4.8% increase, which is in line with the exclusion and the accounting for the site depth.
+In the
+[`library/cables/example_custom_array_exclusions.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_exclusions.yaml)
+configuration, a 4.8% exclusion is applied to the entire farm. When plotting farms with exclusion
+zones, they will not be shown since we are not mapping the true cable path, simply the connections
+between turbines. In this case, we can also a modest increase in cabling costs resulting from the
+additional cable required to account for the exclusion zones.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_exclusions")
-config
-```
+pprint(config)
 
-```{code-cell} ipython3
 array_exclusion = CustomArraySystemDesign(config)
 array_exclusion.run()
 ```
@@ -283,38 +290,38 @@ for cable, cost in array_exclusion.cost_by_type.items():
 print(f"{'Total':<16}| ${array_exclusion.total_cable_cost:>15,.2f}")
 ```
 
-```{code-cell} ipython3
-
-```
-
 (case_5)=
-## Case 5: Customize the distances
+## Case 5: Custom Cable Lengths
 
-If we look at the map in the [Call to Mariners](http://dudgeonoffshorewind.co.uk/news/notices/Dudgeon%20-%20Notice%20to%20Mariners%20wk25.pdf) there are different sized exclusions in the cables, so for this example we'll change the distances from [Case 4](#case_4) where we used an average exclusion to be a bit different in each case by using the `cable_length` column. In addition, we will utilize the `bury_speed` column to demonstrate how these columns will be used.
+If we look at the map in the
+[Call to Mariners](http://dudgeonoffshorewind.co.uk/news/notices/Dudgeon%20-%20Notice%20to%20Mariners%20wk25.pdf)
+there are different sized exclusions in the cables, so for this example we'll change the distances
+from [Case 4](#case_4) to have more variation by using the `cable_length` column of the
+`location_data` CSV. In addition, we will utilize the `bury_speed` column to demonstrate how these
+columns will be used. Please note this work was performed outside the example, and we will only
+show the resulting configurations.
 
-**Note:** this work was done outside the notebook, but can be uploaded as show in the example below.
-
-For this example, half of the windfarm will have different soil condition, so we will use our proxy: `bury_speed` by modifying the burial speed to be fast (0.5 km/h) and slow (0.05 km/hr), respectively, to account for sandy soil and rocky soil. The purpose of this is for passing through customized parameters in the design phase to be utilized in the installation phase as will be seen in the final two examples.
+For this example, half of the windfarm will have different soil condition, so we will use our proxy:
+`bury_speed` by modifying the burial speed to be fast (0.5 km/h) and slow (0.05 km/hr),
+respectively, to account for sandy soil and rocky soil. The purpose of this is for passing through
+customized parameters in the design phase to be utilized in the installation phase as will be seen
+in the final two examples.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_custom")
+pprint(config)
 
-# Note location_data the same one that was saved because I updated it!
-config
-```
-
-```{code-cell} ipython3
 array_custom = CustomArraySystemDesign(config)
 array_custom.run()
 ```
 
-#### Note that there are now cable lengths defined as well as burial speeds for installation
+Note that there are now cable lengths defined as well as burial speeds for the installation phase.
 
 ```{code-cell} ipython3
 array_custom.location_data
 ```
 
-#### See also that the costs have increased again!
+Once again, the cabling costs have increased.
 
 ```{code-cell} ipython3
 print(f"{'Cable Type':<16}|  {'Cost in USD':>15}")
@@ -324,50 +331,44 @@ for cable, cost in array_custom.cost_by_type.items():
 print(f"{'Total':<16}| ${array_custom.total_cable_cost:>15,.2f}")
 ```
 
-```{code-cell} ipython3
-
-```
-
 (running)=
-# Let's run some simulations!
-We can now compare cases 2-4 to see how the installation cost will vary.
+## Incorporating Custom Array Designs Into `ProjectManager`
 
-+++
+Using cases 2, 3, 4, and 5 we will demonstrate the project-wide effects from differing cabling layouts.
 
-#### First, we have to create a configuration dictionary for each of the 3 main cases we'll be simulating for installations, corresponding to the configuration file from the tests library. Then, we'll update eeach with the `design_result` of each of the 3 cases that we defined above.
+### Setting Up The Cases
+
+Using the
+[`library/cables/example_array_cable_install.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_array_cable_install.yaml)
+configuration as a base configuration, we'll create a new configuration for each of the cases
+using each case's `design_result` as the `array_system` values.
 
 ```{code-cell} ipython3
 base_config = library.extract_library_specs("config", "example_array_cable_install")
 
-#Case 2
 array_case2 = deepcopy(base_config)
 array_case2["array_system"] = array.design_result["array_system"]
 
-# Case 3
 array_case3 = deepcopy(base_config)
 array_case3["array_system"] = array_distance.design_result["array_system"]
 
-# Case 4
 array_case4 = deepcopy(base_config)
 array_case4["array_system"] = array_exclusion.design_result["array_system"]
 
-# Case 5
 array_case5 = deepcopy(base_config)
 array_case5["array_system"] = array_custom.design_result["array_system"]
-```
 
-#### Instantiate the simulations
-
-```{code-cell} ipython3
 sim2 = ArrayCableInstallation(array_case2)
 sim3 = ArrayCableInstallation(array_case3)
 sim4 = ArrayCableInstallation(array_case4)
 sim5 = ArrayCableInstallation(array_case5)
 ```
 
-#### Run the simulations
+### Run And Inspect The Simulation Results
 
-We can see that both the installation cost and the time required to complete the simulation have all increased here, which corresponds to the increased cable lengths and changes to the burial speeds defined above.
+We can see that both the installation cost and the time required to complete the installations have
+all increased here, corresponding to the increased cable lengths and changes to the burial speeds
+defined above.
 
 ```{code-cell} ipython3
 names = ("straight-line distance", "distance-based coordinates", "with exclusions", "custom")
@@ -381,16 +382,13 @@ for name, simulation in zip(names, simulations):
     print(f"{name:<26} | ${cost:>13,.2f} | {time:>16,.0f}")
 ```
 
-```{code-cell} ipython3
-
-```
-
 (project_manager)=
-## Let's put this all together and load with a data frame
+### Incorporating Case 5 Into `ProjectManager`
 
-### Using `ProjectManager` we will run Case 4 from design to installation.
-
-We'll see here at the end that we end up with the same results running a custom array cabling project piecemeal and as a whole.
+We will now incorporate the desgin settings from [Case 5](#case_5) to demonstrate incorporation
+of the custom array design tooling into `ProjectManager`. This example will use the
+[`library/cables/example_custom_array_project_manager.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_project_manager.yaml)
+configuration.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_project_manager")
@@ -400,16 +398,16 @@ config["array_system_design"]["location_data"] = library.extract_library_specs(
 config
 ```
 
+Below, we can see that the results coming from the `ProjectManager` are the same as the additive
+results of running each phase separately.
+
 ```{code-cell} ipython3
 project = ProjectManager(config)
 project.run()
-```
 
-```{code-cell} ipython3
 total = array_custom.total_cable_cost + sim5.installation_capex
-
 print(f"Custom Design        | ${array_custom.total_cable_cost:>13,.2f}")
 print(f"Custom Installation  | ${sim5.installation_capex:>13,.2f}")
-print(f"Total Cost.          | ${total:>13,.2f}")
+print(f"Total Custom Cost    | ${total:>13,.2f}")
 print(f"Project Manager Cost | ${project.bos_capex:>13,.2f}")
 ```
