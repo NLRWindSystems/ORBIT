@@ -23,7 +23,7 @@ parts:
     - file: topical_guides/floating_substructures
     - file: topical_guides/custom_array
     - file: topical_guides/hvdc_hvac_export
-    - file: topical_guides/cable_installations
+    - file: topical_guides/cable_installation
 - caption: API Reference
   chapters:
   - file: api/ProjectManager

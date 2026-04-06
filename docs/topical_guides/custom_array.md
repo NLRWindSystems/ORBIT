@@ -160,6 +160,9 @@ There are a few items worth noting in the layout:
 ```{code-cell} ipython3
 dudgeon_array_no_data = pd.read_csv(library_path / f"project/plant/{save_name}.csv")
 dudgeon_array_no_data
+
+# NOTE: remove this line if you would like to keep this data
+Path(library_path / "project/plant/dudgeon_array_no_data.csv").unlink()
 ```
 
 (case_2)=
