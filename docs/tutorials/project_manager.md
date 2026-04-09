@@ -29,7 +29,7 @@ from ORBIT import ProjectManager
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorial" else here
+example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
 ```
 
 ## Compiling Input Requirements Dynamically

@@ -32,7 +32,7 @@ from matplotlib.ticker import StrMethodFormatter
 from ORBIT import ParametricManager, load_config
 
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorial" else here
+example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
 
 config = load_config(example_dir / "configs/example_fixed_project.yaml")
 config["turbine"] = "15MW_generic"

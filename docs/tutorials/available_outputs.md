@@ -36,7 +36,7 @@ from ORBIT import ProjectManager, load_config
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorial" else here
+example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
 
 config = load_config(example_dir / "configs/example_fixed_project.yaml")
 project = ProjectManager(config)
