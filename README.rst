@@ -8,7 +8,7 @@ Offshore Renewables Balance of system and Installation Tool
 |Binder| |Pre-commit| |Black| |isort| |Ruff|
 
 :Authors: `Jake Nunemaker <https://www.linkedin.com/in/jake-nunemaker/>`_, `Matt Shields <https://www.linkedin.com/in/matt-shields-834a6b66/>`_, `Rob Hammond <https://www.linkedin.com/in/rob-hammond-33583756/>`_, `Nick Riccobono <https://www.linkedin.com/in/nicholas-riccobono-674a3b43/>`_
-:Documentation: `ORBIT Docs <https://wisdem.github.io/ORBIT/>`_
+:Documentation: `ORBIT Docs <https://nlrwindsystems.github.io/ORBIT/>`_
 
 Installation
 ------------
@@ -56,7 +56,7 @@ Instructions
         conda deactivate <environment_name>
 
 4. Clone the repository:
-   ``git clone https://github.com/WISDEM/ORBIT.git``
+   ``git clone https://github.com/NLRWindSystems/ORBIT.git``
 5. Navigate to the top level of the repository
    (``<path-to-ORBIT>/ORBIT/``) and install ORBIT as an editable package
    with following command.
@@ -123,7 +123,7 @@ Recommended packages for easy iteration and running of code:
 .. |image| image:: https://img.shields.io/pypi/pyversions/orbit-nrel.svg
    :target: https://pypi.python.org/pypi/orbit-nrel
 .. |Binder| image:: https://mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/v2/gh/WISDEM/ORBIT/dev?filepath=examples
+   :target: https://mybinder.org/v2/gh/NLRWindSystems/ORBIT/dev?filepath=examples
 .. |Pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg

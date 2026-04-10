@@ -1,9 +1,9 @@
 """Provides the `ExportSystemDesign` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 from warnings import warn
 
@@ -32,9 +32,9 @@ class ExportSystemDesign(CableSystem):
         Total length of cable required to trasmit power.
     total_mass : float
         Total mass of cable required to transmit power.
-    sections_cables : np.ndarray, shape: (`num_cables, )
+    sections_cables : np.ndarray, shape: (``num_cables``, )
         An array of `cable`.
-    sections_lengths : np.ndarray, shape: (`num_cables, )
+    sections_lengths : np.ndarray, shape: (``num_cables``, )
         An array of `length`.
     """
 

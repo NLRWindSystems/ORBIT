@@ -1,7 +1,7 @@
 __author__ = "Jake Nunemaker, Sophie Bredenkamp"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "Jake.Nunemaker@nrel.gov"
+__email__ = "Jake.Nunemaker@nlr.gov"
 
 
 import warnings

@@ -1,9 +1,9 @@
 """The design package contains `DesignPhase` and its subclasses."""
 
 __author__ = ["Jake Nunemaker", "Rob Hammond"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = ["Jake Nunemaker", "Rob Hammond"]
-__email__ = ["jake.nunemaker@nrel.gov" "rob.hammond@nrel.gov"]
+__email__ = ["jake.nunemaker@nlr.gov" "rob.hammond@nlr.gov"]
 
 
 from .design_phase import DesignPhase  # isort:skip
@@ -17,3 +17,17 @@ from .export_system_design import ExportSystemDesign
 from .mooring_system_design import MooringSystemDesign
 from .scour_protection_design import ScourProtectionDesign
 from .semi_submersible_design import SemiSubmersibleDesign
+
+design_phases = [
+    "MonopileDesign",
+    "ScourProtectionDesign",
+    "SparDesign",
+    "SemiSubmersibleDesign",
+    "MooringSystemDesign",
+    "ArraySystemDesign",
+    "CustomArraySystemDesign",
+    "ElectricalDesign",
+    "ExportSystemDesign",
+    "OffshoreSubstationDesign",
+    "OffshoreFloatingSubstationDesign",
+]

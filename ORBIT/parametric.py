@@ -1,9 +1,9 @@
 """Provides the ParametricManager class for a parameter sweeps."""
 
 __author__ = ["Jake Nunemaker"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = ["jake.nunemaker@nrel.gov"]
+__email__ = ["jake.nunemaker@nlr.gov"]
 
 
 import re
@@ -121,9 +121,11 @@ class ParametricManager:
             runs = list(product(*self.params.values()))
 
         else:
-            runs = list(zip(*self.params.values()))
+            runs = list(zip(*self.params.values(), strict=False))
 
-        return [dict(zip(self.params.keys(), run)) for run in runs]
+        return [
+            dict(zip(self.params.keys(), run, strict=False)) for run in runs
+        ]
 
     @property
     def num_runs(self):
@@ -358,7 +360,7 @@ class LinearModel:
         pd.Series
         """
 
-        inputs = dict(zip(self.X.T.index, self.X.T.to_numpy()))
+        inputs = dict(zip(self.X.T.index, self.X.T.to_numpy(), strict=False))
         predicted = self.predict(inputs)
 
         return (self.Y - predicted) / self.Y

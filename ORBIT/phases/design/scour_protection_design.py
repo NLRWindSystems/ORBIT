@@ -1,9 +1,9 @@
 """Provides the `ScourProtectionDesign` class."""
 
 __author__ = ["Rob Hammond", "Jake Nunemaker"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 from math import ceil
 
@@ -15,7 +15,7 @@ from ORBIT.phases.design import DesignPhase
 class ScourProtectionDesign(DesignPhase):
     """
     Calculates the necessary scour protection material for a fixed
-    substructure.
+    substructure based on Design of Offshore Wind Turbine Structures [1]_.
 
     Parameters
     ----------
@@ -91,9 +91,9 @@ class ScourProtectionDesign(DesignPhase):
         self.protection_depth = self._design.get("scour_protection_depth", 1)
 
     def compute_scour_protection_tonnes_to_install(self):
-        r"""
+        """
         Computes the amount of scour protection material that needs to be
-        installed around a fixed substructure.
+        installed around a fixed substructure [1]_.
 
         Terms:
          * :math:`S =` Scour depth
@@ -107,8 +107,8 @@ class ScourProtectionDesign(DesignPhase):
         References
         ----------
         .. [1] Det Norske Veritas AS. (2014, May). Design of Offshore Wind
-        Turbine Structures. Retrieved from
-        https://rules.dnvgl.com/docs/pdf/DNV/codes/docs/2014-05/Os-J101.pdf
+            Turbine Structures. Retrieved from
+            https://rules.dnvgl.com/docs/pdf/DNV/codes/docs/2014-05/Os-J101.pdf
         """  # noqa: E501
 
         self.scour_depth = self.equilibrium * self.diameter
@@ -158,7 +158,7 @@ class ScourProtectionDesign(DesignPhase):
         Returns
         -------
         output : dict
-             - ``scour_protection`` :`dict`
+            - ``scour_protection`` :`dict`
                 - ``tonnes_per_substructure`` : `int`
         """
 
