@@ -19,8 +19,8 @@ parts:
     - file: tutorials/parametric_manager
   - file: topical_guides/index
     sections:
-    - file: topical_guides/fixed_substructures
-    - file: topical_guides/floating_substructures
+    - file: topical_guides/fixed_bottom_installations
+    - file: topical_guides/supply_chains
     - file: topical_guides/custom_array
     - file: topical_guides/hvdc_hvac_export
     - file: topical_guides/cable_installation
