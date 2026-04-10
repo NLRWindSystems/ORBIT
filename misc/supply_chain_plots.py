@@ -216,7 +216,7 @@ def area_time_plot(x, y, color, fname=None):
     y_init = np.sum([v[0] for k, v in y.items()])
 
     for k, v in y.items():
-        y1 = [yi + vi for yi, vi in zip(y0, v)]
+        y1 = [yi + vi for yi, vi in zip(y0, v, strict=False)]
         ax.fill_between(x, y0 / y_init, y1 / y_init, color=color[k], label=k)
         ax.plot(x, y1 / y_init, "w")
         y0 = y1
