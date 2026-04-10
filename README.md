@@ -24,15 +24,13 @@ Offshore Renewables Balance of system and Installation Tool
 
 - Rob Hammond
 
-Rob Hammond
-
 ## Documentation
 
 Please visit the documentation site at https://nlrwindsystems.github.io/ORBIT/
 
 ## Installation
 
-`pip install orbit-nrel`.
+`pip install orbit-nrel`
 
 ### Environment Setup
 

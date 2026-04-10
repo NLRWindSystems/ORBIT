@@ -9,6 +9,7 @@ parts:
   - file: getting_started/overview
   - file: getting_started/bos
   - file: getting_started/install
+  - file: CONTRIBUTING
 - caption: User Guide
   chapters:
   - file: tutorials/index
@@ -84,5 +85,5 @@ parts:
 - caption: About
   chapters:
   - file: publications
-  - file: ../CHANGELOG
+  - file: changelog
   - file: team
