@@ -5,7 +5,7 @@ Establishing cost values for each installation process, component design, and pr
 parameter is essential to ORBIT's ability to calculate CapEx. Common costs and cost rates
 were specified as default values in each module and thus spread out across multiple files.
 Further, as modules were added or updated over time, these common costs were either updated
-or were simply left as an older value. As of v1.2 (see {doc}`../../CHANGELOG`), all the common costs in the design modules
+or were simply left as an older value. As of v1.2 (see {doc}`../changelog`), all the common costs in the design modules
 were centralized under `common_cost.yaml`. That way, users can access a single file and
 update any number of costs they wish to change.
 
