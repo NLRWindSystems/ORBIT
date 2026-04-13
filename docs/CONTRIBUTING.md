@@ -183,12 +183,12 @@ met the following steps should be taken to create a new release
    [Test PyPI GitHub Action](https://github.com/NLRWindSystems/ORBIT/actions/workflows/publish_to_test_pypi.yml)
    has run successfully.
    1. If the action failed, identify and fix the issue, then
-   2. delete the local and remote tag using the following (replace "v0.1" in all instances just like
+   2. delete the local and remote tag using the following (replace "v1.2.3" in all instances just like
       in step 5):
 
       ```bash
-      git tag -d v0.1
-      git push --delete origin v0.1
+      git tag -d v1.2.3
+      git push --delete origin v1.2.3
       ```
 
    3. Start back at step 1.
