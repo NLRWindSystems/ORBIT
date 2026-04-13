@@ -1,5 +1,5 @@
 (changelog)=
-# ORBIT Changelog
+# Changelog
 
 ## Unreleased
 
