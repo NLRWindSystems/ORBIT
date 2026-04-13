@@ -1,5 +1,5 @@
 (installation)=
-## Installing ORBIT
+# Installing ORBIT
 
 ```{include} ../../README.md
 :lang: markdown
