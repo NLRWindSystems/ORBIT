@@ -84,6 +84,6 @@ parts:
   - file: methods/CommonCost
 - caption: About
   chapters:
-  - file: publications
-  - file: team
-  - file: changelog
+  - file: about/publications
+  - file: about/team
+  - file: about/changelog
