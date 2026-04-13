@@ -12,12 +12,13 @@ exclude_patterns: [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
 execute:
   execute_notebooks: auto
   timeout: -1
-  allow_errors: true
+  allow_errors: false
   exclude_patterns:
     - _build
     - Thumbs.db
     - DS_Store
     - "**.ipynb_checkpoints"
+    - "topical_guides/cost_curves.md"
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -125,3 +126,4 @@ sphinx:
     napoleon_use_admonition_for_notes: true
     napoleon_use_rtype: false
     nb_merge_streams: true
+    nb_execution_raise_on_error: true
