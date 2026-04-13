@@ -5,7 +5,7 @@ Establishing cost values for each installation process, component design, and pr
 parameter is essential to ORBIT's ability to calculate CapEx. Common costs and cost rates
 were specified as default values in each module and thus spread out across multiple files.
 Further, as modules were added or updated over time, these common costs were either updated
-or were simply left as an older value. As of v1.2 (see {doc}`../changelog`), all the common costs in the design modules
+or were simply left as an older value. As of v1.2 (see the [changelog](#changelog)), all the common costs in the design modules
 were centralized under `common_cost.yaml`. That way, users can access a single file and
 update any number of costs they wish to change.
 
@@ -37,7 +37,8 @@ in each vessel file in the `library/vessels` folder; and project costs are store
 /path/to/orbit/ORBIT/manager.py
 ```
 
-Questions regarding the methodology or organization of the common costs? Reach out to the {doc}`../team`
+Questions regarding the methodology or organization of the common costs? Reach out to one of the
+[current maintainers](#team)
 
 :::{note}
 This page is under construction and may receive an example in future releases.
