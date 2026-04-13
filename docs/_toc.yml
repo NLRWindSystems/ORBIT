@@ -9,6 +9,7 @@ parts:
   - file: getting_started/overview
   - file: getting_started/bos
   - file: getting_started/install
+  - file: CONTRIBUTING
 - caption: User Guide
   chapters:
   - file: tutorials/index
@@ -22,7 +23,7 @@ parts:
     - file: topical_guides/fixed_bottom_installations
     - file: topical_guides/supply_chains
     - file: topical_guides/custom_array
-    - file: topical_guides/hvdc_hvac_export
+    - file: topical_guides/export_cable_system
     - file: topical_guides/cable_installation
 - caption: API Reference
   chapters:
@@ -83,6 +84,6 @@ parts:
   - file: methods/CommonCost
 - caption: About
   chapters:
-  - file: publications
-  - file: ../CHANGELOG
-  - file: team
+  - file: about/publications
+  - file: about/team
+  - file: about/changelog

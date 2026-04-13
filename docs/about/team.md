@@ -10,6 +10,6 @@
 - Nick Riccobono (NLR)
 - Daniel Mulas Hernando (NLR)
 
-## Maintainer
+## Maintainers
 
 - Rob Hammond (NLR)

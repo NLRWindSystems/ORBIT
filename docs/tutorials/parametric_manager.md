@@ -40,6 +40,8 @@ config["turbine"] = "15MW_generic"
 weather = pd.read_csv(example_dir / "data/example_weather.csv").set_index("datetime")
 ```
 
+## Setting Up The Parameterized Inputs
+
 For all the non-parameterized inputs, they can be left as-is. However, all parameterized variables
 should be provided in a separate dictionary as a list. Because ORBIT uses the `benedict` library
 for more streamlined dictionary access, nested keys can be represented using dot-notation as is
@@ -49,7 +51,6 @@ shown below where we parameterize the key siting details.
 params = {
    "site.depth": list(range(10, 71, 10)),
    "site.distance": list(range(20, 201, 20)),
-   "site.distance_to_landfall": [60, 80, 100],
 }
 ```
 
@@ -63,6 +64,8 @@ results = {
    "System": lambda project: project.system_capex
 }
 ```
+
+## Previewing and Running The Model
 
 If many parameters are configured, it will take a longer time to run, especially if a weather
 profile is provided and `product=True`. To get an idea of the total run time, use the `preview`
@@ -87,7 +90,7 @@ The results are saved as a pandas DataFrame in the `results` attribute where eac
 different scenario run and the columns are labeled with with the various parameters and results
 values that were configured.
 
-## Plotting
+## Plotting The Results
 
 It is more convenient to plot the results of the `ParametricManager` than it is to view them as a
 table, especially with a large number of parameters. First, we will create a matrix of results

@@ -1,5 +1,5 @@
 (changelog)=
-# ORBIT Changelog
+# Changelog
 
 ## Unreleased
 
@@ -10,6 +10,9 @@
   for direct saving without user modification.
 - Fixes a bug in `CustomArraySystemDesign.create_project_csv()` where the output file location does
   not adjust to the user's `folder` input.
+- Adds a contributor's guide to clearly delineate how to install and use the various developer's
+  tools.
+- Modernize and streamline the installation instructions.
 
 ## 1.2.6
 

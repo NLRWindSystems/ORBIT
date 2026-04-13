@@ -48,7 +48,7 @@ jacket design model in ORBIT, so we must provide the basic jacket parameterizati
 design result.
 
 ```{code-cell} ipython3
-base_jacket_config = load_config("configs/example_fixed_project.yaml")
+base_jacket_config = load_config(example_path / "configs/example_fixed_project.yaml")
 base_jacket_config["jacket"] = {
     "diameter": 10,
     "height": 100,
@@ -173,29 +173,29 @@ ax = fig.add_subplot(111)
 
 case2_installs_neg = case2_installs.copy()
 case2_installs_neg["number"] *= -1
-case2_total = pd.concat([case2_deliveries, case2_installs_neg]).sort_values('time')
-case2_total['storage'] = case2_total['number'].cumsum()
+case2_total = pd.concat([case2_deliveries, case2_installs_neg]).sort_values("time")
+case2_total["storage"] = case2_total["number"].cumsum()
 
 case3_installs_neg = case3_installs.copy()
 case3_installs_neg["number"] *= -1
-case3_total = pd.concat([case3_deliveries, case3_installs_neg]).sort_values('time')
-case3_total['storage'] = case3_total['number'].cumsum()
+case3_total = pd.concat([case3_deliveries, case3_installs_neg]).sort_values("time")
+case3_total["storage"] = case3_total["number"].cumsum()
 
 ax.plot(
-  case2_total['time'],
-  case2_total['storage'],
+  case2_total["time"],
+  case2_total["storage"],
   label="Storage Required - Slow Fabrication"
 )
 ax.plot(
-  case3_total['time'],
-  case3_total['storage'],
+  case3_total["time"],
+  case3_total["storage"],
   label="Storage Required - Increased Fabrication"
 )
 
 ax.set_xlim(0, ax.get_xlim()[1])
 # ax.set_ylim(0, 5)
 
-ax.axhline(4, ls="--", lw=0.5, c='k', label="Theoretical Port Storage Limit)
+ax.axhline(4, ls="--", lw=0.5, c="k", label="Theoretical Port Storage Limit")
 
 ax.set_xlabel("Simulation Time (h)")
 ax.set_ylabel("Substructures")

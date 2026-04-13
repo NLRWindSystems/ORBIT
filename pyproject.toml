@@ -23,6 +23,7 @@ dependencies = [
   "pyyaml",
   "python-benedict",
   "statsmodels",
+  "matplotlib",
 ]
 keywords = [
   "python3",
@@ -66,7 +67,6 @@ dev = [
   "pytest-cov",
   "ruff",
 ]
-plot = ["matplotlib"]
 
 docs = [
   "jupyter-book>=1,<2",

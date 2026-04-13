@@ -133,7 +133,7 @@ df.sort_values(by=["String", "Order"])
 
 In this first case, we assume little knowledge of what data are required for the CSV, and walk
 through generating a sample CSV. We will use the
-[`library/cables/example_custom_array_no_data.csv`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_no_data.csv)
+[`library/project/config/example_custom_array_no_data.csv`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config/example_custom_array_no_data.csv)
 configuration for this example.
 
 First, we need to load in the configuration dictionary. Then, we will create a starter file in
@@ -174,7 +174,7 @@ information regarding the actual cable lengths or the cable burial speeds for ea
 we will demonstrate using the standard straight-line distance and default cable burying rates.
 
 This case will rely on the
-[`library/cables/example_custom_array_simple.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_simple.yaml) configuration.
+[`library/project/config/example_custom_array_simple.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/project/config/cables/example_custom_array_simple.yaml) configuration.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_simple")
@@ -232,7 +232,7 @@ df
 
 Using the distance-based location data requires us to set `distance` to True in the
 `array_system_design` section of the configuration. This change is shown below in the
-[`library/cables/example_custom_array_simple_distance_based.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_simple_distance_based.yaml) configuration.
+[`library/project/config/example_custom_array_simple_distance_based.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config/example_custom_array_simple_distance_based.yaml) configuration.
 
 ```{code-cell} ipython3
 config = library.extract_library_specs("config", "example_custom_array_simple_distance_based")
@@ -271,7 +271,7 @@ will be applied to all cable sections, so it's important to account for this whe
 additional cable lengths.
 
 In the
-[`library/cables/example_custom_array_exclusions.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_exclusions.yaml)
+[`library/project/config/example_custom_array_exclusions.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config/example_custom_array_exclusions.yaml)
 configuration, a 4.8% exclusion is applied to the entire farm. When plotting farms with exclusion
 zones, they will not be shown since we are not mapping the true cable path, simply the connections
 between turbines. In this case, we can also a modest increase in cabling costs resulting from the
@@ -342,7 +342,7 @@ Using cases 2, 3, 4, and 5 we will demonstrate the project-wide effects from dif
 ### Setting Up The Cases
 
 Using the
-[`library/cables/example_array_cable_install.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_array_cable_install.yaml)
+[`library/project/config/example_array_cable_install.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config/example_array_cable_install.yaml)
 configuration as a base configuration, we'll create a new configuration for each of the cases
 using each case's `design_result` as the `array_system` values.
 
@@ -390,7 +390,7 @@ for name, simulation in zip(names, simulations):
 
 We will now incorporate the desgin settings from [Case 5](#case_5) to demonstrate incorporation
 of the custom array design tooling into `ProjectManager`. This example will use the
-[`library/cables/example_custom_array_project_manager.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/cables/example_custom_array_project_manager.yaml)
+[`library/project/config/example_custom_array_project_manager.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config/example_custom_array_project_manager.yaml)
 configuration.
 
 ```{code-cell} ipython3
