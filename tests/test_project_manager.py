@@ -988,22 +988,24 @@ def test_capex_categories():
     )
 
 
-def test_total_capex():
+def test_total_capex(subtests):
     """Test total capex for baseline fixed and floating project."""
 
     fix_project = ProjectManager(complete_project)
     fix_project.run()
 
-    assert fix_project.total_capex == pytest.approx(
-        1843929494.9506452, abs=1e-1
-    )
+    with subtests.test("Fixed-bottom project CapEx"):
+        assert fix_project.total_capex == pytest.approx(
+            1843929494.9506452, abs=1e-1
+        )
 
     flt_project = ProjectManager(complete_floating_project)
     flt_project.run()
 
-    assert flt_project.total_capex == pytest.approx(
-        4448212431.513601, abs=1e-1
-    )
+    with subtests.test("Floating project CapEx"):
+        assert flt_project.total_capex == pytest.approx(
+            4448212431.513601, abs=1e-1
+        )
 
 
 def test_construction_financing_factor_exception():
@@ -1024,6 +1026,6 @@ def test_deprecated_warnings():
 
     config = deepcopy(complete_project)
     config["project_parameters"] = {"contingency": 88}
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         project = ProjectManager(config)
         project.run()

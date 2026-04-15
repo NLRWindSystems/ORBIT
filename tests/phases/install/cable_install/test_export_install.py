@@ -265,25 +265,7 @@ def test_deprecated_values():
 
     deprecated["export_system"] = new_export_system
 
-    with pytest.deprecated_call():
-
-        # sim = ExportCableInstallation(base)
-        # sim.run()
+    with pytest.raises(KeyError):
 
         sim = ExportCableInstallation(deprecated)
         sim.run()
-
-        # assert len(w) == 2
-        # assert issubclass(w[0].category, DeprecationWarning)
-        # assert (
-        #    str(w[0].message)
-        #    == "landfall dictionary will be deprecated and moved \
-        #            into [export_system][landfall]."
-        # )
-
-        # assert issubclass(w[1].category, DeprecationWarning)
-        # assert (
-        #    str(w[1].message)
-        #    == "[export_system][interconnection] will be deprecated and \
-        #            moved into [export_system][landfall][interconnection]."
-        # )

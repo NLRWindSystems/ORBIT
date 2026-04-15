@@ -66,13 +66,13 @@ def test_deprecated_vessel():
     deprecated = deepcopy(config)
     deprecated["support_vessel"] = "test_support_vessel"
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = GravityBasedInstallation(deprecated)
         sim.run()
 
     deprecated2 = deepcopy(config)
     deprecated2["towing_vessel_groups"]["station_keeping_vessels"] = 2
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = GravityBasedInstallation(deprecated2)
         sim.run()

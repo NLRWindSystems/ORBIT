@@ -34,6 +34,9 @@ import matplotlib.pyplot as plt
 
 from ORBIT import ProjectManager, load_config
 
+# Apply thousands separators and no decimals to floats
+pd.options.display.float_format = '{:,.0f}'.format
+
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
 example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
@@ -388,8 +391,6 @@ mp_vessel_summary = (
     mp_install[["agent", "action", "duration", "cost"]]
     .groupby(["agent", "action"])
     .sum()
-    .style
-    .format("{:,.2f}")
 )
 mp_vessel_summary
 ```
@@ -425,5 +426,5 @@ pd.concat(
         pd.DataFrame(project.cash_flow.values(), columns=["cash_flow"]),
     ],
     axis=1
-).head(12).style.format("{:,.2f}")
+).head(12)
 ```

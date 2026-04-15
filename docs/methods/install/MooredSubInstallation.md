@@ -24,12 +24,11 @@ config = {
 
     ...
 
-    "support_vessel": "example_support_vessel",  # Will perform onsite installation procedures.
     "ahts_vessel": "example_ahts_vessel",    # Anchor handling tug supply vessel associated with each tow group.
     "towing_vessel": "example_towing_vessel",    # Towing groups will contain multiple of this vessel.
     "towing_groups": {
         "towing_vessel": 1,  # Vessels used to tow the substructure to site.
-        "station_keeping_vessels": 3,  # Vessels used for station keeping during mooring line hookups.
+        "ahts_vessels": 3,  # Number of anchor handling/station keeping vessels
         "num_groups": 1  # Number of independent groups. Optional, defualt: 1.
     },
 

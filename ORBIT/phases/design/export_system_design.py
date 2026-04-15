@@ -5,7 +5,6 @@ __copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
 __email__ = "rob.hammond@nlr.gov"
 
-from warnings import warn
 
 import numpy as np
 
@@ -86,17 +85,14 @@ class ExportSystemDesign(CableSystem):
         self._distance_to_landfall = config["site"]["distance_to_landfall"]
         self._get_touchdown_distance()
 
-        _landfall = self.config.get("landfall", {})
-        if _landfall:
-            warn(
-                "landfall dictionary will be deprecated and moved"
-                " into [export_system_design][landfall].",
-                DeprecationWarning,
-                stacklevel=2,
+        if self.config.get("landfall", None) is not None:
+            msg = (
+                "The top-level 'landfall' dictionary is deprecated and"
+                " should be nested in the 'export_system_design' dictionary."
             )
+            raise KeyError(msg)
 
-        else:
-            _landfall = self.config["export_system_design"].get("landfall", {})
+        _landfall = self._design.get("landfall", {})
 
         self._distance_to_interconnection = _landfall.get(
             "interconnection_distance", 3

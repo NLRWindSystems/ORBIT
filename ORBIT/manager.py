@@ -17,7 +17,6 @@ from copy import deepcopy
 from math import ceil
 from numbers import Number
 from pathlib import Path
-from warnings import warn
 from itertools import product
 
 warnings.filterwarnings("default")
@@ -196,19 +195,15 @@ class ProjectManager:
     def _print_warnings(self):
 
         if "contingency" in self.project_params:
-            warn(
-                "The 'contingency' project parameter will be deprecated"
-                " and replaced with two separate parameters:"
-                " 'installation_contingency' and 'procurement_contingency'."
-                " Specify the 'installation_contingency' and "
-                " 'procurement_contingency' in $/kW, or alternatively, use"
-                " 'procurement_contingency_factor' in '%' of the turbine "
-                " + system + project capex, and"
-                " 'installation_contingency_factor' in '%' of the"
-                " installation capex",
-                DeprecationWarning,
-                stacklevel=2,
+            msg = (
+                "The 'contingency' project parameter was replaced with"
+                " separate 'installation_contingency' and"
+                " 'procurement_contingency' in ($/kW). Alternatively, use"
+                " the 'procurement_contingency_factor' (% of turbine, system,"
+                " and project CapEx) or 'installation_contingency_factor'"
+                " (% of installation capex)."
             )
+            raise KeyError(msg)
 
         try:
             df = pd.DataFrame(self.logs)
