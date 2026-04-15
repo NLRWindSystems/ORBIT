@@ -22,6 +22,10 @@ export_system_design:
   landfall:
     interconnection_distance: 3
     trench_length: 2
+export_system:
+  landfall:
+    interconnection_distance: 3
+    trench_length: 2
 install_phases:
   ArrayCableInstallation: 0
   ExportCableInstallation: 2000
