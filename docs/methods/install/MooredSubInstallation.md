@@ -28,6 +28,7 @@ config = {
     "towing_vessel": "example_towing_vessel",    # Towing groups will contain multiple of this vessel.
     "towing_groups": {
         "towing_vessel": 1,  # Vessels used to tow the substructure to site.
+        "ahts_vessels": 3,  # Number of anchor handling/station keeping vessels
         "num_groups": 1  # Number of independent groups. Optional, defualt: 1.
     },
 

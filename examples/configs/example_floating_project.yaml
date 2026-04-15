@@ -21,7 +21,7 @@ oss_install_vessel: floating_heavy_lift_vessel
 ahts_vessel: example_ahts_vessel
 towing_vessel: example_towing_vessel
 towing_vessel_groups:
-  ahts_vessel: 1
+  ahts_vessel: 2
   towing_vessels: 3
 wtiv: floating_heavy_lift_vessel
 # Module Specific
