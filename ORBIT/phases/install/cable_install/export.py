@@ -8,7 +8,6 @@ __email__ = "jake.nunemaker@nlr.gov"
 
 from copy import deepcopy
 from math import ceil
-from warnings import warn
 
 from marmot import process
 
@@ -138,16 +137,13 @@ class ExportCableInstallation(InstallPhase):
 
         site = self.config["site"]["distance"]
 
-        _landfall = self.config.get("landfall", {})
-        if _landfall:
-            warn(
-                "landfall dictionary will be deprecated and moved"
-                " into [export_system][landfall].",
-                DeprecationWarning,
-                stacklevel=2,
+        if self.config.get("landfall", None) is not None:
+            msg = (
+                "The top-level 'landfall' dictionary is deprecated and"
+                " should be nested in the 'export_system' dictionary."
             )
-        else:
-            _landfall = self.config["export_system"].get("landfall", {})
+            raise KeyError(msg)
+        _landfall = self.config["export_system"].get("landfall", {})
 
         trench = _landfall.get("trench_length", 1)
 
@@ -203,16 +199,15 @@ class ExportCableInstallation(InstallPhase):
         # capacity = self.config["plant"]["capacity"]
         system = self.config["export_system"]
         voltage = system.get("interconnection_voltage", 345)
-        distance = system.get("interconnection_distance", None)
 
-        if distance:
-            warn(
-                "[export_system][interconnection_distance] will be deprecated"
-                " and moved to"
-                " [export_system][landfall][interconnection_distance].",
-                DeprecationWarning,
-                stacklevel=2,
+        if system.get("interconnection_distance", None) is not None:
+            msg = (
+                "The `export_system`-level 'interconnection_distance' is"
+                "deprecated and should be placed in the 'export_system'"
+                "'landfall' dictionary"
+                "(e.g., export_system.landfall.interconnection_distance)."
             )
+            raise KeyError(msg)
 
         landfall = system.get("landfall", {})
         distance = landfall.get("interconnection_distance", 3)
