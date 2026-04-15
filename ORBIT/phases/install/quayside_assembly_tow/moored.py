@@ -245,15 +245,12 @@ class MooredSubInstallation(InstallPhase):
         processes at site.
         """
 
-        specs = self.config.get("support_vessel", None)
-
-        if specs is not None:
-            warn(
-                "support_vessel will be deprecated and replaced with"
-                " towing_vessels and ahts_vessel in the towing groups.\n",
-                DeprecationWarning,
-                stacklevel=2,
+        if self.config.get("support_vessel") is not None:
+            msg = (
+                "`support_vessel` has been replaced with the separate"
+                " `towing_vessels`, `towing_groups`, and `ahts_vessel`."
             )
+            raise KeyError(msg)
 
         # vessel = self.initialize_vessel("Multi-Purpose Support Vessel",
         # specs)
@@ -267,13 +264,12 @@ class MooredSubInstallation(InstallPhase):
         )
 
         if station_keeping_vessels is not None:
-            warn(
-                "['towing_vessl_groups]['station_keeping_vessels']"
-                " will be deprecated and replaced with"
-                " ['towing_vessl_groups]['ahts_vessels'].\n",
-                DeprecationWarning,
-                stacklevel=2,
+            msg = (
+                "`towing_vessl_groups.station_keeping_vessels` has been"
+                " replaced with the separate `towing_vessels`,"
+                " `towing_groups`, and `ahts_vessel`."
             )
+            raise KeyError(msg)
 
         # install_moored_substructures(
         #    self.support_vessel,
