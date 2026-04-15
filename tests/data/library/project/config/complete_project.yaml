@@ -19,6 +19,9 @@ export_cable_install_vessel: example_cable_lay_vessel
 export_system_design:
   cables: XLPE_500mm_132kV
   percent_added_length: 0.0
+  landfall:
+    interconnection_distance: 3
+    trench_length: 2
 install_phases:
   ArrayCableInstallation: 0
   ExportCableInstallation: 2000
@@ -30,9 +33,6 @@ install_phases:
   TurbineInstallation: !!python/tuple
   - MonopileInstallation
   - 0.1
-landfall:
-  interconnection_distance: 3
-  trench_length: 2
 oss_install_vessel: example_heavy_lift_vessel
 plant:
   layout: grid

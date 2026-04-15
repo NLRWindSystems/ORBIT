@@ -141,6 +141,6 @@ def test_deprecated_landfall():
     deprecated = deepcopy(base)
     deprecated["landfall"] = {"interconnection_distance": 4}
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = ExportSystemDesign(deprecated)
         sim.run()
