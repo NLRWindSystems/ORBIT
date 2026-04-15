@@ -203,7 +203,7 @@ class ProjectManager:
                 " and project CapEx) or 'installation_contingency_factor'"
                 " (% of installation capex)."
             )
-            raise AttributeError(msg)
+            raise KeyError(msg)
 
         try:
             df = pd.DataFrame(self.logs)
