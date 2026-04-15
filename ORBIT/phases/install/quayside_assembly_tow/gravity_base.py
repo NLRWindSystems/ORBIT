@@ -26,13 +26,11 @@ class GravityBasedInstallation(InstallPhase):
 
     #:
     expected_config = {
-        "support_vessel": "str, (optional)",
         "wtiv": "str, (optional)",
         "ahts_vessel": "str",
         "towing_vessel": "str",
         "towing_vessel_groups": {
             "towing_vessels": "int",
-            "station_keeping_vessels": "int (optional)",
             "ahts_vessels": "int (optional, default: 1)",
             "num_groups": "int (optional)",
         },
