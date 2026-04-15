@@ -14,6 +14,15 @@
   tools.
 - Modernize and streamline the installation instructions.
 
+### Deprecations
+
+- Project parameter `contingency` is fully deprecated in favor of `installation_contingency` and
+  `procurement_contingency` and will raise a `KeyError` when detected by the `ProjectManager`.
+- Top-level `landfall` dictionary is no longer suppored and is fully deprecated in favor of nesting
+  it in the `export_system_design` and `export_system` dictionary, for design and installation phases.
+- The `export_system`-level `interconnection_distance` variable is deprecated and should now be
+  placed in the `export_system.landfall` dictionary.
+
 ## 1.2.6
 
 - Implements `create_layout_df` for the `CustomArraySystemDesign` model to ensure
