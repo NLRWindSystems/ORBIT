@@ -115,5 +115,10 @@ docs/cables/Figs
 # Pycharm
 .idea/
 
-# Other
+# ORBIT-specific
 Analysis/
+examples/configs/array_system.yaml
+examples/configs/export_system.yaml
+examples/configs/mooring_system.yaml
+examples/configs/oss.yaml
+examples/configs/substructure.yaml
