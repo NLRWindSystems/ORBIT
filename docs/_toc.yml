@@ -25,6 +25,7 @@ parts:
     - file: topical_guides/custom_array
     - file: topical_guides/export_cable_system
     - file: topical_guides/cable_installation
+    - file: topical_guides/cost_curves
 - caption: API Reference
   chapters:
   - file: api/ProjectManager

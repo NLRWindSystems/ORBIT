@@ -18,7 +18,6 @@ execute:
     - Thumbs.db
     - DS_Store
     - "**.ipynb_checkpoints"
-    - "topical_guides/cost_curves.md"
 
 # Define the name of the latex output file for PDF builds
 latex:

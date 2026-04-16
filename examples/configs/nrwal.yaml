@@ -2,15 +2,15 @@
 site:
   depth: 30
   distance: 100
-  distance_to_landfall: 60
   mean_windspeed: 9
-turbine: 17MW_low_SP
+turbine: 15MW_generic
 plant:
   layout: grid
   num_turbines: 36
   row_spacing: 7
   substation_distance: 1
   turbine_spacing: 7
+
 # --- Additional Configs ---
 OffshoreSubstationInstallation:
   feeder: example_heavy_feeder
@@ -26,9 +26,10 @@ export_cable_install_vessel: example_cable_lay_vessel
 export_system_design:
   cables: XLPE_1000mm_220kV
   percent_added_length: 0.05
-landfall:
-  interconnection_distance: 3
-  trench_length: 2
+  landfall:
+    interconnection_distance: 3
+    trench_length: 2
+    distance_to_landfall: 60
 oss_install_vessel: example_heavy_lift_vessel
 
 scour_protection_design:
@@ -40,7 +41,8 @@ port:
   monthly_rate: 2000000.0
   sub_assembly_lines: 1
   turbine_assembly_cranes: 1
-# --- Don't specify these here since they're set in the curve generator ---
+
+# NOTE: Don't specify any of the below settings becacuse they're set in the curve generator
 # design_phases:
 # - MonopileDesign
 # - ScourProtectionDesign

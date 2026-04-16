@@ -6,7 +6,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.19.1
 kernelspec:
-  display_name: bos
+  display_name: Python 3 (ipykernel)
   language: python
   name: python3
 ---
@@ -14,29 +14,33 @@ kernelspec:
 # Cost Curve Creator
 
 This notebook enables fitting curves to ORBIT models to create a cost function that can be
-embedded in NRWAL.
-A variety of curve and surface fitting options are available, and new ones can be added easily.
-There are also tools for visualizing the ORBIT data and fitted curves.
+embedded in [NRWAL](https://github.com/NatLabRockies/NRWAL). A variety of curve and surface
+fitting options are available, and new ones can be added easily. There are also tools for
+visualizing the ORBIT data and fitted curves.
 
-## Dependencies
+## Extra Optional Dependencies
 
-- ORBIT
-- ipympl enables interactive matplotlib elements in jupyter notebooks via the `%matplotlib widget` magic command below
+- `ipympl` (`pip install ipympl`) enables interactive matplotlib elements in Jupyter notebooks via
+  the `%matplotlib widget` magic command below
 
 ## Instructions
 
 Follow the steps below to configure and run the notebook.
 
-1. Create a basic ORBIT configuration file including at least the following sections:
-- site
-- turbine
-- plant
+1. Create a basic ORBIT configuration file including at least the following sections. As a note,
+   this example makes use of the
+   [`narwal.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/examples/configs/narwal.yaml)
+   configuration file.
+* site
+* turbine
+* plant
 
-2. Configure the notebook by setting the following variables in the "Configuration" section:
-- `BASE_CONFIG`: the ORBIT config file at a given path
-- `DEPTHS`: a list of water depths to use for cost curves
-- `MEAN_WIND_SPEED`: a list of mean wind speed to use for cost curves
-- Add any additional global parameter ranges
+2. Configure the notebook by setting the following variables in the
+   [Configuration](#configuration) section:
+* `BASE_CONFIG`: the ORBIT config file at a given path
+* `DEPTHS`: a list of water depths to use for cost curves
+* `MEAN_WIND_SPEED`: a list of mean wind speed to use for cost curves
+* Add any additional global parameter ranges
 
 3. Run the notebook to establish a first-pass fit for the ORBIT data. This will also plot the ORBIT
 data and curves.
@@ -44,19 +48,21 @@ data and curves.
 4. Refine the curve fits by swapping the curve-fit function from the options available in
 the "Curve Fit Library" section
 
++++
+
 ## Practical Guidance
 
-This notebook specifically models spatially varying costs typically related to water depth
-but in some cases other variables are considered. The same methods could be used to model
-the cost relationship for other variables. The general workflow is to first create a parameterized
-ORBIT model and obtain the cost as a function of the variables of interest.
-Then, fit a curve or surface to the data by starting with the linear options.
-Plot the data and curve fits to evaluate whether the linear forms are sufficient.
-If not, move to the quadratic or higher order curve fits.
+This notebook specifically models spatially varying costs typically related to water depth but in
+some cases other variables are considered. The same methods could be used to model the cost
+relationship for other variables. The general workflow is to first create a parameterized ORBIT
+model and obtain the cost as a function of the variables of interest. Then, fit a curve or surface
+to the data by starting with the linear options. Plot the data and curve fits to evaluate whether
+the linear forms are sufficient. If not, move to the quadratic or higher order curve fits.
 
 A class `CostFunction` is provided to simplify running the ORBIT parameterization, fit the
 curves to the data, and visualize the results. An example is given below to instantiate the
 class:
+
 ```python
 cost_function = CostFunction(
     config={"design_phases": ["MonopileDesign"]},
@@ -70,13 +76,14 @@ cost_function = CostFunction(
 )
 ```
 
-The config parameter is a dictionary containing additional configuration parameters to add to
-the basic ORBIT configuration provided through the input file created in Step 1 in the instructions.
-Any parameters given in the `CostFunction` config will be added to the base configuration or
-overwritten if they already exist. The parameters dictionary contains the variables to be varied
-in the cost function via `ORBIT.ParametricManager`, and the results dictionary sets the results
-variables from ORBIT. Each of these dictionaries are passed directly to the
-`ORBIT.ParametricManager` class.
+The `config` parameter is a dictionary containing additional configuration parameters to add to
+the base ORBIT configuration provided through the input file created in Step 1 in the instructions.
+Any parameters given in the `CostFunction` `config` will be added to the base configuration or
+overwritten if they already exist.
+
+The `parameters` dictionary contains the variables to be varied in the cost function via
+ORBIT's `ParametricManager`, and the `results` dictionary sets the results variables from ORBIT.
+Each of these dictionaries are passed directly to the `ParametricManager` class.
 
 The fitted curves are saved on the `CostFunction` object and multiple types can exist at the
 same time. Two versions of one type cannot be saved at the same time. To create a curve fit,
@@ -90,6 +97,7 @@ Considerations:
 - A new `CostFunction` instance should be created for each cost model.
 
 ### Plotting API for 2D vs 3D plots
+
 The `CostFunction` class handles 2D and 3D data seamlessly by using the x and z parameters for 2D
 and adding y for 3D. The appropriate matplotlib API is used depending if the data is 2D or 3D.
 From the calling script, be sure to configure the Axes that is given to `CostFunction.plot` with
@@ -106,8 +114,7 @@ The following code block provides a template for creating a cost function for a 
 two independent parameters.
 
 ```python
-
-# Create the CostFunction object with the ORBIT configuration for the parameterization
+# 1. Create the CostFunction object with the ORBIT configuration for the parameterization
 cost_function = CostFunction(
     config={
         "design_phases": ["Design"],
@@ -121,16 +128,16 @@ cost_function = CostFunction(
     }
 )
 
-# Run ORBIT via ORBIT.ParametricManager
+# 2. Run ORBIT via ORBIT.ParametricManager
 cost_function.run()
 
-# Fit two curves (surfaces since there are two independent parameters) to the data.
+# 3. Fit two curves (surfaces since there are two independent parameters) to the data.
 # After running the following two commands, the CostFunction object will have two related
 # attributes that store the curve fits.
 cost_function.fit_curve("linear_2d")
 cost_function.fit_curve("quadratic_2d")
 
-# Plot the data and curves
+# 4. Plot the data and curves
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
 ax.set_title("Depth vs mean wind speed")
@@ -138,11 +145,11 @@ ax.set_xlabel("Depth (m)")
 ax.set_ylabel("Mean wind speed (m/s)")
 ax.set_zlabel("Cost ($)")
 cost_function.plot(ax, plot_data=True)
-cost_function.plot(ax, plot_curves=["linear_1d", "quadratic_1d"])   # These curves must have been generated first
+cost_function.plot(ax, plot_curves=["linear_2d", "quadratic_2d"])   # These curves must have been generated first
 # alternatively, the two lines above could be combined into a single line:
 # cost_function.plot(ax, plot_data=True, plot_curves=["linear_1d", "quadratic_1d"])
 
-# Export the curve function to a NRWAL-compatible file
+# 5. Export the curve function to a NRWAL-compatible file
 cost_function.export("design.yaml", "design_system")
 ```
 
@@ -150,29 +157,30 @@ cost_function.export("design.yaml", "design_system")
 
 There are a number of curve fit options in the `CostFunction` class, and more can be added by
 creating a new method and connecting it in some key places in the class.
+
 First, create a new method on the `CostFunction` class that follows the naming convention of
-`{curve_type}_{dimension}` where `curve_type` is the name of the type of function like
-"exponential" or "linear" and `dimension` is the number of independent variables the curve.
-The function should return the fitted curve evaluated at the data points given to fit the curve.
-A generic function signature is given below:
+`{curve_type}_{dimension}` where `curve_type` is the name of the type of function like "exponential"
+or "linear" and `dimension` is the number of independent variables the curve. The function should
+return the fit curve evaluated at the data points given to fit the curve. A generic function
+signature is given below:
+
 ```python
 class CostFunction:
 
     def curvetype_dimension(self):
+        ...
 
-    # Such as:
     def linear_1d(self):
+        ...
 ```
 
 To fit a curve to the data for one independent variable, it is recommended to use the
-`scipy.optimize.curve_fit` function via the `Curves` class.
-In general, a one-dimensional curve fit function will follow the form given below.
-By setting the curve fit function `f`, you define the shape of the curve and set
-the order of the coefficients in `self.coeffs` since they are returned in the order they are
-given in the function signature.
-The `Curves.polynomal_eval` function is available to easily evaluate polynomial curves, but other
-curve-types can be evaluated by simply plugging in the data points (`self.x`) to the fitted
-function.
+`scipy.optimize.curve_fit` function via the `Curves` class. In general, a one-dimensional curve fit
+function will follow the form given below. By setting the curve fit function `f`, you define the
+shape of the curve and set the order of the coefficients in `self.coeffs` since they are returned in
+the order they are given in the function signature. The `Curves.polynomal_eval` function is
+available to easily evaluate polynomial curves, but other curve-types can be evaluated by simply
+plugging in the data points (`self.x`) to the fit function.
 
 ```python
 # Define a function for a prototype curve; this is where you define the shape of the curve
@@ -188,31 +196,32 @@ self.coeffs = Curves.fit(f, self.x, self.z)
 self._linear_1d_curve = Curves.polynomial_eval(self.coeffs, self.x)
 ```
 
-A two-dimensional curve (surface) fit will typically follow a similar process, as should below.
-For these types, it is recommended to use the `numpy.linalg.lstsq` function.
-First, reshape the data into a new array with each element containing the three-dimensional
-data points.
-Then, stack the data into a column matrix in the form of the equation that you're implementing.
-See the comments in the code block for more information.
-Evaluate the curve at the data points (`self.x`, `self.y`) by stating the form of the curve
-with the coefficients from the curve fit.
+A two-dimensional curve (surface) fit will typically follow a similar process, as shown below. For
+these types, it is recommended to use the `numpy.linalg.lstsq` function. First, reshape the data
+into a new array with each element containing the three-dimensional data points. Then, stack the
+data into a column matrix in the form of the equation that you're implementing. See the comments in
+the code block for more information. Evaluate the curve at the data points (`self.x`, `self.y`) by
+stating the form of the curve with the coefficients from the curve fit.
 
 ```python
-    # Reshape the data into a new array with each element containing the three-dimensional data points
+    ...
+
+    # Reshape the data into a new array where each element is a three-dimensional data point
     data_to_fit = np.array(list(zip(self.x, self.y, self.z)))
 
-    # Stack the data into a column matrix in the form of the equation that you're implementing.
-    # Here, the equation is z = ax + by + c and data_to_fit[:,0] are the x values,
-    # data_to_fit[:,1] are the y values. The third column is all ones to account for the constant
-    # term.
+    # Stack the data into a column matrix in the form of the equation that you're
+    # implementing. Here, the equation is z = ax + by + c and data_to_fit[:,0] are the x
+    # values, data_to_fit[:,1] are the y values. The third column is all ones to account
+    # for the constant term.
     A = np.c_[
         data_to_fit[:,0],
         data_to_fit[:,1],
         np.ones(data_to_fit.shape[0])
     ]
 
-    # Fit the curve to the data; the data is the cost and these are always `self.z` which is data_to_fit[:,2]
-    self.coeffs,_,_,_ = linalg.lstsq(A, data_to_fit[:,2])
+    # Fit the curve to the data; the data is the cost and these are always
+    # self.z which is data_to_fit[:,2]
+    self.coeffs, _, _, _ = linalg.lstsq(A, data_to_fit[:, 2])
 
     # Evaluate it on the same points as the input data
     self._linear_2d_curve = self.coeffs[0]*self.x + self.coeffs[1]*self.y + self.coeffs[2]
@@ -222,23 +231,33 @@ Finally, save the coefficients to `self.coeffs`, save the evaluated curve to
 `self._{curve_type}_{dimension}_curve`, and add the corresponding if-statements
 in `CostFunction.plot` and `CostFunction.export`.
 
+## Setup the Example
+
+First, we must import all the required libraries and ORBIT functionality to implement
+everything discussed up to this section.
+
 ```{code-cell} ipython3
-%matplotlib widget
+# NOTE: uncomment this line if using the interactive plotting functionality
+# %matplotlib widget
 
 from copy import deepcopy
-import matplotlib.pyplot as plt
+from pathlib import Path
+
+import yaml
 import numpy as np
 import pandas as pd
-from scipy import stats, optimize, linalg
-import yaml
-
-from ORBIT import (
-    ParametricManager,
-    load_config,
-)
-
 import matplotlib as mpl
+import matplotlib.pyplot as plt
+from scipy import stats, optimize, linalg
+
+from ORBIT import ParametricManager, load_config
+
+
 mpl.rcParams["figure.autolayout"] = True
+
+# Ensure the correct examples directory is used when running this in docs or in examples
+here = Path(".").resolve()
+example_dir = here.parents[1] / "examples" if here.stem == "topical_guides" else here
 ```
 
 ## Configuration
@@ -246,7 +265,7 @@ mpl.rcParams["figure.autolayout"] = True
 Replace any of these throughout the notebook to customize a cost model parameterization.
 
 ```{code-cell} ipython3
-BASE_CONFIG = load_config("nrwal.yaml")
+BASE_CONFIG = load_config(example_dir / "configs/nrwal.yaml")
 
 DEPTHS = [i for i in range(5, 60, 5)]           # Ocean depth in meters
 MEAN_WIND_SPEED = [i for i in range(2, 20, 2)]  # Mean wind speed in m/s
@@ -279,13 +298,18 @@ class Curves():
         This method evaluates a curve defined by a polynomial equation given a set of
         coefficients and data points.
 
-        Args:
-            coeffs (list): A list of coefficients for the curve. The order of the
-                coefficients should be from highest to lowest power.
-            data_points (list): A list of data points at which to evaluate the curve.
+        Parameters
+        ----------
+        coeffs : list
+            A list of coefficients for the curve. The order of the coefficients should
+            be from highest to lowest power.
+        data_points : list
+            A list of data points at which to evaluate the curve.
 
-        Returns:
-            np.array: The curve evaluated at the given data points.
+        Returns
+        -------
+        np.array
+            The curve evaluated at the given data points.
         """
         curve = np.zeros_like(data_points)
         for i, dp in enumerate(data_points):
@@ -297,19 +321,25 @@ class Curves():
 
     @staticmethod
     def fit(func, x, y, fit_check=False):
-        if x is pd.Series:
+        if isinstance(x, pd.Series):
             x = x.to_numpy(dtype=np.float64)
-        elif x is np.array:
+        elif isinstance(x, np.array):
             x = x.astype(np.float64)
-        if y is pd.Series:
+        else:
+            raise ValueError("`x` must be a pd.Series or np.ndarray.")
+
+        if isinstance(y, pd.Series):
             y = y.to_numpy(dtype=np.float64)
-        elif y is np.array:
+        elif isinstance(y, np.array):
             y = y.astype(np.float64)
+            x = x.astype(np.float64)
+        else:
+            raise ValueError("`y` must be a pd.Series or np.ndarray.")
 
         popt, pcov, nfodict, mesg, ier = optimize.curve_fit(func, x, y, full_output=True)
 
         if fit_check:
-            print(f"mesg: {mesg}")
+            print(f"message: {mesg}")
             print(f"ier: {ier}")
             print(f"Coefficients: {popt}")
             # print(f"R-squared: {rvalue**2:.6f}")
@@ -320,25 +350,27 @@ class Curves():
 ```{code-cell} ipython3
 class CostFunction():
     """
-    This class is used to create the ORBIT parameterization, fit a curve, plot the curve, and
-    export the function to NRWAL format. Parameterizations are limited to up to two independent
-    variables.
+    Creates the ORBIT parameterization, curve fits, plots the curve, and exports
+    the function to a NRWAL format. Parameterizations are limited to up to two
+    independent variables.
     """
     def __init__(self, config: dict, parameters: dict, results: dict):
         """
-        On initialization, the config, parameters, and results dictionaries are prepared for
-        use in ORBIT.ParametricManager. Additionally, the independent variables are extracted
-        into x and y (for two-variable parameterizations) and z is extracted as the dependent
-        variable. Whether the cost function is 3D or 2D is determined by the length of the
-        parameters variable.
+        Prepares the ``config``, ``parameters``, and ``results`` dictionaries for use
+        in ``ParametricManager``. Additionally, the independent variables are extracted
+        into ``x` and ``y`` (for two-variable parameterizations) and ``z`` is extracted
+        as the dependent variable. Whether the cost function is 3D or 2D is determined
+        by the length of theparameters variable.
 
-        Args:
-            config (str): Configuration settings to added to the BASE_CONFIG or overwrite
-                in the BASE_CONFIG. This must include the `design_phases` config.
-            parameters (dict): Parameters to use with ORBIT.ParametricManager; maximum of two
-                parameters are supported.
-            results (dict): Results to use with ORBIT.ParametricManager; this must include only
-                one variable.
+        Parameters
+        ----------
+        config : str
+            Configuration settings to added to the BASE_CONFIG or overwrite
+            in the ``BASE_CONFIG``. This must include the ``design_phases`` config.
+        parameters : dict
+            Parameters to use with ``ParametricManager``; maximum of two parameters.
+        results : dict
+            Results to use with ``ParametricManager``; this must include only one variable.
         """
         self.is_3d = False
 
@@ -368,7 +400,11 @@ class CostFunction():
         # results and postprocessing the data
         self.parameters = deepcopy(self.parameters)
         _vars = list(self.parameters.keys())
-        self.x_variable = _vars.pop(0)          # NOTE: This assumes the first parameter is site.depth; it's not critical to functionality but good to keep in mind
+
+        # NOTE: This assumes the first parameter is site.depth; it's not critical to
+        # functionality but good to keep in mind
+        self.x_variable = _vars.pop(0)
+
         if len(_vars) == 1:
             self.is_3d = True
             self.y_variable = _vars.pop()
@@ -379,7 +415,9 @@ class CostFunction():
             raise ValueError("This class is limited to results with one variable")
 
     def run(self):
-        self.parametric = ParametricManager(self.config, self.parameters, self.results, product=True)
+        self.parametric = ParametricManager(
+            self.config, self.parameters, self.results, product=True
+        )
         self.parametric.run()
 
         self.x = self.parametric.results[self.x_variable]
@@ -388,7 +426,9 @@ class CostFunction():
         self.z = self.parametric.results[self.z_variable]
 
 
-    ### --------- Curve fit functions --------- ###
+    # -------------------
+    # Curve fit functions
+    # -------------------
 
     def linear_1d(self):
         def f(x, a, b):
@@ -423,10 +463,16 @@ class CostFunction():
             data_to_fit[:,1],
             np.ones(data_to_fit.shape[0])
         ]
-        self.coeffs,_,_,_ = linalg.lstsq(A, data_to_fit[:,2])    # coefficients
+        self.coeffs, _, _, _ = linalg.lstsq(A, data_to_fit[:, 2])  # coefficients
 
         # Evaluate it on the same points as the input data
-        self._linear_2d_curve = self.coeffs[0]*self.x + self.coeffs[1]*self.y + self.coeffs[2]
+        self._linear_2d_curve = (
+            self.coeffs[0]
+            * self.x
+            + self.coeffs[1]
+            * self.y
+            + self.coeffs[2]
+        )
 
     def quadratic_2d(self):
         data_to_fit = np.array(list(zip(self.x, self.y, self.z)))
@@ -434,36 +480,37 @@ class CostFunction():
         # best-fit quadratic curve
         A = np.c_[
             np.ones(data_to_fit.shape[0]),
-            data_to_fit[:,:2],
-            np.prod(data_to_fit[:,:2], axis=1),
-            data_to_fit[:,:2]**2
+            data_to_fit[:, :2],
+            np.prod(data_to_fit[:, :2], axis=1),
+            data_to_fit[:, :2]**2,
         ]
-        self.coeffs,_,_,_ = linalg.lstsq(A, data_to_fit[:,2])
+        self.coeffs, _, _, _ = linalg.lstsq(A, data_to_fit[:, 2])
 
         # Evaluate it on the same points as the input data
         # This dot product is equivalent to the sum of the terms of the polynomial;
-        # np.c_[] is used to concatenate the arrays into the correct form for the dot product
-        # and C is the coefficients of the polynomial
+        # np.c_[] is used to concatenate the arrays into the correct form for the
+        # dot product and C is the coefficients of the polynomial
         self._quadratic_2d_curve = np.dot(
             np.c_[
                 np.ones(self.x.shape),
                 self.x,
                 self.y,
-                self.x*self.y,
+                self.x * self.y,
                 self.x**2,
-                self.y**2
+                self.y**2,
             ],
             self.coeffs
         ).reshape(self.x.shape)
 
-
-    ### --------- Plotting functions --------- ###
+    # ------------------
+    # Plotting functions
+    # ------------------
 
     def plot(
         self,
         ax,
         plot_data: bool = False,
-        plot_curves: list[str] = []
+        plot_curves: list[str] = None,
     ):
         if plot_data:
             if self.is_3d:
@@ -471,47 +518,49 @@ class CostFunction():
             else:
                 ax.scatter(self.x, self.z, label="Data")
 
+        if plot_curves is None:
+            plot_curves = []
         for curve in plot_curves:
+            match curve:
+                case "linear_1d":
+                    ax.plot(self.x, self._linear_1d_curve, label="Linear Fit")
+                case "quadratic_1d":
+                    ax.plot(self.x, self._quadratic_1d_curve, label="Quadratic Fit")
+                case  "poly3_1d":
+                    ax.plot(self.x, self._poly3_1d_curve, label="Degree 3 Polynomial Fit")
+                case "linear_2d":
+                    ax.plot_surface(
+                        np.reshape(self.x, (len(DEPTHS), -1)),
+                        np.reshape(self.y, (len(DEPTHS), -1)),
+                        np.reshape(self._linear_2d_curve, (len(DEPTHS), -1)),
+                        alpha=0.3,
+                        label="Linear Fit",
+                    )
+                case "quadratic_2d":
+                    ax.plot_surface(
+                        np.reshape(self.x, (len(DEPTHS), -1)),
+                        np.reshape(self.y, (len(DEPTHS), -1)),
+                        np.reshape(self._quadratic_2d_curve, (len(DEPTHS), -1)),
+                        alpha=0.3,
+                        label="Quadratic Fit",
+                    )
 
-            if curve == "linear_1d":
-                ax.plot(self.x, self._linear_1d_curve, label="Linear Fit")
+    # ------------------
+    # Export functions
+    # ------------------
 
-            if curve == "quadratic_1d":
-                ax.plot(self.x, self._quadratic_1d_curve, label="Quadratic Fit")
-
-            if curve == "poly3_1d":
-                ax.plot(self.x, self._poly3_1d_curve, label="Degree 3 Polynomial Fit")
-
-            if curve == "linear_2d":
-                ax.plot_surface(
-                    np.reshape(self.x, (len(DEPTHS), -1)),
-                    np.reshape(self.y, (len(DEPTHS), -1)),
-                    np.reshape(self._linear_2d_curve, (len(DEPTHS), -1)),
-                    alpha=0.3,
-                    label="Linear Fit"
-                )
-
-            if curve == "quadratic_2d":
-                ax.plot_surface(
-                    np.reshape(self.x, (len(DEPTHS), -1)),
-                    np.reshape(self.y, (len(DEPTHS), -1)),
-                    np.reshape(self._quadratic_2d_curve, (len(DEPTHS), -1)),
-                    alpha=0.3,
-                    label="Quadratic Fit"
-                )
-
-
-    ### --------- Export functions --------- ###
-
-    def export(self, filename: str, key: str, comments: str = ""):
+    def export(self, filename: Path, key: str, comments: str = "") -> None:
         """
-        This function writes the curve equation to a file for use in NRWAL.
+        Writes the curve equation to a file for use in NRWAL.
 
-        Args:
-            filename (str): The file to write the curve equation to. If the file exists, the
-                equation is appended to the end of the file.
-            key (str): The key to use in the NRWAL file for the curve equation. In the key-value
-                pair, this argument is the key and the value is the equation string.
+        Parameters
+        ----------
+        filename : Path
+            The file to write the curve equation to. If the file exists, the
+            equation is appended to the end of the file.
+        key : str
+            The key to use in the NRWAL file for the curve equation. In the key-value
+            pair, this argument is the key and the value is the equation string.
         """
 
         x_var = orbit_to_nrwal_params[self.x_variable]
@@ -522,6 +571,7 @@ class CostFunction():
         S = "{:s}"
         if self._linear_1d_curve is not None:
             # y = ax + b
+            equation_string = f"{F} * {S} + {F}".format(self.coeffs[0], x_var, self.coeffs[1])
             equation_string = f"{F} * {S} + {F}".format(self.coeffs[0], x_var, self.coeffs[1])
 
         if self._quadratic_1d_curve is not None:
@@ -567,7 +617,9 @@ class CostFunction():
         # nrwal_dict = {self.config["design_phases"][0]: equation_string}
         nrwal_dict = {key: equation_string}
 
-        with open(filename, "a") as f:
+        if isinstance(filename, str):
+            filename = Path(filename).resolve()
+        with filename.open("a") as f:
             f.write("\n")
             if comments:
                 f.write(f"# {comments}\n")
@@ -578,8 +630,6 @@ class CostFunction():
 ```
 
 # ORBIT Design Phase Cost Curves
-
-+++
 
 ## Monopile Substructure
 
@@ -614,7 +664,7 @@ cost_function.plot(ax, plot_data=True)
 cost_function.plot(ax, plot_curves=["linear_2d", "quadratic_2d"])
 ax.legend()
 
-cost_function.export("substructure.yaml", "substructure_17MW")
+cost_function.export(example_dir / "configs/substructure.yaml", "substructure_15MW")
 ```
 
 ## Semi-Submersible Substructure
@@ -736,9 +786,9 @@ ax.set_ylabel("Cost ($)")
 cost_semitaut.plot(ax, plot_data=True)
 cost_semitaut.plot(ax, plot_curves=["linear_1d"])
 
-cost_catenary.export("mooring_system.yaml", "catenary")
-cost_tlp.export("mooring_system.yaml", "tlp")
-cost_semitaut.export("mooring_system.yaml", "semitaut")
+cost_catenary.export(example_dir / "configs/mooring_system.yaml", "catenary")
+cost_tlp.export(example_dir / "configs/mooring_system.yaml", "tlp")
+cost_semitaut.export(example_dir / "configs/mooring_system.yaml", "semitaut")
 ```
 
 ## Array System
@@ -909,7 +959,7 @@ cost_touchdown_cabledepth.plot(ax, plot_curves=["quadratic_2d"])
 ```
 
 ```{code-cell} ipython3
-cost_touchdown_cabledepth.export("array_system.yaml", "floating")
+cost_touchdown_cabledepth.export(example_dir / "configs/array_system.yaml", "floating")
 ```
 
 ## Export System
@@ -984,10 +1034,10 @@ multiline_comment = "\n# ".join([
     "special because it's the only one that ",
     "is like it is."
 ])
-cost_hvac.export("export_system.yaml", "floating_hvac", comments=multiline_comment)
+cost_hvac.export(example_dir / "configs/export_system.yaml", "floating_hvac", comments=multiline_comment)
 
 singleline_comment = "HVDC export system"
-cost_hvdc.export("export_system.yaml", "floating_hvdc", comments=singleline_comment)
+cost_hvdc.export(example_dir / "configs/export_system.yaml", "floating_hvdc", comments=singleline_comment)
 ```
 
 ## Offshore Floating Substation
@@ -1018,5 +1068,5 @@ cost_function.plot(ax, plot_data=True)
 cost_function.plot(ax, plot_curves=["linear_1d"])
 ax.legend()
 
-cost_function.export("oss.yaml", "oss_substructure")
+cost_function.export(example_dir / "configs/oss.yaml", "oss_substructure")
 ```
