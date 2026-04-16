@@ -21,7 +21,6 @@ def remove_extraneous(notebook_fn: str | Path):
 
     with notebook_fn.open("w", encoding="utf-8") as f:
         nbf.write(notebook, f)
-        nbf.write("\n")
 
 
 if __name__ == "__main__":
