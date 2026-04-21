@@ -55,6 +55,8 @@ def prepare_config_for_save(config: dict | benedict) -> dict:
                 config[k] = float(v)
             case np.integer():
                 config[k] = int(v)
+            case benedict():
+                config[k] = prepare_config_for_save(v.dict())
             case dict():
                 config[k] = prepare_config_for_save(v)
             case _:
