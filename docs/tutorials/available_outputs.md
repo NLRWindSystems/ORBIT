@@ -164,8 +164,8 @@ print(f"System (procurement) CapEx (millions, USD): {project.system_capex / 1e6:
 print(f"System (procurement) CapEx (USD) per kW: {project.system_capex_per_kw:,.2f}")
 ```
 
-To view the individual component system costs, users can inspect the `system_costs` dictionary where
-costs are summarized by each modeled or input system.
+To view the individual component system costs related to each installation phase, users can
+inspect the `system_costs` dictionary where costs are summarized by each modeled or input system.
 
 ```{code-cell} ipython3
 for name, capex in project.system_costs.items():
@@ -214,8 +214,8 @@ for all of these subcategories, however the values can also be overridden in the
 `project_parameters` subdict.
 
 ```{code-cell} ipython3
-print(f"Turbine CapEx (millions, USD): {project.project_capex / 1e6:,.2f}")
-print(f"Turbine CapEx (USD) per kW: {project.project_capex_per_kw:,.2f}")
+print(f"Project CapEx (millions, USD): {project.project_capex / 1e6:,.2f}")
+print(f"Project CapEx (USD) per kW: {project.project_capex_per_kw:,.2f}")
 ```
 
 ### Soft CapEx
@@ -263,6 +263,7 @@ print(f"Procurement Contingency CapEx (millions, USD): {project.procurement_cont
 print(f"Installation Contingency CapEx (millions, USD): {project.installation_contingency_capex() / 1e6:,.2f}")
 print(f"Construction Financing CapEx (millions, USD): {project.construction_financing_capex() / 1e6:,.2f}")
 ```
+
 ### All Other CapEx Categories
 
 #### Supply Chain CapEx
