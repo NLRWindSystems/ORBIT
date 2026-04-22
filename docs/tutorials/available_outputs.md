@@ -403,10 +403,11 @@ mp_vessel_summary
 The `ProjectManager` includes a basic cash flow and net present value (NPV) model. The project must
 have the array, export, and substation installation models configured for this model to be
 applicable. The model will find the point in the project logs where the substation and export
-cable installations were completed and where each completed string of array cables was installed.
-When all three of these conditions are met, the project can begin to generate energy and produce
-revenue. The revenue generation is then superimposed on the monthly spend of the installation
-models for the `project.cash_flow`. Please note this assumes a fixed operational expenditure (OpEx).
+cable installations were completed and where each completed string of array cables and turbines
+was installed. When all three of these conditions are met, the project can begin to generate energy
+and produce revenue. The revenue generation is then superimposed on the monthly spend of the
+installation models for the `project.cash_flow`. Please note this assumes a fixed operational
+expenditure (OpEx).
 
 The NPV of the project can then be calculated and is available through `npv`. The underlying
 financial assumptions for this model are also contained within the `project_parameters` section of
