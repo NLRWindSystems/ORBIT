@@ -168,7 +168,7 @@ a series of default vessls in `library/vessels/` to support all possible install
 For more details on vessel configurations, please see the [vessels section](#vessels).
 
 ```{code-cell} ipython3
-install_config = deepcopy(monopile_design_result)
+install_config = deepcopy(monopile_design.design_result)
 install_config["wtiv"] = "example_wtiv"
 install_config["feeder"] = "example_feeder"
 install_config["num_feeders"] = 2
