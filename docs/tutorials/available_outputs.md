@@ -77,11 +77,13 @@ print(f"Project Installation Time (days): {project.project_time / 24:,.1f}")
 
 The `installation_time` provides the sum total installation time of all phases, in hours, without
 accounting for timing overlaps, whereas the `project_days` provides the total number of days between
-the start and completion of the project.
+the start and completion of the project. Similar to `project_days`, `project_time` provides the total
+elapsed simulation time, accounting for overlapping installation phases.
 
 ```{code-cell} ipython3
 print(f"Total Installation Time: {project.installation_time / 24:.0f} days")
 print(f"Total Elapsed Time: {project.project_days} days")
+print(f"Total Elapsed Time: {project.project_time:,.0f} hours")
 ```
 
 ## All Outputs At Once
