@@ -247,7 +247,7 @@ to turbine and cable configuration files, these should be stored in the YAML for
   - Any other custom input that will override logistics defaults.
 - `transport_specs` - Transit related parameters and constraints.
   - `transit_speed`: Average transiting speed, km/h.
-  - `max_waveheight`: Maximum operational wave height, m/s.
+  - `max_waveheight`: Maximum operational wave height, m.
   - `max_windspeed`: Maximum operational wind speed, m/s.
 - `storage_specs` - Storage related parameters. Required to transport items
   on deck.
