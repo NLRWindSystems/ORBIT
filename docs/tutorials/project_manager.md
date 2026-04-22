@@ -133,7 +133,9 @@ or the installations may use different installation vessels.
 
 In these cases, it is necessary to define phase specific input parameters using the phase's name as
 the dictionary key. Below, we can see how we model a differing staging port where a separate WTIV
-will be used with its much further port distance.
+will be used with its much further port distance. Please note that the turbine installation's
+WTIV "other_wtiv" is not a valid vessel configuration file, so this demonstration setup will fail
+if used.
 
 Please note that phase-specific configurations will always override their general counterparts.
 
