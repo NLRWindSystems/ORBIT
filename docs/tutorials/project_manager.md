@@ -29,7 +29,16 @@ from ORBIT import ProjectManager
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here / "examples"
+match here.stem:
+    case "examples":
+        example_dir = here
+    case "tutorials":
+        example_dir = here.parents[1] / "examples"
+    case "ORBIT":
+        example_dir = here / "examples"
+    case _:
+        msg = "Please manually change `example_dir` if running in a custom location."
+        raise FileNotFoundError(msg)
 ```
 
 ## Compiling Input Requirements Dynamically

@@ -39,7 +39,16 @@ pd.options.display.float_format = '{:,.0f}'.format
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here / "examples"
+match here.stem:
+    case "examples":
+        example_dir = here
+    case "tutorials":
+        example_dir = here.parents[1] / "examples"
+    case "ORBIT":
+        example_dir = here / "examples"
+    case _:
+        msg = "Please manually change `example_dir` if running in a custom location."
+        raise FileNotFoundError(msg)
 
 config = load_config(example_dir / "configs/example_fixed_project.yaml")
 project = ProjectManager(config)

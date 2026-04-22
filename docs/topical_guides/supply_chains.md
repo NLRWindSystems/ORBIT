@@ -32,7 +32,16 @@ from ORBIT.phases.install import MonopileInstallation, JacketInstallation
 
 # Set the example path for use in the docs and standalone examples usage
 here = Path(".").resolve()
-example_path = here.parents[1] / "examples" if here.stem == "topical_guides" else here
+match here.stem:
+    case "examples":
+        example_path = here
+    case "topical_guides":
+        example_path = here.parents[1] / "examples"
+    case "ORBIT":
+        example_path = here / "examples"
+    case _:
+        msg = "Please manually change `example_path` if running in a custom location."
+        raise FileNotFoundError(msg)
 
 weather = pd.read_csv(
     example_path / "data/example_weather.csv", parse_dates=["datetime"]
