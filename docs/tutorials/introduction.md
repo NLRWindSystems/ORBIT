@@ -154,40 +154,6 @@ print(f"Total Substructure Cost: ${monopile_design.total_cost / 1e6:,.2f} M")
 pprint(monopile_design.design_result)
 ```
 
-### Overriding Values from the Design Phase
-
-In the example above, the `MonopileDesign` phase will produce the input parameters "monopile and
-"transition_piece". It is also possible to supply some of the values for these designs if they are
-known, and let `MonopileDesign` fill in the rest. For example, if the user knows the dimensions of
-the monopile but not the transition piece, the "monopile" dictionary can be added to the project config above:
-
-```{code-cell} ipython3
-design_config_custom = {
-    "site": {
-        "depth": 25,
-        "mean_windspeed": 9.5,
-    },
-    "plant": {
-        "num_turbines": 50,
-    },
-    "turbine": {
-        "rotor_diameter": 220,
-        "hub_height": 120,
-        "rated_windspeed": 13,
-    },
-    "monopile": {
-        "type": "Monopile",
-        "mass": 800,
-        "length": 100,
-    },
-}
-
-monopile_design = MonopileDesign(design_config_custom)
-monopile_design.run()
-monopile_design_result = monopile_design.design_result
-pprint(monopile_design_result)
-```
-
 ### Installation Phases
 
 ORBIT's installation phases tend to require more inputs and provide implicit pathways to model
