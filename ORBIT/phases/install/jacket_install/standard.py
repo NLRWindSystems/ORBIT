@@ -68,7 +68,6 @@ class JacketInstallation(InstallPhase):
             "enabled": "(optional, default: False)",
             "substructure_delivery_time": "h (optional, default: 168)",
             "num_substructures_delivered": "int (optional: default: 1)",
-            "substructure_storage": "int (optional, default: inf)",
         },
     }
 
@@ -137,7 +136,6 @@ class JacketInstallation(InstallPhase):
             delivery_time = self.supply_chain.get(
                 "substructure_delivery_time", 168
             )
-            # storage = self.supply_chain.get("substructure_storage", "inf")
             supply_chain = SubstructureDelivery(
                 "Jacket",
                 self.num_jackets,
