@@ -79,14 +79,10 @@ class InstallPhase(BasePhase):
     def initialize_port(self):
         """Initializes a Port object with N number of cranes."""
 
-        self.port = Port(self.env)
-
-        try:
-            cranes = self.config["port"]["num_cranes"]
-            self.port.crane = simpy.Resource(self.env, cranes)
-
-        except KeyError:
-            self.port.crane = simpy.Resource(self.env, 1)
+        port_config = self.config.get("port", {})
+        cranes = port_config.get("num_cranes", 1)
+        self.port = Port(self.env, **port_config)
+        self.port.crane = simpy.Resource(self.env, cranes)
 
     def run(self, until=None):
         """
