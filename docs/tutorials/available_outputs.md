@@ -299,7 +299,9 @@ print(f"Turbine CapEx (USD) per kW: {project.turbine_capex_per_kw:,.2f}")
 
 #### Overnight CapEx
 
-The `overnight_capex` provides the overnight capital cost (system and turbine CapEx) of the project.
+The `overnight_capex` provides the overnight capital cost of the project as defined by the
+[NLR Annual Technology Baseline (ATB)](https://atb.nrel.gov/electricity/2024b/definitions).
+This is all capital costs excluding grid connection costs and construction financing.
 
 ```{code-cell} ipython3
 print(f"Overnight CapEx (millions, USD): {project.overnight_capex / 1e6:,.2f}")
