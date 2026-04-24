@@ -24,9 +24,30 @@ Offshore Renewables Balance of system and Installation Tool
 
 - Rob Hammond
 
-## Documentation
+## Documentationa
 
 Please visit the documentation site at https://nlrwindsystems.github.io/ORBIT/
+
+## Citing ORBIT
+
+Please cite this repository using the following citation, or with proceeding Bibtex.
+
+> Nunemaker, Jacob, Shields, Matthew, Hammond, Robert, et al.,
+> "ORBIT: Offshore Renewables Balance-of-System and Installation Tool," (2020),
+> https://doi.org/10.2172/1660132
+
+```bibtex
+@techreport{orbit_tech_report,
+  author={Nunemaker, Jacob and Shields, Matthew and Hammond, Robert and Duffy, Patrick},
+  title={ORBIT: Offshore Renewables Balance-of-System and Installation Tool},
+  institution={National Renewable Energy Laboratory (NREL), Golden, CO (United States)},
+  doi={10.2172/1660132},
+  url={https://www.osti.gov/biblio/1660132},
+  place={United States},
+  year={2020},
+  month={08}
+}
+```
 
 ## Installation
 
