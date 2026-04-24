@@ -210,4 +210,5 @@ ax.set_xlabel("Simulation Time (h)")
 ax.set_ylabel("Substructures")
 
 ax.legend()
+fig.show()
 ```
