@@ -1598,9 +1598,11 @@ class ProjectManager:
 
     @property
     def overnight_capex(self):
-        """Returns the overnight capital cost of the project."""
+        """Returns the overnight capital cost of the project, which is all
+        capital costs excluding grid connection and construction financing.
+        """
 
-        return self.system_capex + self.turbine_capex
+        return self.total_capex - self.construction_financing_capex()
 
     @property
     def soft_capex(self):

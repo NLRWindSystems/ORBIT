@@ -29,7 +29,16 @@ from ORBIT import ProjectManager
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
+match here.stem:
+    case "examples":
+        example_dir = here
+    case "tutorials":
+        example_dir = here.parents[1] / "examples"
+    case "ORBIT":
+        example_dir = here / "examples"
+    case _:
+        msg = "Please manually change `example_dir` if running in a custom location."
+        raise FileNotFoundError(msg)
 ```
 
 ## Compiling Input Requirements Dynamically
@@ -133,7 +142,9 @@ or the installations may use different installation vessels.
 
 In these cases, it is necessary to define phase specific input parameters using the phase's name as
 the dictionary key. Below, we can see how we model a differing staging port where a separate WTIV
-will be used with its much further port distance.
+will be used with its much further port distance. Please note that the turbine installation's
+WTIV "other_wtiv" is not a valid vessel configuration file, so this demonstration setup will fail
+if used.
 
 Please note that phase-specific configurations will always override their general counterparts.
 

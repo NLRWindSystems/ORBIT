@@ -39,7 +39,16 @@ pd.options.display.float_format = '{:,.0f}'.format
 
 # Ensure the correct examples directory is used when running this in docs or in examples
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
+match here.stem:
+    case "examples":
+        example_dir = here
+    case "tutorials":
+        example_dir = here.parents[1] / "examples"
+    case "ORBIT":
+        example_dir = here / "examples"
+    case _:
+        msg = "Please manually change `example_dir` if running in a custom location."
+        raise FileNotFoundError(msg)
 
 config = load_config(example_dir / "configs/example_fixed_project.yaml")
 project = ProjectManager(config)
@@ -77,11 +86,13 @@ print(f"Project Installation Time (days): {project.project_time / 24:,.1f}")
 
 The `installation_time` provides the sum total installation time of all phases, in hours, without
 accounting for timing overlaps, whereas the `project_days` provides the total number of days between
-the start and completion of the project.
+the start and completion of the project. Similar to `project_days`, `project_time` provides the total
+elapsed simulation time, accounting for overlapping installation phases.
 
 ```{code-cell} ipython3
 print(f"Total Installation Time: {project.installation_time / 24:.0f} days")
 print(f"Total Elapsed Time: {project.project_days} days")
+print(f"Total Elapsed Time: {project.project_time:,.0f} hours")
 ```
 
 ## All Outputs At Once
@@ -162,8 +173,8 @@ print(f"System (procurement) CapEx (millions, USD): {project.system_capex / 1e6:
 print(f"System (procurement) CapEx (USD) per kW: {project.system_capex_per_kw:,.2f}")
 ```
 
-To view the individual component system costs, users can inspect the `system_costs` dictionary where
-costs are summarized by each modeled or input system.
+To view the individual component system costs related to each installation phase, users can
+inspect the `system_costs` dictionary where costs are summarized by each modeled or input system.
 
 ```{code-cell} ipython3
 for name, capex in project.system_costs.items():
@@ -212,8 +223,8 @@ for all of these subcategories, however the values can also be overridden in the
 `project_parameters` subdict.
 
 ```{code-cell} ipython3
-print(f"Turbine CapEx (millions, USD): {project.project_capex / 1e6:,.2f}")
-print(f"Turbine CapEx (USD) per kW: {project.project_capex_per_kw:,.2f}")
+print(f"Project CapEx (millions, USD): {project.project_capex / 1e6:,.2f}")
+print(f"Project CapEx (USD) per kW: {project.project_capex_per_kw:,.2f}")
 ```
 
 ### Soft CapEx
@@ -261,6 +272,7 @@ print(f"Procurement Contingency CapEx (millions, USD): {project.procurement_cont
 print(f"Installation Contingency CapEx (millions, USD): {project.installation_contingency_capex() / 1e6:,.2f}")
 print(f"Construction Financing CapEx (millions, USD): {project.construction_financing_capex() / 1e6:,.2f}")
 ```
+
 ### All Other CapEx Categories
 
 #### Supply Chain CapEx
@@ -287,7 +299,9 @@ print(f"Turbine CapEx (USD) per kW: {project.turbine_capex_per_kw:,.2f}")
 
 #### Overnight CapEx
 
-The `overnight_capex` provides the overnight capital cost (system and turbine CapEx) of the project.
+The `overnight_capex` provides the overnight capital cost of the project as defined by the
+[NLR Annual Technology Baseline (ATB)](https://atb.nrel.gov/electricity/2024b/definitions).
+This is all capital costs excluding grid connection costs and construction financing.
 
 ```{code-cell} ipython3
 print(f"Overnight CapEx (millions, USD): {project.overnight_capex / 1e6:,.2f}")
@@ -400,10 +414,11 @@ mp_vessel_summary
 The `ProjectManager` includes a basic cash flow and net present value (NPV) model. The project must
 have the array, export, and substation installation models configured for this model to be
 applicable. The model will find the point in the project logs where the substation and export
-cable installations were completed and where each completed string of array cables was installed.
-When all three of these conditions are met, the project can begin to generate energy and produce
-revenue. The revenue generation is then superimposed on the monthly spend of the installation
-models for the `project.cash_flow`. Please note this assumes a fixed operational expenditure (OpEx).
+cable installations were completed and where each completed string of array cables and turbines
+was installed. When all three of these conditions are met, the project can begin to generate energy
+and produce revenue. The revenue generation is then superimposed on the monthly spend of the
+installation models for the `project.cash_flow`. Please note this assumes a fixed operational
+expenditure (OpEx).
 
 The NPV of the project can then be calculated and is available through `npv`. The underlying
 financial assumptions for this model are also contained within the `project_parameters` section of

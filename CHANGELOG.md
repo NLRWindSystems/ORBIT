@@ -8,11 +8,22 @@
   directly into the documentation site.
 - The `save_config` function is now compatible with the `ProjectManager.config` object, allowing
   for direct saving without user modification.
-- Fixes a bug in `CustomArraySystemDesign.create_project_csv()` where the output file location does
-  not adjust to the user's `folder` input.
 - Adds a contributor's guide to clearly delineate how to install and use the various developer's
   tools.
 - Modernize and streamline the installation instructions.
+- Converts all the materials found in `examples/` to either tutorials or topical guides in the
+  documentation.
+- Adds a documentation build shell script to help automatically clean existing documentation site
+  materials, build the documentation, copy over the output example Jupyter Notebooks to `examples/`,
+  and run the pre-commit workflow for basic file handling.
+- Places the ORBIT tech report citation more prominently throughout the repository and documentation.
+
+### Bug Fixes
+
+- Fixes a bug in `CustomArraySystemDesign.create_project_csv()` where the output file location does
+  not adjust to the user's `folder` input.
+- Corrects the `ProjectManager.overnight_capex` to reflect the definition provided in the ATB as all
+  capital costs excluding construction financing and grid connection costs.
 
 ### Deprecations
 

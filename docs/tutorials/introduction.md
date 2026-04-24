@@ -154,40 +154,6 @@ print(f"Total Substructure Cost: ${monopile_design.total_cost / 1e6:,.2f} M")
 pprint(monopile_design.design_result)
 ```
 
-### Overriding Values from the Design Phase
-
-In the example above, the `MonopileDesign` phase will produce the input parameters "monopile and
-"transition_piece". It is also possible to supply some of the values for these designs if they are
-known, and let `MonopileDesign` fill in the rest. For example, if the user knows the dimensions of
-the monopile but not the transition piece, the "monopile" dictionary can be added to the project config above:
-
-```{code-cell} ipython3
-design_config_custom = {
-    "site": {
-        "depth": 25,
-        "mean_windspeed": 9.5,
-    },
-    "plant": {
-        "num_turbines": 50,
-    },
-    "turbine": {
-        "rotor_diameter": 220,
-        "hub_height": 120,
-        "rated_windspeed": 13,
-    },
-    "monopile": {
-        "type": "Monopile",
-        "mass": 800,
-        "length": 100,
-    },
-}
-
-monopile_design = MonopileDesign(design_config_custom)
-monopile_design.run()
-monopile_design_result = monopile_design.design_result
-pprint(monopile_design_result)
-```
-
 ### Installation Phases
 
 ORBIT's installation phases tend to require more inputs and provide implicit pathways to model
@@ -202,7 +168,7 @@ a series of default vessls in `library/vessels/` to support all possible install
 For more details on vessel configurations, please see the [vessels section](#vessels).
 
 ```{code-cell} ipython3
-install_config = deepcopy(monopile_design_result)
+install_config = deepcopy(monopile_design.design_result)
 install_config["wtiv"] = "example_wtiv"
 install_config["feeder"] = "example_feeder"
 install_config["num_feeders"] = 2
@@ -281,7 +247,7 @@ to turbine and cable configuration files, these should be stored in the YAML for
   - Any other custom input that will override logistics defaults.
 - `transport_specs` - Transit related parameters and constraints.
   - `transit_speed`: Average transiting speed, km/h.
-  - `max_waveheight`: Maximum operational wave height, m/s.
+  - `max_waveheight`: Maximum operational wave height, m.
   - `max_windspeed`: Maximum operational wind speed, m/s.
 - `storage_specs` - Storage related parameters. Required to transport items
   on deck.

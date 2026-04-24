@@ -32,7 +32,16 @@ from matplotlib.ticker import StrMethodFormatter
 from ORBIT import ParametricManager, load_config
 
 here = Path(".").resolve()
-example_dir = here.parents[1] / "examples" if here.stem == "tutorials" else here
+match here.stem:
+    case "examples":
+        example_dir = here
+    case "tutorials":
+        example_dir = here.parents[1] / "examples"
+    case "ORBIT":
+        example_dir = here / "examples"
+    case _:
+        msg = "Please manually change `example_dir` if running in a custom location."
+        raise FileNotFoundError(msg)
 
 config = load_config(example_dir / "configs/example_fixed_project.yaml")
 config["turbine"] = "15MW_generic"
@@ -116,7 +125,13 @@ im = ax.imshow(installation_arr.values, vmin=290, vmax=380)
 cbar = fig.colorbar(im, ax=ax, shrink=0.8)
 cbar.ax.set_ylabel("Installation CapEx (millions, USD)", rotation=-90, va="bottom")
 
-ax.set_xticks(range(len(installation_arr.columns)), labels=installation_arr.columns, rotation=45, ha="right", rotation_mode="anchor")
+ax.set_xticks(
+    range(len(installation_arr.columns)),
+    labels=installation_arr.columns,
+    rotation=45,
+    ha="right",
+    rotation_mode="anchor"
+)
 ax.set_yticks(range(len(installation_arr.index)), labels=installation_arr.index)
 
 ax.set_xlabel("Site Distance (km)")
@@ -125,9 +140,8 @@ ax.set_ylabel("Site Depth (m)")
 fig.tight_layout()
 ```
 
-However, the system CapEx only increases as the site's depth increases because only the site's
-distance to port changes, and not the distance to landfall, meaning the export cable length will
-not change across scenarios. This can be seen in the below bar graph.
+The system CapEx in this example does not change with site distance. The increase in system CapEx
+with depth can be seen in the bar graph below.
 
 ```{code-cell} ipython3
 fig = plt.figure()
