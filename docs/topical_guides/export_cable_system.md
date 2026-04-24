@@ -194,7 +194,7 @@ ax.plot(hvdc_df["plant.capacity"], hvdc_df["num_substations"], c="tab:orange", l
 ax.plot(hvdc_df["plant.capacity"], hvdc_df["num_cables"], c="tab:orange", ls="-", label="HVDC Substations")
 
 ax.set_xlim(0, capacity_range.max())
-ax.set_ylim(0, 2500)
+ax.set_ylim(0, 16)
 
 ax.xaxis.set_major_formatter(StrMethodFormatter("{x:,.0f}"))
 ax.yaxis.set_major_formatter(StrMethodFormatter("{x:,.0f}"))
