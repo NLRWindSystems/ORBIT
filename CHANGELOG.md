@@ -1,7 +1,25 @@
 (changelog)=
 # Changelog
 
-## Unreleased
+## 1.3
+
+### Bug Fixes
+
+- Fixes a bug in `CustomArraySystemDesign.create_project_csv()` where the output file location does
+  not adjust to the user's `folder` input.
+- Corrects the `ProjectManager.overnight_capex` to reflect the definition provided in the ATB as all
+  capital costs excluding construction financing and grid connection costs.
+
+### Deprecations
+
+- Project parameter `contingency` is fully deprecated in favor of `installation_contingency` and
+  `procurement_contingency` and will raise a `KeyError` when detected by the `ProjectManager`.
+- Top-level `landfall` dictionary is no longer supported and is fully deprecated in favor of nesting
+  it in the `export_system_design` and `export_system` dictionary, for design and installation phases.
+- The `export_system`-level `interconnection_distance` variable is deprecated and should now be
+  placed in the `export_system.landfall` dictionary.
+
+### Miscellaneous Updates and Improvements
 
 - The existing documentation has been converted from a Sphinx-based setup to a Jupyter Book v1 build
   to create more easily modifiable documentation components and integrate better code examples
@@ -17,22 +35,6 @@
   materials, build the documentation, copy over the output example Jupyter Notebooks to `examples/`,
   and run the pre-commit workflow for basic file handling.
 - Places the ORBIT tech report citation more prominently throughout the repository and documentation.
-
-### Bug Fixes
-
-- Fixes a bug in `CustomArraySystemDesign.create_project_csv()` where the output file location does
-  not adjust to the user's `folder` input.
-- Corrects the `ProjectManager.overnight_capex` to reflect the definition provided in the ATB as all
-  capital costs excluding construction financing and grid connection costs.
-
-### Deprecations
-
-- Project parameter `contingency` is fully deprecated in favor of `installation_contingency` and
-  `procurement_contingency` and will raise a `KeyError` when detected by the `ProjectManager`.
-- Top-level `landfall` dictionary is no longer suppored and is fully deprecated in favor of nesting
-  it in the `export_system_design` and `export_system` dictionary, for design and installation phases.
-- The `export_system`-level `interconnection_distance` variable is deprecated and should now be
-  placed in the `export_system.landfall` dictionary.
 
 ## 1.2.6
 
@@ -157,7 +159,7 @@
   - Fixed the output substructure type from Monopile to Floating. (use `oss_substructure_type`)
   - Removes any pile or fixed-bottom substructure geometry.
   - See `Example 5. Example Floating Project` for more details.
-- Updated `MoredSubInstallation`:
+- Updated `MooredSubInstallation`:
   - Uses an AHTS vessel which must be added to project config file.
   - See `example/example_floating_project.yaml` (use `ahts_vessel`)
 - New `22MW_generic.yaml` turbine.
@@ -259,7 +261,7 @@
 - Refactored aggregation project level outputs in `ProjectManager`.
 - Revised Net Present Value calculation to utilize new project outputs.
 - Added `load_config` and `save_config` functions.
-- Moved `ORBIT.library` to `OBRIT.core.library`.
+- Moved `ORBIT.library` to `ORBIT.core.library`.
 - Centralized model defaults to `ORBIT.core.defaults`.
 - `ProjectManager.project_actions` renamed to `ProjectManager.actions`
 - `ProjectManager.project_logs` renamed to `ProjectManager.logs`
@@ -295,8 +297,8 @@
 ## 0.4.2
 
 - New feature: Phase dependencies in `ProjectManager`.
-- New feature: Windspeed constraints at multiple heights, including automatic
-  interpolation/extrapolation of configured windspeed profiles.
+- New feature: Wind speed constraints at multiple heights, including automatic
+  interpolation/extrapolation of configured wind speed profiles.
 - Added option to define `mobilization_days` and `mobilization_mult` in a
   `Vessel` configuration file.
 - Added option for pre-installation trenching operations to
@@ -319,7 +321,7 @@
 
 - Vessel mobilization added to all vessels in all installation modules.
   Defaults to 7 days at 50% day-rate.
-- Cable lay, bury and simulataneous lay/bury methods are not flagged as
+- Cable lay, bury and simultaneous lay/bury methods are not flagged as
   suspendable to avoid unrealistic project delays.
 - Cost of onshore transmission construction added to
   `ExportCableInstallation`.
@@ -353,7 +355,7 @@
 ## 0.3.3
 
 - Added configuration for multiple tower sections in `TurbineInstallation`.
-- Added configuration for seperate lay/burial in `ArrayCableInstallation` and
+- Added configuration for separate lay/burial in `ArrayCableInstallation` and
   `ExportCableInstallation`.
 - Overhauled test suite and associated library.
 - Bugfix in `CableCarousel`.
