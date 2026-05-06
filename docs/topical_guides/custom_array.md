@@ -11,10 +11,10 @@ kernelspec:
   name: python3
 ---
 
-(custom-array-layou)=
+(custom-array-layout)=
 # Custom Array Cabling Guide
 
-## Dudgeon Windfarm
+## Dudgeon Wind Farm
 
 This guide will walk through four of the main use cases for using the custom array cable layout
 functionality of `ORBIT` for when custom turbine locations, cable lengths or burial speeds are needed.
@@ -114,7 +114,7 @@ dictionary, so let's dissect this file:
      `bury_speed`.
 4. Define the turbines
    - Each turbine should have a reference to its substation in the `substation_id` column.
-     - In this example, there is one substaion, so all of the values are "DOW_OSS".
+     - In this example, there is one substation, so all of the values are "DOW_OSS".
    - `string` and `order` should be 0-indexed for their ordering and not skip any numbers.
      - In this example, the strings are ordered in clock-wise order starting from the string with
        turbines labeled with an "A" in the
@@ -151,7 +151,7 @@ array.create_project_csv(save_name, folder="plant")
 There are a few items worth noting in the layout:
 
 1. The offshore substation (row 0) is indicated via the `id` and `substation_id` columns being equal
-2. For substaions only the `id`, `substation_id`, `name`, `latitude`, and `longitude` are required
+2. For substations only the `id`, `substation_id`, `name`, `latitude`, and `longitude` are required
 3. `cable_length` and `bury_speed` are optional columns for turbines
 4. `string` and `order` are filled out to maximize the length of a string given the cable(s)
    provided, which translates to a maximum of 5 turbines in a string.
@@ -243,7 +243,7 @@ Alternatively, we can set the `distance=True` when calling the `CustomArraySyste
 the configuration dictionary's setting will override this input to allow for project-level
 configurations to run as expected. Below, we can see some of the cable lengths differ slightly due
 to the methodology of converting the WGS-84coordinates to relative points, however the spacing is
-maintained, and we can see that this is still the Dudgeon windfarm.
+maintained, and we can see that this is still the Dudgeon wind farm.
 
 ```{code-cell} ipython3
 array_distance = CustomArraySystemDesign(config, distance=True)
@@ -252,7 +252,7 @@ array_distance.plot_array_system(show=True)
 ```
 
 Overall, the cabling cost is highly similar, with the difference being attributed to the method
-to convert the WGS-84 coordiantes to relative coordinates.
+to convert the WGS-84 coordinates to relative coordinates.
 
 ```{code-cell} ipython3
 print(f"{'Cable Type':<16} | {'Cost in USD (lat,lon)':>20} | {'Cost in USD (dist_lat,dist_lon)':>15}")
@@ -304,7 +304,7 @@ from [Case 4](#case_4) to have more variation by using the `cable_length` column
 columns will be used. Please note this work was performed outside the example, and we will only
 show the resulting configurations.
 
-For this example, half of the windfarm will have different soil condition, so we will use our proxy:
+For this example, half of the wind farm will have different soil condition, so we will use our proxy:
 `bury_speed` by modifying the burial speed to be fast (0.5 km/h) and slow (0.05 km/hr),
 respectively, to account for sandy soil and rocky soil. The purpose of this is for passing through
 customized parameters in the design phase to be utilized in the installation phase as will be seen
@@ -388,7 +388,7 @@ for name, simulation in zip(names, simulations):
 (project_manager)=
 ### Incorporating Case 5 Into `ProjectManager`
 
-We will now incorporate the desgin settings from [Case 5](#case_5) to demonstrate incorporation
+We will now incorporate the design settings from [Case 5](#case_5) to demonstrate incorporation
 of the custom array design tooling into `ProjectManager`. This example will use the
 [`library/project/config/example_custom_array_project_manager.yaml`](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config/example_custom_array_project_manager.yaml)
 configuration.

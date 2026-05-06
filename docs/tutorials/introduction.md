@@ -51,7 +51,7 @@ pprint(install_phases)
 Each model has a property `expected_config` that provides basic information about the required and
 optional inputs for the model. Notice that for each input there is a provided data type, an
 indication if the parameter is optional, and any nested dictionary configurations are fully mapped
-in the same way as individal parameters. Below, we can see the expected configurations for both
+in the same way as individual parameters. Below, we can see the expected configurations for both
 the monopile design and installation classes. It should be noted that when combining complimentary
 design and installation phases for a component, that the design model will provide most of the
 installation inputs as a `design_result` (more details in the `ProjectManager` introduction).
@@ -164,7 +164,7 @@ Additionally, supply chains and ports can be configured to model component avail
 logistics.
 
 Using the output from the above example, we can add further configurations. Note that ORBIT provides
-a series of default vessls in `library/vessels/` to support all possible installation strategies.
+a series of default vessels in `library/vessels/` to support all possible installation strategies.
 For more details on vessel configurations, please see the [vessels section](#vessels).
 
 ```{code-cell} ipython3
@@ -207,7 +207,7 @@ ORBIT makes use of its own
 [internal library](https://github.com/NLRWindSystems/ORBIT/tree/main/library) when a user-provided
 library path is not provided (i.e. a value isn't provide so the default `None` is used in
 `ProjectManager(config, library_path=None)`). When a value is provided, user library files will be
-searched for first, and the default library will be checked for any unfound files.
+searched for first, and the default library will be checked for any files that were not found.
 
 This is made visible in the [installation phases section](#installation-phases) where the value
 "example_wtiv" is provided to the "wtiv" key. When the configuration is loaded, `ProjectManager`
@@ -219,8 +219,8 @@ folder. Below is the expected folder structure of the library. I
 ├── defaults         <- Top-level default data
 ├── project
 │   ├── config       <- Configuration dictionary repository
-│   ├── port         <- Port specific data setttings
-│   ├── plant        <- Wind farm specific data setttings
+│   ├── port         <- Port specific data settings
+│   ├── plant        <- Wind farm specific data settings
 │   ├── site         <- Project site data settings
 │   ├── development  <- Project development cost settings
 ├── cables           <- Cable data files: array cables, export cables
@@ -263,7 +263,7 @@ to turbine and cable configuration files, these should be stored in the YAML for
   - `leg_length`: Length of the jackup vessel's legs, m.
   - `air_gap`: Distance between sea level and the vessel bottom when fully jacked up, m.
   - `leg_pen`: How far the leg penetrates the sea floor for stability, m.
-  - `max_depth`: Maxium water depth, m.
+  - `max_depth`: Maximum water depth, m.
   - `max_extension`: Maximum leg extension, m.
   - `speed_below_depth`: Jackup speed when leg extension has not reached the sea floor, m/min
   - `speed_above_depth`: Jackup speed after the leg has reached the sea floor and the vessel is
@@ -301,7 +301,7 @@ pprint(config_template)
 ```
 
 Now, we can combine the monopile design and installation configurations that were
-used in the previous examples, and run the model to get a single CapEx alongsie the
+used in the previous examples, and run the model to get a single CapEx alongside the
 high level category breakdown.
 
 ```{code-cell} ipython3

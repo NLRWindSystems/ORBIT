@@ -48,7 +48,7 @@ For example,
 }
 ```
 
-The installation of each section above will be modeled seperately. In the above
+The installation of each section above will be modeled separately. In the above
 example, only one cable was used, though there could be additional defined
 cables (with their own `cable_sections` key).
 
@@ -62,7 +62,7 @@ result of running the `ArraySystemDesign` module.
 ## Configuration
 
 ORBIT considers two installation strategies: a simultaneous lay/bury operation
-using modern cable installation vessels and a seperated operation where one
+using modern cable installation vessels and a separated operation where one
 vessel lays the cable and another follows behind to bury it. A detailed
 description of the applicability of each strategy is covered in the
 [ORBIT technical report](https://www.nlr.gov/docs/fy20osti/77081.pdf).

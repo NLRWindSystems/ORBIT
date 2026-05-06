@@ -5,7 +5,7 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NLRWindSystems/ORBIT/main?urlpath=%2Fdoc%2Ftree%2Fexamples)
 
 Welcome to the ORBIT tutorials! The following examples will cover the basic usage of ORBIT. For
-backround on the project and Offshore Balance of System modeling, please see the
+background on the project and Offshore Balance of System modeling, please see the
 [introduction](#bos-intro). For more advanced examples and real world
 validation cases, please see the [topical guides](#topical-guides) section of the documentation.
 

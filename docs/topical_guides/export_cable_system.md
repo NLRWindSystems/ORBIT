@@ -37,7 +37,7 @@ pd.options.display.float_format = '{:,.0f}'.format
 ## Setup The Models
 
 Here we will setup a base configuration for use with `ProjectManager` plus additional configurations
-for running in the `ParametericManager` to look at the cost tradeoffs in export cable types
+for running in the `ParametricManager` to look at the cost tradeoffs in export cable types
 depending on project size.
 Config must include all required variables except those you plan to vary. In this example, we will be manually vary the cable type and then use the `ParametricManager` to vary cable type and plant capacity.
 
@@ -182,7 +182,7 @@ fig.tight_layout()
 Comparing the below figure to the CapEx figure above, highlights that CapEx increases for the HVDC
 system correspond to an increase in the number of substations (each requires a single cable),
 whereas for HVAC system, these increases primarily correspond to an increase in the number of export
-cables with a smaller increase stemming from the substation requiremensts.
+cables with a smaller increase stemming from the substation requirements.
 
 ```{code-cell} ipython3
 fig = plt.figure(figsize=(6,4), dpi=200)

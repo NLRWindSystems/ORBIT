@@ -19,12 +19,12 @@ For more detail on the helper classes used to support this design please see
 
 The number of export cables required for HVAC is calculated by dividing the windfarm's
 capacity by the configured export cable's power rating and adding any user
-defined redundnacy as seen below.
+defined redundancy as seen below.
 
 $num\_cables = \lceil\frac{plant\_capacity}{cable\_power}\rceil + num\_redundant$
 
 For HVDC cables (both monopole and bipole), the number of cables is twice the number as
-calculated abpve because HVDC systems require a pair of cables per implementation.
+calculated above because HVDC systems require a pair of cables per implementation.
 The equation for this calculation is shown below.
 
 $num\_cables = 2 * \lceil\frac{plant\_capacity}{cable\_power}\rceil + num\_redundant$
@@ -46,7 +46,7 @@ crossing. The default number of cable crossings is 0 and cost per cable
 crossing is \$500,000. This cost includes materials, installation, etc. Crossing
 cost is calculated as product of number of crossings and unit cost.
 
-## Number of Required Power Transformer, Tranformer Rating, and Cost
+## Number of Required Power Transformer, Transformer Rating, and Cost
 
 The number of main power transformers (MPT) required is assumed to be equal to the number
 of required export cables. The transformer rating is calculated by dividing the
@@ -54,7 +54,7 @@ windfarm's capacity by the number of MPTs. MPTs are only required if the
 export cables are HVAC. The default cost of the MPT is \$2.87m per HVAC cable. Therefore, the total MPT cost is
 proportional to the number of cables. Note: Previous versions may have used curve-fits to
 calculate total MPT cost based on the windfarm's capacity. The MPT unit cost (\$/cable) can
-be ovewritten by the user by setting (`mpt_unit_cost`) to the desired cost. If the export cables
+be overwritten by the user by setting (`mpt_unit_cost`) to the desired cost. If the export cables
 are HVDC, then the cost of power transformers will be \$0.
 
 ## Number of Shunt Reactors, Reactive Power Compensation, and Cost
@@ -63,7 +63,7 @@ The shunt reactor cost is dependent on the amount of reactive power compensation
 required based on the distance of the substation to shore. This model assumes
 one shunt reactor for each HVAC export cable. An HVDC export systems do not require
 reactive power compensation. The default cost rate of the shunt reactors is \$10k per HVAC cable. The total cost is proportional
-to the number of cables multipled by a cable-specific compensation factor. The default cost rate
+to the number of cables multiplied by a cable-specific compensation factor. The default cost rate
 can be overwritten by the user by setting (`shunt_unit_cost`) to the desired cost. The shunt
 reactor cost is \$0 for HVDC systems.
 
@@ -78,7 +78,7 @@ cables.
 ## Number of Circuit Breakers and Cost
 
 The number of circuit breakers required is assumed to be equal to the number of required
-export cables. Breakers are only necssary if HVDC export cables are chosen. The default cost is
+export cables. Breakers are only necessary if HVDC export cables are chosen. The default cost is
 \$10.6m per HVDC cable. The default cost can be overwritten by the user by setting (`dc_breaker_cost`)
 to the desired cost. Breaker cost is \$0 for HVAC cables.
 
@@ -89,7 +89,7 @@ is assumed to be equal to the number of HVDC export cables.
 
 ## Ancillary System Cost
 
-Costs are included such as a backup generator, workspace cost, and miscellous to
+Costs are included such as a backup generator, workspace cost, and miscellaneous to
 capture any additional features outside the main components. The user can define each
 variable by setting (`backup_gen_cost`), (`workspace_cost`), and (`other_ancillary_cost`).
 

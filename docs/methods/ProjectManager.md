@@ -19,7 +19,7 @@ and save the outputs.
 
 ## Run
 
-This method checks to see if a design or install phase is instatiated prior to running them. Depending on
+This method checks to see if a design or install phase is instantiated prior to running them. Depending on
 which design phases are specified, each phase is run in no particular order and the results are added to
 `design_results` dictionary. Conversely, the install phases can be run sequentially or as overlapped
 processes (see example: {doc}`Overlapping install <../examples>`). It is worth noting, that ORBIT

@@ -87,9 +87,9 @@ and turbine installation phases.
 ```{code-cell} ipython3
 print(f"Monopile and Turbine Installation (Heavy Lift Vessel for Monopile Installation, WTIV for Turbine Installation)")
 print(f"Install phases: {list(case1_config['install_phases'].keys())}\n")
-print(f"Gravity-Based Foundation Intallation (Substructure-Turbine Assembly Tow-out, no WTIV)")
+print(f"Gravity-Based Foundation Installation (Substructure-Turbine Assembly Tow-out, no WTIV)")
 print(f"Install phases: {list(case2_config['install_phases'].keys())}\n")
-print(f"Gravity-Based Foundation and Turbine Intallation (Substructure Tow-out, WTIV for Turbine Installation)")
+print(f"Gravity-Based Foundation and Turbine Installation (Substructure Tow-out, WTIV for Turbine Installation)")
 print(f"Install phases: {list(case3_config['install_phases'].keys())}\n")
 ```
 

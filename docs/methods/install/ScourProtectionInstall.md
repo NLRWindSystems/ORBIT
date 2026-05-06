@@ -23,7 +23,7 @@ installation method, involving "Side Stone Installation Vessels" that dump
 loads of rocks next to the substructure without much ability to ensure that
 their payload is distributed evenly. A future version of ORBIT may expand this
 module to include more modern installation approaches using a "Fall Pipe
-Vessel" that allow for an even distrubution of scour protection material.
+Vessel" that allow for an even distribution of scour protection material.
 
 ### Example
 

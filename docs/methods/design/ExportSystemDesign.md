@@ -13,9 +13,9 @@ see the [Cabling Helper Classes documentation](#cable-helpers-methods), specific
 
 ## Number of Required Cables
 
-The number of export cables required is calculated by dividing the windfarm's
+The number of export cables required is calculated by dividing the wind farm's
 capacity by the configured export cable's power rating and adding any user
-defined redundnacy as seen below.
+defined redundancy as seen below.
 
 $num\_cables = \lceil\frac{plant\_capacity}{cable\_power}\rceil + num\_redundant$
 
