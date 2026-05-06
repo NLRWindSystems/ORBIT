@@ -108,7 +108,7 @@ df_combined.iloc[3:12]
 Now, we demonstrate the separate process by combining the separate laying and burying steps taken
 for the first cable. Note that we have to concatenate two separate sections of the actions log
 to highlight this process. For each process the vessel has to "Position Onsite", then go on
-with the separate logic. For the burying process, this is much simpler than the intial laying
+with the separate logic. For the burying process, this is much simpler than the initial laying
 and cable connection.
 
 ```{code-cell} ipython3

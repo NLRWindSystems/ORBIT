@@ -10,7 +10,7 @@ cost in a highly customizable framework, allowing the user to override any
 default values if they wish.
 
 The primary structure of ORBIT relies on the [Project Manager](#project-manager-methods)
-to intrepret the user specified configuration. Refer to the
+to interpret the user specified configuration. Refer to the
 [library/project/config](https://github.com/NLRWindSystems/ORBIT/tree/main/library/project/config).
 The `ProjectManager` calls `DesignPhase` to include all the wind farm components that
 comprise the balance of system, then it calls `InstallationPhase` to schedule all the installation

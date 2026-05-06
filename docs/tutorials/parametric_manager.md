@@ -17,7 +17,7 @@ kernelspec:
 Similar to the `ProjectManager`, ORIBT provides the `ParametricManager` to run simple parametric
 studies by defining a subset of the inputs as a list. This allows for tradeoff studies to compare
 the effects of siting (e.g., water depth and distance) on cost and installation timing. For complete
-details on using the `ParmetricManager` please see the [API documentation](#parametric-manager-api).
+details on using the `ParametricManager` please see the [API documentation](#parametric-manager-api).
 
 First, we'll import the necessary libraries, and load the example fixed-bottom project to use as
 our project base with the 15 MW turbine.
@@ -83,7 +83,7 @@ method, as seen below.
 Setting `product` to `True` means that all of the parameters will be run as a combination of all
 possible permutations rather than a zipped list. When using `False` extra care must be taken to
 ensure the correct outcomes will be achieved by using equally-lengthed parameterizations. For
-instacnce, in our current example, the shortest parameterization has only 3 values, so the first
+instance, in our current example, the shortest parameterization has only 3 values, so the first
 3 values of `depth` and `distance` will be selected for the parameterized run.
 
 ```{code-cell} ipython3

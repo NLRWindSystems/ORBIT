@@ -369,7 +369,7 @@ class CostFunction():
         in ``ParametricManager``. Additionally, the independent variables are extracted
         into ``x` and ``y`` (for two-variable parameterizations) and ``z`` is extracted
         as the dependent variable. Whether the cost function is 3D or 2D is determined
-        by the length of theparameters variable.
+        by the length of the parameters variable.
 
         Parameters
         ----------

@@ -48,7 +48,7 @@ where $t$ represents the depth of the scour protection material. This
 value defaults to 1m in the code, which represents an appropriate initial
 assumption and not a complete design. For sites that exhibit greater seafloor
 currents, the scour protection layer may be as thick as 2m, whereas calmer
-sites may only need 0.3-0.5m of material. In the abscense of a geotechnical
+sites may only need 0.3-0.5m of material. In the absence of a geotechnical
 study, this value is difficult to calculate and is instead presented to user as
 a configurable input so the cost impacts of different thicknesses can be
 investigated.

@@ -49,7 +49,7 @@ class ExportCableInstallation(InstallPhase):
                 "linear_density": "t/km",
                 "sections": [("length, km", "speed, km/h (optional)")],
                 "number": "int (optional)",
-                "cable_type": "str(optional, defualt: 'HVAC')",
+                "cable_type": "str(optional, default: 'HVAC')",
                 "landfall": {
                     "trench_length": "km (optional)",
                     "interconnection_distance": "km (optional); default: 3km",

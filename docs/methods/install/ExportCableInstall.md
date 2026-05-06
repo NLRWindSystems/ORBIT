@@ -73,7 +73,7 @@ array system installation:
 
 :::{note}
 The cable lengths for an export system are typically much longer than the
-array system and thhere is the possibility that a cable splice will be
+array system and there is the possibility that a cable splice will be
 needed. The time for splicing a cable can be configured by the user using
 the `cable_splice_time` key, which defaults to 48h.
 :::

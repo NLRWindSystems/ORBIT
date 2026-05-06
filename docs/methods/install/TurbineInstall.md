@@ -64,7 +64,7 @@ The default times for fastening each component to deck are listed below.
 Currently, all vessels are only able to load multiples of complete sets of
 components (tower, nacelle and three blades).
 
-### Site Preperation
+### Site Preparation
 
 Once the WTIV and a set of components are at site (either on the WTIV or a
 feeder barge), the WTIV positions itself onsite and jacks up. The following
@@ -77,7 +77,7 @@ table outlines the inputs and default times for these tasks.
 
 ### Turbine Installation
 
-After site preperation is complete, the WTIV begins installation by releasing a
+After site preparation is complete, the WTIV begins installation by releasing a
 turbine from its fastening (either on its own deck or neighboring feeder
 barge). The tower is then lifted into place using the WTIV crane and attached
 to the substructure. The nacelle is then released from its fastenings, lifted
@@ -103,12 +103,12 @@ following table.
 
 ### Single WTIV Installation
 
-![Single WTIV turbine installation proceess diagrame](../../images/process_diagrams/turbine_single_wtiv.png)
+![Single WTIV turbine installation process diagram](../../images/process_diagrams/turbine_single_wtiv.png)
 
 ### WTIV with Feeder Barges Installation
 
-![WTIV with feeder barges turbine installation proceess diagrame](../../images/process_diagrams/turbine_wtiv_with_feeders.png)
+![WTIV with feeder barges turbine installation process diagram](../../images/process_diagrams/turbine_wtiv_with_feeders.png)
 
 ### Component Installation
 
-![Component installation proceess diagrame](../../images/process_diagrams/turbine_install.png)
+![Component installation process diagram](../../images/process_diagrams/turbine_install.png)

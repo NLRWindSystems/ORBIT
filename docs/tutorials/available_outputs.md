@@ -66,9 +66,9 @@ used by `ProjectManger` to pass into other phases or calculate further metrics.
 pprint(project.design_results)
 ```
 
-### Project Parameterizaions
+### Project Parameterizations
 
-Below is brief example showing the basic project parameterizations that are availabe.
+Below is brief example showing the basic project parameterizations that are available.
 
 - `num_turbines`: the number of turbines.
 - `turbine_rating`: the rating of an individual turbine, in MW.
@@ -121,7 +121,7 @@ sections). This represents the complete project costs including all upfront cost
 procurement and installation of BOS subsystems and the procurement costs of the turbines.
 
 :::{note}
-ORBIT doesn't explicity model the procurement of turbines, however the Turbine CapEx is included
+ORBIT doesn't explicitly model the procurement of turbines, however the Turbine CapEx is included
 within `project.total_capex`. To configure the cost of the turbines, `turbine_capex` can be passed
 into the `project_parameters` section of an ORBIT configuration.
 :::
@@ -166,7 +166,7 @@ The `system_capex` property provides the total procurement costs for all modeled
 the costs were user inputs, or the results of design models. This value will not change unless
 the design or plant's properties (e.g., distance to shore, depth, or number of turbines) change.
 
-In addition, `system_capex_per_kw` provies the capacity-normalized CapEx for the project.
+In addition, `system_capex_per_kw` provides the capacity-normalized CapEx for the project.
 
 ```{code-cell} ipython3
 print(f"System (procurement) CapEx (millions, USD): {project.system_capex / 1e6:,.2f}")
@@ -187,7 +187,7 @@ Installation CapEx is a dynamic result based on the installation simulation and 
 associated with each subsystem installation, day rates of any vessels/ports and any accrued weather
 delays.
 
-In addition, `installation_capex_per_kw` provies the capacity-normalized CapEx for the project.
+In addition, `installation_capex_per_kw` provides the capacity-normalized CapEx for the project.
 Below we will print out the dictionary keys and the values in millions USD.
 
 ```{code-cell} ipython3
@@ -240,7 +240,8 @@ print(f"Soft CapEx (millions, USD): {project.soft_capex / 1e6:,.2f}")
 print(f"Soft CapEx (USD) per kW: {project.soft_capex_per_kw:,.2f}")
 ```
 
-The soft CapEx can also be broken down using both the `soft_capex_breakdown` and the `capex_detailed_soft_capex_breakdown`, which also provide a capacity-noramlized variation by adding
+The soft CapEx can also be broken down using both the `soft_capex_breakdown` and the
+`capex_detailed_soft_capex_breakdown`, which also provide a capacity-normalized variation by adding
 `_per_kw` to the end of either (not shown in this demonstration). The primary difference (as shown
 below) is that the `capex_detailed_soft_capex_breakdown` metric provides the capex breakdown with
 the additional soft capex breakdown.
@@ -279,7 +280,7 @@ print(f"Construction Financing CapEx (millions, USD): {project.construction_fina
 
 The supply chain CapEx (`supply_chain_capex`) directly captures the user-provided
 `supply_chain_capex` from the `project_parameters` section of the project configuration. This
-value should encompass any project-level investements in supply chain development, port upgrade,
+value should encompass any project-level investments in supply chain development, port upgrade,
 community benefit agreements, fisheries mitigation funds, community or research initiatives, and
 US-built vessels.
 

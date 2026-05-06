@@ -7,10 +7,10 @@ For details of the code implementation, please see the
 ## Overview
 
 The `MooredSubInstallation` module simulates the manufacture and installation
-of moored substuctures for a floating offshore wind project. The installation
+of moored substructures for a floating offshore wind project. The installation
 procedures include the time required to manufacture a substructure at quayside,
 assemble a turbine on the substructure, ballast the completed assembly, tow
-the completed assembly to site and hook up the pre-installed moooring lines.
+the completed assembly to site and hook up the pre-installed mooring lines.
 
 ## Configuration
 
@@ -29,7 +29,7 @@ config = {
     "towing_groups": {
         "towing_vessel": 1,  # Vessels used to tow the substructure to site.
         "ahts_vessels": 3,  # Number of anchor handling/station keeping vessels
-        "num_groups": 1  # Number of independent groups. Optional, defualt: 1.
+        "num_groups": 1  # Number of independent groups. Optional, default: 1.
     },
 
     "port": {

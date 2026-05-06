@@ -21,11 +21,11 @@ Offshore Renewables Balance of system and Installation Tool
 - [Rob Hammond](https://www.linkedin.com/in/rob-hammond-33583756/)
 - [Nick Riccobono](https://www.linkedin.com/in/nicholas-riccobono-674a3b43/)
 
-### Curent Maintainers
+### Current Maintainers
 
 - Rob Hammond
 
-## Documentationa
+## Documentation
 
 Please visit the documentation site at https://nlrwindsystems.github.io/ORBIT/
 
@@ -92,7 +92,7 @@ pip install jupyterlab
 
 ### Source Installation
 
-For users looking to modify ORBIT or build their own models to incorporte, installing
+For users looking to modify ORBIT or build their own models to incorporate, installing
 from the source code is required.
 
 1. Open a terminal/Anaconda Prompt session and navigate to your desired folder location
@@ -129,7 +129,7 @@ from the source code is required.
 
 ### Development Setup
 
-For more advanced users, such as those interested in building the documentation localling, running
+For more advanced users, such as those interested in building the documentation locally, running
 tests, or even contributing code back to the library, please use the following instructions.
 
 1. Open a terminal/Anaconda Prompt session and navigate to your desired folder location
@@ -160,7 +160,7 @@ tests, or even contributing code back to the library, please use the following i
    pip install -3 .
    ```
 
-   For developers install the developer dependences in addition:
+   For developers install the developer dependencies in addition:
 
    ```bash
    pip install -e .[dev,docs]
