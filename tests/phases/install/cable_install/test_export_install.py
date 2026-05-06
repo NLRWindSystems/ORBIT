@@ -1,9 +1,9 @@
 """Testing framework for the `ExportCableInstallation` class."""
 
 __author__ = ["Rob Hammond", "Jake Nunemaker"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "Jake.Nunemaker@nrel.gov"
+__email__ = "Jake.Nunemaker@nlr.gov"
 
 
 import warnings
@@ -265,25 +265,7 @@ def test_deprecated_values():
 
     deprecated["export_system"] = new_export_system
 
-    with pytest.deprecated_call():
-
-        # sim = ExportCableInstallation(base)
-        # sim.run()
+    with pytest.raises(KeyError):
 
         sim = ExportCableInstallation(deprecated)
         sim.run()
-
-        # assert len(w) == 2
-        # assert issubclass(w[0].category, DeprecationWarning)
-        # assert (
-        #    str(w[0].message)
-        #    == "landfall dictionary will be deprecated and moved \
-        #            into [export_system][landfall]."
-        # )
-
-        # assert issubclass(w[1].category, DeprecationWarning)
-        # assert (
-        #    str(w[1].message)
-        #    == "[export_system][interconnection] will be deprecated and \
-        #            moved into [export_system][landfall][interconnection]."
-        # )

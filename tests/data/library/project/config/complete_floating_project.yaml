@@ -41,11 +41,9 @@ site:
   distance_to_landfall: 100
 substructure:
   takt_time: 168
-support_vessel: test_support_vessel
 ahts_vessel: test_ahts_vessel
 towing_vessel: test_towing_vessel
 towing_vessel_groups:
-  station_keeping_vessels: 2
   towing_vessels: 3
 turbine: 12MW_generic
 wtiv: test_floating_heavy_lift_vessel

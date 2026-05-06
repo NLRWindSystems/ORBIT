@@ -1,9 +1,9 @@
 """Provides the `ArraySystemDesign` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 
 import warnings
@@ -209,7 +209,8 @@ class ArraySystemDesign(CableSystem):
         Calculates the required full and partial string design.
 
         .. note:: For custom layouts this is to provide guidance on the number
-        of strings.
+            of strings.
+
         """
 
         self._compute_maximum_turbines_per_cable()
@@ -825,7 +826,8 @@ class CustomArraySystemDesign(ArraySystemDesign):
         ]
         rows.insert(0, first)
         rows.insert(0, self.COLUMNS)
-        print(f"Saving custom array to: <library_path>/cables/{save_name}.csv")
+        fp = folder if folder == "cables" else "project/plant"
+        print(f"Saving custom array to: <library_path>/{fp}/{save_name}.csv")
         export_library_specs(folder, save_name, rows, file_ext="csv")
 
     def _format_windfarm_data(self):

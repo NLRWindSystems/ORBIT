@@ -6,9 +6,9 @@ __author__ = [
     "Rob Hammond",
     "Nick Riccobono",
 ]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Nick Riccobono"
-__email__ = ["nicholas.riccobono@nrel.gov", "rob.hammond@nrel.gov"]
+__email__ = ["nicholas.riccobono@nlr.gov", "rob.hammond@nlr.gov"]
 __status__ = "Development"
 
 
@@ -17,4 +17,4 @@ from ORBIT.config import load_config, save_config
 from ORBIT.parametric import ParametricManager
 from ORBIT.supply_chain import SupplyChainManager
 
-__version__ = "1.2.6"
+__version__ = "1.3"

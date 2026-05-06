@@ -10,9 +10,6 @@ plant:
   row_spacing: 7
   substation_distance: 1
   turbine_spacing: 7
-landfall:
-  interconnection_distance: 3
-  trench_length: 2
 turbine: 12MW_generic
 # Vessels
 array_cable_install_vessel: example_cable_lay_vessel
@@ -32,6 +29,9 @@ array_system_design:
 export_system_design:
   cables: XLPE_500mm_132kV
   percent_added_length: 0.0
+  landfall:
+    interconnection_distance: 3
+    trench_length: 2
 scour_protection_design:
   cost_per_tonne: 40
   scour_protection_depth: 1

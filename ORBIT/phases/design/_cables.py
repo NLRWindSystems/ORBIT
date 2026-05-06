@@ -1,9 +1,9 @@
 """Provides the base `Cable`, `Plant`, and `CableSystem` classes."""
 
 __author__ = ["Matt Shields", "Rob Hammond"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 
 import math
@@ -17,7 +17,7 @@ from ORBIT.phases.design import DesignPhase
 
 
 class Cable:
-    r"""
+    """
     Base cable class.
 
     Parameters
@@ -421,7 +421,7 @@ class CableSystem(DesignPhase):
 
     @property
     def free_cable_length(self):
-        """Returns the vertical length of a cable section, in :mat:`km`."""
+        """Returns the vertical length of a cable section, in :math:`km`."""
 
         _design = f"{self.cable_type}_system_design"
         depth = self.config["site"]["depth"]
@@ -531,14 +531,14 @@ class CableSystem(DesignPhase):
         output : dict
             Dictionary of the number of section lengths and the linear density
             of each cable type.
-             - <`cable_type`>_system: dict
+
+            - <`cable_type`>_system: dict
                 - cables: dict
                     - `Cable.name`: dict
-                        - sections: [
-                            (length of unique section, number of sections)
-                          ],
+                        - sections: [(length of unique section, number of sections)],
                         - linear_density: `Cable.linear_density`
-        """
+
+        """  # noqa: E501
 
         if self.cables is None:
             raise Exception(f"Has {self.__class__.__name__} been ran?")

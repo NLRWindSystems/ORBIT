@@ -1,7 +1,7 @@
 __author__ = "Jake Nunemaker, Sophie Bredenkamp"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "Jake.Nunemaker@nrel.gov"
+__email__ = "Jake.Nunemaker@nlr.gov"
 
 
 import warnings
@@ -19,7 +19,6 @@ base = {
     "site": {"distance_to_landfall": 50, "depth": 30},
     "plant": {"capacity": 500},
     "export_system_design": {"cables": "XLPE_630mm_220kV"},
-    "landfall": {},
     "substation_design": {
         "oss_pile_cost_rate": 1200,  # need to set this for kwarg tests
     },
@@ -537,6 +536,6 @@ def test_deprecated_landfall():
     deprecated = deepcopy(base)
     deprecated["landfall"] = {"interconnection_distance": 4}
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = ElectricalDesign(deprecated)
         sim.run()

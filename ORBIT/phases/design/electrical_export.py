@@ -1,19 +1,18 @@
 """Provides the `ElectricalDesign` class."""
 
 __author__ = ["Sophie Bredenkamp"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = ""
 __email__ = []
 
-from warnings import warn
 
 import numpy as np
 
 from ORBIT.phases.design._cables import CableSystem
 
 """
-[1] Maness et al. 2017, NREL Offshore Balance-of-System Model.
-https://www.nrel.gov/docs/fy17osti/66874.pdf
+[1] Maness et al. 2017, NLR Offshore Balance-of-System Model.
+https://www.nlr.gov/docs/fy17osti/66874.pdf
 """
 
 
@@ -37,9 +36,9 @@ class ElectricalDesign(CableSystem):
         Total length of cable required to trasmit power.
     total_mass : float
         Total mass of cable required to transmit power.
-    sections_cables : np.ndarray, shape: (`num_cables, )
+    sections_cables : np.ndarray, shape: (`num_cables`, )
         An array of `cable`.
-    sections_lengths : np.ndarray, shape: (`num_cables, )
+    sections_lengths : np.ndarray, shape: (`num_cables`, )
         An array of `length`.
 
     """
@@ -120,17 +119,14 @@ class ElectricalDesign(CableSystem):
 
         self._design = self.config["export_system_design"]
 
-        _landfall = self.config.get("landfall", {})
-        if _landfall:
-            warn(
-                "landfall dictionary will be deprecated and moved"
-                " into [export_system_design][landfall].",
-                DeprecationWarning,
-                stacklevel=2,
+        if self.config.get("landfall", None) is not None:
+            msg = (
+                "The top-level 'landfall' dictionary is deprecated and"
+                " should be nested in the 'export_system_design' dictionary."
             )
+            raise KeyError(msg)
 
-        else:
-            _landfall = self._design.get("landfall", {})
+        _landfall = self._design.get("landfall", {})
 
         self._distance_to_interconnection = _landfall.get(
             "interconnection_distance", 3

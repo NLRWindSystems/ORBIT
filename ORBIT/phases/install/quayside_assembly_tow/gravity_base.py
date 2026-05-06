@@ -1,11 +1,10 @@
 """Installation strategies for gravity-base substructures."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
-from warnings import warn
 
 import simpy
 from marmot import le, process
@@ -27,13 +26,11 @@ class GravityBasedInstallation(InstallPhase):
 
     #:
     expected_config = {
-        "support_vessel": "str, (optional)",
         "wtiv": "str, (optional)",
         "ahts_vessel": "str",
         "towing_vessel": "str",
         "towing_vessel_groups": {
             "towing_vessels": "int",
-            "station_keeping_vessels": "int (optional)",
             "ahts_vessels": "int (optional, default: 1)",
             "num_groups": "int (optional)",
         },
@@ -82,15 +79,14 @@ class GravityBasedInstallation(InstallPhase):
 
         self.initialize_port()
         self.initialize_substructure_production()
-        
+
         if "wtiv" not in self.config:
             self.initialize_turbine_assembly()
-        
+
         self.initialize_queue()
         self.initialize_towing_groups()
         self.initialize_support_vessel()
-    
-    
+
     @property
     def system_capex(self):
         """Returns total procurement cost of the substructures."""
@@ -142,10 +138,12 @@ class GravityBasedInstallation(InstallPhase):
 
             self.env.register(a)
             a.start()
-            
+
             if "wtiv" in self.config:
-                self.env.process(self.forward_substructures_to_assembly_storage(a))
-                
+                self.env.process(
+                    self.forward_substructures_to_assembly_storage(a)
+                )
+
             self.sub_assembly_lines.append(a)
 
         try:
@@ -183,7 +181,6 @@ class GravityBasedInstallation(InstallPhase):
             self.env.register(a)
             a.start()
             self.turbine_assembly_lines.append(a)
-        
 
     def initialize_towing_groups(self, **kwargs):
         """
@@ -235,16 +232,12 @@ class GravityBasedInstallation(InstallPhase):
         Initializes Multi-Purpose Support Vessel to perform installation
         processes at site.
         """
-
-        specs = self.config.get("support_vessel", None)
-
-        if specs is not None:
-            warn(
-                "support_vessel will be deprecated and replaced with"
-                " towing_vessels and ahts_vessel in the towing groups.\n",
-                DeprecationWarning,
-                stacklevel=2,
+        if self.config.get("support_vessel") is not None:
+            msg = (
+                "`support_vessel` has been replaced with the separate"
+                " `towing_vessels`, `towing_groups`, and `ahts_vessel`."
             )
+            raise KeyError(msg)
 
         specs = self.config["ahts_vessel"]
         vessel = self.initialize_vessel("Multi-Purpose AHTS Vessel", specs)
@@ -258,13 +251,12 @@ class GravityBasedInstallation(InstallPhase):
         )
 
         if station_keeping_vessels is not None:
-            warn(
-                "['towing_vessl_groups]['station_keeping_vessels']"
-                " will be deprecated and replaced with"
-                " ['towing_vessl_groups]['ahts_vessels'].\n",
-                DeprecationWarning,
-                stacklevel=2,
+            msg = (
+                "`towing_vessl_groups.station_keeping_vessels` has been"
+                " replaced with the separate `towing_vessels`,"
+                " `towing_groups`, and `ahts_vessel`."
             )
+            raise KeyError(msg)
 
         station_keeping_vessels = self.config["towing_vessel_groups"].get(
             "ahts_vessels", 1
@@ -285,29 +277,32 @@ class GravityBasedInstallation(InstallPhase):
 
         # Start with the base operational delays
         delays = {
-            k: self.operational_delay(str(k))
-            for k in self.sub_assembly_lines
+            k: self.operational_delay(str(k)) for k in self.sub_assembly_lines
         }
 
         # Add turbine assembly lines only if "wtiv" not in config
         if "wtiv" not in self.config:
-            delays.update({
-                k: self.operational_delay(str(k))
-                for k in self.turbine_assembly_lines
-            })
+            delays.update(
+                {
+                    k: self.operational_delay(str(k))
+                    for k in self.turbine_assembly_lines
+                }
+            )
 
         # Add installation groups
-        delays.update({
-            k: self.operational_delay(str(k))
-            for k in self.installation_groups
-        })
+        delays.update(
+            {
+                k: self.operational_delay(str(k))
+                for k in self.installation_groups
+            }
+        )
 
         # Add support vessel
-        delays[self.support_vessel] = self.operational_delay(str(self.support_vessel))
+        delays[self.support_vessel] = self.operational_delay(
+            str(self.support_vessel)
+        )
 
-        return {
-            "operational_delays": delays
-        }
+        return {"operational_delays": delays}
 
     def operational_delay(self, name):
         """Gathers the operational delays from the logs."""
@@ -317,22 +312,30 @@ class GravityBasedInstallation(InstallPhase):
 
         return delay
 
-    def forward_substructures_to_assembly_storage(self, SubstructureAssemblyLine):
+    def forward_substructures_to_assembly_storage(
+        self, SubstructureAssemblyLine
+    ):
+        """Move the substructures to the assembly storage area until ready for
+        assembly.
+        """
         while True:
             # Wait until there is both:
             # - an item in wet_storage
             # - room in assembly_storage
-            if len(self.assembly_storage.items) < self.assembly_storage.capacity:
+            if (
+                len(self.assembly_storage.items)
+                < self.assembly_storage.capacity
+            ):
                 item = yield self.wet_storage.get()
                 yield self.assembly_storage.put(item)
-                # submit action log item saying what happened "moved from wet to sub assembly storage"
                 SubstructureAssemblyLine.submit_action_log(
-                "Move GBF from Wet Storage to Assembly Storage", 0
+                    "Move GBF from Wet Storage to Assembly Storage", 0
                 )
             else:
                 # Wait a short amount of time before trying again
                 yield self.env.timeout(0.001)
-    
+
+
 @process
 def transfer_gbf_substructures_from_storage(
     group,
