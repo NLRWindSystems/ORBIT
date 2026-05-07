@@ -33,7 +33,7 @@ def load_config(filepath):
 
 
 def prepare_config_for_save(config: dict | benedict) -> dict:
-    """Prepare the configuration file for compatbility with the YAML
+    """Prepare the configuration file for compatibility with the YAML
     ``SafeDump`` class used for saving configurations to file.
 
     Parameters
@@ -47,6 +47,7 @@ def prepare_config_for_save(config: dict | benedict) -> dict:
         ORBIT configuration dictionary where all NumPy data types are converted
         to standard Python data types, e.g. ``np.float64`` -> ``float``.
     """
+    config = dict(config)
     for k, v in config.items():
         match v:
             case np.ndarray():
@@ -56,7 +57,7 @@ def prepare_config_for_save(config: dict | benedict) -> dict:
             case np.integer():
                 config[k] = int(v)
             case benedict():
-                config[k] = prepare_config_for_save(v.dict())
+                config[k] = prepare_config_for_save(dict(v))
             case dict():
                 config[k] = prepare_config_for_save(v)
             case _:
@@ -90,8 +91,6 @@ def save_config(
             raise FileExistsError(f"File already exists at '{filepath}'.")
 
     config = prepare_config_for_save(config)
-    if isinstance(config, benedict):
-        config = config.dict()
 
     with filepath.open("w") as f:
         yaml.dump(config, f, Dumper=Dumper, default_flow_style=False)
