@@ -158,7 +158,6 @@ def test_kwargs():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         kwargs = {kw: default + 2}
 
@@ -205,7 +204,6 @@ def test_kwargs_in_ProjectManager():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         processes = {kw: default + 2}
 
@@ -250,7 +248,6 @@ def test_multiple_tower_sections():
 
     df = pd.DataFrame(sim.env.actions)
     for vessel in df["agent"].unique():
-
         vl = df[df["agent"] == vessel].copy()
         vl = vl.assign(shift=(vl["time"] - vl["time"].shift(1)))
 

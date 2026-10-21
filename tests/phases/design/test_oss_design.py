@@ -75,7 +75,6 @@ def test_oss_kwargs():
     base_cost = o.total_cost
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["substation_design"] = {}
         config["substation_design"]["oss_pile_cost_rate"] = 1500

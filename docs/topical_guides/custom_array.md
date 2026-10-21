@@ -160,7 +160,9 @@ There are a few items worth noting in the layout:
 ```{code-cell} ipython3
 dudgeon_array_no_data = pd.read_csv(library_path / f"project/plant/{save_name}.csv")
 dudgeon_array_no_data
+```
 
+```{code-cell} ipython3
 # NOTE: remove this line if you would like to keep this data
 Path(library_path / "project/plant/dudgeon_array_no_data.csv").unlink()
 ```
@@ -256,7 +258,7 @@ to convert the WGS-84 coordinates to relative coordinates.
 
 ```{code-cell} ipython3
 print(f"{'Cable Type':<16} | {'Cost in USD (lat,lon)':>20} | {'Cost in USD (dist_lat,dist_lon)':>15}")
-for (cable1, cost1), (cable2, cost2) in zip(array.cost_by_type.items(), array_distance.cost_by_type.items()):
+for (cable1, cost1), (_cable2, cost2) in zip(array.cost_by_type.items(), array_distance.cost_by_type.items(), strict=True):
     print(f"{cable1:<16} | ${cost1:>20,.2f} | ${cost2:>15,.2f}")
 
 print(f"{'Total':<16} | ${array.total_cable_cost:>20,.2f} | ${array_distance.total_cable_cost:>15,.2f}")
@@ -378,7 +380,7 @@ names = ("straight-line distance", "distance-based coordinates", "with exclusion
 simulations = (sim2, sim3, sim4, sim5)
 
 print(f"{'Simulation':<26} | {'Cost (in USD)':>14} | {'Time (in hours)':>16}")
-for name, simulation in zip(names, simulations):
+for name, simulation in zip(names, simulations, strict=True):
     simulation.run()
     cost = simulation.installation_capex
     time = simulation.total_phase_time

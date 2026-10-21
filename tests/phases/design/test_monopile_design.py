@@ -80,7 +80,6 @@ def test_monopile_kwargs():
     base_results = m._outputs["monopile"]
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["monopile_design"] = {}
         config["monopile_design"][k] = v
@@ -107,7 +106,6 @@ def test_transition_piece_kwargs():
     base_results = m._outputs["transition_piece"]
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["monopile_design"] = {}
         config["monopile_design"][k] = v

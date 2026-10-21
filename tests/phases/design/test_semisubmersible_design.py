@@ -55,7 +55,6 @@ def test_design_kwargs():
     base_cost = s.total_cost
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["semisubmersible_design"] = {}
         config["semisubmersible_design"][k] = v

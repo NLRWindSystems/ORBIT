@@ -212,7 +212,6 @@ class ParametricManager:
 
         funcs = {}
         for k, v in outputs.items():
-
             split = v.split("[")
             attr = split[0]
 
@@ -308,7 +307,6 @@ class LinearModel:
 
         out = ""
         for i, (k, v) in enumerate(params.items()):
-
             if i == 0:
                 pre = ""
 

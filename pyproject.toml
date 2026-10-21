@@ -12,7 +12,7 @@ authors = [
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 description = "Offshore Renewables Balance of system and Installation Tool"
-requires-python = ">3.9"
+requires-python = ">=3.11, <3.16"
 license = {file = "LICENSE"}
 dependencies = [
   "numpy",
@@ -43,11 +43,11 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Scientific/Engineering",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
@@ -61,7 +61,6 @@ changelog = "https://github.com/NLRWindSystems/ORBIT/blob/main/CHANGELOG.md"
 [project.optional-dependencies]
 dev = [
   "pre-commit",
-  "black",
   "isort",
   "pytest>=9",
   "pytest-cov",
@@ -90,24 +89,6 @@ exclude = ["*.tests", "*.tests.*", "tests.*", "tests"]
 [tool.setuptools.dynamic]
 version = {attr = "ORBIT.__version__"}
 
-[tool.black]
-line-length = 79
-target-version = ['py310']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
-
 [tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
@@ -130,7 +111,7 @@ length_sort = "1"
 
 [tool.ruff]
 line-length = 79
-target-version = "py310"
+target-version = "py311"
 exclude = [
   ".git",
   "__pycache__",
@@ -139,6 +120,7 @@ exclude = [
   "dist",
   "^tests/",
   ".ruff_cache",
+  "misc/"
 ]
 
 [tool.ruff.lint]
@@ -169,13 +151,14 @@ ignore = [
   "D401",
   "E731",
   "E402",
-  "PD901",
+  "PD011",
   "PERF203",
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "*/__init__.py" = ["D104", "F401"]
 "tests/*" = ["D100", "D101", "D102", "D103"]
+"**/*.ipynb" = ["E501", "D102", "D103", "PD010"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"

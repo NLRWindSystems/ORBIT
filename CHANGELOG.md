@@ -1,6 +1,13 @@
 (changelog)=
 # Changelog
 
+## 1.3.1
+
+- Ends support for Python 3.10, and enables Python 3.15.
+- Replaces black with ruff for automated formatting, and brings the pre-commit workflow up to date
+  while ensuring repo-wide compliance with updated rulesets.
+- Add a tagged Zenodo release workflow.
+
 ## 1.3
 
 ### Bug Fixes

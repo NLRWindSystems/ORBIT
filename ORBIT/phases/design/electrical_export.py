@@ -653,6 +653,6 @@ class ElectricalDesign(CableSystem):
             + self.mpt_cost
         )
 
-        self._outputs["export_system"][
-            "onshore_substation_costs"
-        ] = self.onshore_cost
+        self._outputs["export_system"]["onshore_substation_costs"] = (
+            self.onshore_cost
+        )

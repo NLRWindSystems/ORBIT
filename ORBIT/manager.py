@@ -211,7 +211,6 @@ class ProjectManager:
             df = df.loc[df["message"].str.contains("Exceeded")]
 
             for msg in df["message"].unique():
-
                 idx = df.loc[df["message"] == msg].index[0]
                 phase = df.loc[idx, "phase"]
                 print(f"{phase}:\n\t {msg}")
@@ -539,7 +538,6 @@ class ProjectManager:
         right = {k: right[k] for k in set(new).intersection(set(right))}
 
         for k, val in right.items():
-
             if isinstance(new.get(k, None), dict) and isinstance(val, dict):
                 new[k] = cls.remove_keys(new[k], val)
 
@@ -786,7 +784,6 @@ class ProjectManager:
 
         # Run defined
         for name, start in defined.items():
-
             _, logs = self.run_install_phase(name, start, **kwargs)
 
             if logs is None:
@@ -820,7 +817,6 @@ class ProjectManager:
         skipped = {}
 
         while True:
-
             phases = {**phases, **skipped}
             if not phases:
                 break
@@ -872,7 +868,6 @@ class ProjectManager:
         elapsed = self.phase_times[target]
 
         if isinstance(perc, int | float):
-
             if (perc < 0.0) or (perc > 1.0):
                 raise ValueError(
                     "Dependent phase perc must be between 0. and 1."
@@ -881,7 +876,6 @@ class ProjectManager:
             return start + elapsed * perc
 
         if isinstance(perc, str):
-
             try:
                 delta = dt.timedelta(
                     **{
@@ -953,7 +947,6 @@ class ProjectManager:
         depends = {}
 
         for k, v in phases.items():
-
             if isinstance(v, int | float | str):
                 defined[k] = v
 
@@ -975,7 +968,6 @@ class ProjectManager:
             )
 
         for k, v in defined.items():
-
             if isinstance(v, int):
                 continue
 
@@ -1156,7 +1148,7 @@ class ProjectManager:
             dig = list(np.digitize(times, self.month_bins))
 
         except ValueError:
-            return {i: 0.0 for i in range(1, lifetime * 12)}
+            return dict.fromkeys(range(1, lifetime * 12), 0.0)
 
         opex = {}
         for i in range(1, lifetime * 12):
@@ -1260,7 +1252,6 @@ class ProjectManager:
 
         summary = {}
         for i in range(1, len(self.month_bins)):
-
             unique, counts = np.unique(
                 arr["progress"][dig == i], return_counts=True
             )
@@ -1299,7 +1290,6 @@ class ProjectManager:
         dates = {}
 
         for phase, _start in self.config["install_phases"].items():
-
             try:
                 start = dt.datetime.strptime(_start, self.date_format_short)
 
@@ -1939,8 +1929,7 @@ class ProjectManager:
 
         else:
             raise ValueError(
-                f"Unrecognized level '{level}'."
-                " Must be 'ACTION' or 'DEBUG'."
+                f"Unrecognized level '{level}'. Must be 'ACTION' or 'DEBUG'."
             )
 
         out.to_csv(filepath, index=False)

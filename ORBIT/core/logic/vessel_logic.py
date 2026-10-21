@@ -155,7 +155,6 @@ def shuttle_items_to_queue(vessel, port, queue, distance, items, **kwargs):
     transit_time = vessel.transit_time(distance)
 
     while True:
-
         if vessel.at_port:
             vessel.submit_debug_log(message=f"{vessel} is at port.")
 
@@ -279,16 +278,13 @@ def get_list_of_items_from_port(vessel, port, items, **kwargs):
                 proposed_mass = vessel.storage.current_cargo_mass + total_mass
 
                 if vessel.storage.current_cargo_mass == 0:
-
                     if proposed_deck_space > vessel.storage.max_deck_space:
-
                         msg = (
                             f"Warning: '{vessel}' Deck Space Capacity Exceeded"
                         )
                         vessel.submit_debug_log(message=msg)
 
                     if proposed_mass > vessel.storage.max_cargo_mass:
-
                         msg = (
                             f"Warning: '{vessel}' Cargo Mass Capacity Exceeded"
                         )
@@ -356,7 +352,6 @@ def shuttle_items_to_queue_wait(
 
     n = 0
     while n < assigned:
-
         vessel.submit_debug_log(message=f"{vessel} is at port.")
 
         # Get list of items

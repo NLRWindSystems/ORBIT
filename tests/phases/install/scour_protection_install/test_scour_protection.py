@@ -61,7 +61,6 @@ def test_kwargs():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         kwargs = {kw: default + 2}
 
@@ -96,7 +95,6 @@ def test_kwargs_in_ProjectManager():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         processes = {kw: default + 2}
 

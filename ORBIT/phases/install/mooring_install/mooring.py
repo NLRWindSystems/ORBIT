@@ -169,9 +169,7 @@ def install_mooring_systems(vessel, port, distance, depth, systems, **kwargs):
             vessel.at_site = True
 
         if vessel.at_site:
-
             if vessel.storage.items:
-
                 system = yield vessel.get_item_from_storage(
                     "MooringSystem", **kwargs
                 )
