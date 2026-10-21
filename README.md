@@ -6,6 +6,7 @@ Offshore Renewables Balance of system and Installation Tool
 [![PyPI downloads](https://img.shields.io/pypi/dm/orbit-nrel?link=https%3A%2F%2Fpypi.org%2Fproject%2Forbit-nrel%2F)](https://pypi.org/project/orbit-nrel/)
 [![Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![image](https://img.shields.io/pypi/pyversions/orbit-nrel.svg)](https://pypi.python.org/pypi/orbit-nrel)
+[![DOI 10.5281/zenodo.23547748](https://zenodo.org/badge/DOI/10.5281/zenodo.23547748.svg)](https://doi.org/10.5281/zenodo.23547748)
 [![DOI:10.2172/1660132](https://zenodo.org/badge/DOI/10.2172/1660132.svg)](https://doi.org/10.2172/1660132)
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NLRWindSystems/ORBIT/dev?filepath=examples)
