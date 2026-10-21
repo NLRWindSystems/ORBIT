@@ -12,7 +12,7 @@ authors = [
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 description = "Offshore Renewables Balance of system and Installation Tool"
-requires-python = ">=3.11, <3.15"
+requires-python = ">=3.11, <3.16"
 license = {file = "LICENSE"}
 dependencies = [
   "numpy",
@@ -120,6 +120,7 @@ exclude = [
   "dist",
   "^tests/",
   ".ruff_cache",
+  "misc/"
 ]
 
 [tool.ruff.lint]
@@ -150,13 +151,14 @@ ignore = [
   "D401",
   "E731",
   "E402",
-  "PD901",
+  "PD011",
   "PERF203",
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "*/__init__.py" = ["D104", "F401"]
 "tests/*" = ["D100", "D101", "D102", "D103"]
+"**/*.ipynb" = ["E501", "D102", "D103", "PD010"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
