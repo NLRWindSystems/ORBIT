@@ -497,7 +497,6 @@ def install_moored_substructures(
     n = 0
     while n < substructures:
         if queue.vessel:
-
             start = vessel.env.now
             if n == 0:
                 vessel.mobilize()

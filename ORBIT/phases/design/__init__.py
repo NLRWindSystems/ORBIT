@@ -3,7 +3,7 @@
 __author__ = ["Jake Nunemaker", "Rob Hammond"]
 __copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = ["Jake Nunemaker", "Rob Hammond"]
-__email__ = ["jake.nunemaker@nlr.gov" "rob.hammond@nlr.gov"]
+__email__ = ["jake.nunemaker@nlr.govrob.hammond@nlr.gov"]
 
 
 from .design_phase import DesignPhase  # isort:skip

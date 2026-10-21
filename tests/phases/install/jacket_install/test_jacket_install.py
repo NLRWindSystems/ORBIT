@@ -155,7 +155,6 @@ def test_kwargs_piles():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         kwargs = {kw: default + 2}
 
@@ -198,7 +197,6 @@ def test_kwargs_suction():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         kwargs = {kw: default + 2}
 

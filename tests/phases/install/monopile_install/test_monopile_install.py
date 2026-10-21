@@ -115,7 +115,6 @@ def test_kwargs():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
 
         if kw == "mono_drive_rate":
@@ -170,7 +169,6 @@ def test_kwargs_in_ProjectManager():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
 
         if kw == "mono_drive_rate":

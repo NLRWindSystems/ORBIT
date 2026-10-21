@@ -266,6 +266,5 @@ def test_deprecated_values():
     deprecated["export_system"] = new_export_system
 
     with pytest.raises(KeyError):
-
         sim = ExportCableInstallation(deprecated)
         sim.run()

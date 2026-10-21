@@ -207,7 +207,7 @@ stating the form of the curve with the coefficients from the curve fit.
     ...
 
     # Reshape the data into a new array where each element is a three-dimensional data point
-    data_to_fit = np.array(list(zip(self.x, self.y, self.z)))
+    data_to_fit = np.array(list(zip(self.x, self.y, self.z, strict=True)))
 
     # Stack the data into a column matrix in the form of the equation that you're
     # implementing. Here, the equation is z = ax + by + c and data_to_fit[:,0] are the x
@@ -276,8 +276,8 @@ Replace any of these throughout the notebook to customize a cost model parameter
 ```{code-cell} ipython3
 BASE_CONFIG = load_config(example_dir / "configs/nrwal.yaml")
 
-DEPTHS = [i for i in range(5, 60, 5)]           # Ocean depth in meters
-MEAN_WIND_SPEED = [i for i in range(2, 20, 2)]  # Mean wind speed in m/s
+DEPTHS = list(range(5, 60, 5))  # Ocean depth in meters
+MEAN_WIND_SPEED = list(range(2, 20, 2))  # Mean wind speed in m/s
 ```
 
 ```{code-cell} ipython3
@@ -296,7 +296,7 @@ orbit_to_nrwal_params = {
 ```{code-cell} ipython3
 class Curves():
     """
-    This class contains static methods for fitting data to various curve types.
+    Provides static methods for fitting data to various curve types.
     Though they could exist outside of a class, consolidating them into a consistent
     namespace allows for a simpler API throughout the script.
     """
@@ -304,7 +304,7 @@ class Curves():
     @staticmethod
     def polynomial_eval(coeffs, data_points):
         """
-        This method evaluates a curve defined by a polynomial equation given a set of
+        Evaluates a curve defined by a polynomial equation given a set of
         coefficients and data points.
 
         Parameters
@@ -464,7 +464,7 @@ class CostFunction():
     #     pass
 
     def linear_2d(self):
-        data_to_fit = np.array(list(zip(self.x, self.y, self.z)))
+        data_to_fit = np.array(list(zip(self.x, self.y, self.z, strict=True)))
 
         # Best-fit linear plane
         A = np.c_[
@@ -484,7 +484,7 @@ class CostFunction():
         )
 
     def quadratic_2d(self):
-        data_to_fit = np.array(list(zip(self.x, self.y, self.z)))
+        data_to_fit = np.array(list(zip(self.x, self.y, self.z, strict=True)))
 
         # best-fit quadratic curve
         A = np.c_[
@@ -746,7 +746,7 @@ cost_tlp = CostFunction(
     },
     parameters={
         "site.depth": DEPTHS,
-        "mooring_system_design.draft_depth": [i for i in range(5, 100, 5)] # Draft depth 5-100 meters
+        "mooring_system_design.draft_depth": list(range(5, 100, 5)) # Draft depth 5-100 meters
     },
     results=results
 )
@@ -836,7 +836,7 @@ cost_touchdown_distance = CostFunction(
         "design_phases": [design_phase],
     },
     parameters={
-        "array_system_design.touchdown_distance": [i for i in range(0, 100, 10)],
+        "array_system_design.touchdown_distance": list(range(0, 100, 10)),
     },
     results=results
 )
@@ -900,7 +900,7 @@ cost_depth_touchdown_distance = CostFunction(
     },
     parameters={
         "site.depth": DEPTHS,
-        "array_system_design.touchdown_distance": [i for i in range(0, 100, 10)],
+        "array_system_design.touchdown_distance": list(range(0, 100, 10)),
     },
     results=results
 )
@@ -926,7 +926,7 @@ cost_touchdown_cabledepth = CostFunction(
     },
     parameters={
         "array_system_design.floating_cable_depth": DEPTHS,
-        "array_system_design.touchdown_distance": [i for i in range(0, 100, 10)],
+        "array_system_design.touchdown_distance": list(range(0, 100, 10)),
     },
     results=results
 )
@@ -995,7 +995,7 @@ cost_hvac = CostFunction(
     },
     parameters={
         "site.depth": DEPTHS,
-        "site.distance_to_landfall": [i for i in range(0, 400, 10)],
+        "site.distance_to_landfall": list(range(0, 400, 10)),
     },
     results=results
 )
@@ -1008,7 +1008,7 @@ cost_hvdc = CostFunction(
     },
     parameters={
         "site.depth": DEPTHS,
-        "site.distance_to_landfall": [i for i in range(0, 400, 10)],
+        "site.distance_to_landfall": list(range(0, 400, 10)),
     },
     results=results
 )

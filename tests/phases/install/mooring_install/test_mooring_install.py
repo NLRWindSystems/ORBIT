@@ -74,7 +74,6 @@ def test_kwargs(anchor, key):
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         kwargs = {kw: default + 2}
 
@@ -117,7 +116,6 @@ def test_kwargs_in_ProjectManager(anchor, key):
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         processes = {kw: default + 2}
         new_config = deepcopy(base)

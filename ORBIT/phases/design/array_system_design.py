@@ -349,11 +349,11 @@ class ArraySystemDesign(CableSystem):
             ix = row.sum()
             # Fill each string (row in array) with the cables names for valid
             # positions in the layout starting from the end
-            self.sections_cables[
-                i, 0 : self.num_turbines_full_string - ix
-            ] = self.full_string[::-1][: self.num_turbines_full_string - ix][
-                ::-1
-            ]  # noqa: E501
+            self.sections_cables[i, 0 : self.num_turbines_full_string - ix] = (
+                self.full_string[::-1][: self.num_turbines_full_string - ix][
+                    ::-1
+                ]
+            )  # noqa: E501
 
     def run(self):
         """Runs all the functions to create an array sytem."""
@@ -597,7 +597,6 @@ class ArraySystemDesign(CableSystem):
 
         for i, row in enumerate(self.sections_cables):
             for cable, width in zip(max_string, string_widths, strict=False):
-
                 ix_to_plot = np.where(row == cable)[0]
                 if ix_to_plot.size == 0:
                     continue

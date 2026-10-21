@@ -52,11 +52,9 @@ def test_for_required_phase_structure():
     """
 
     for p in ProjectManager._install_phases:
-
         assert isinstance(p.expected_config, dict)
 
     for p in ProjectManager._design_phases:
-
         assert isinstance(p.expected_config, dict)
         assert isinstance(p.output_config, dict)
 
@@ -131,7 +129,6 @@ def test_find_key_match():
     ]
 
     for test in tests:
-
         i, expected = test
         response = TestProjectManager.find_key_match(i)
 
@@ -144,7 +141,6 @@ def test_find_key_match():
     ]
 
     for f in fails:
-
         assert TestProjectManager.find_key_match(f) is None
 
 
@@ -1017,7 +1013,6 @@ def test_construction_financing_factor_exception():
     }  # does not sum to 1.0
 
     with pytest.raises(ValueError):
-
         project = ProjectManager(config)
         project.construction_financing_factor()
 

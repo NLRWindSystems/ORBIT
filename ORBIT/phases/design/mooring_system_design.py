@@ -4,8 +4,7 @@ __author__ = "Jake Nunemaker, Becca Fuchs"
 __copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Nicholas Riccobono"
 __email__ = (
-    "jake.nunemaker@nlr.gov, rebecca.fuchs@nlr.gov,"
-    "nicholas.riccobono@nlr.gov"
+    "jake.nunemaker@nlr.gov, rebecca.fuchs@nlr.gov,nicholas.riccobono@nlr.gov"
 )
 
 from math import sqrt
@@ -174,7 +173,6 @@ class MooringSystemDesign(DesignPhase):
         draft = self._design.get("draft_depth", 20)
 
         if self.mooring_type == "Semitaut":
-
             # Interpolation of rope and chain length at project depth
             self.chain_length = interp1d(
                 self._semitaut_params["depths"],
@@ -214,13 +212,11 @@ class MooringSystemDesign(DesignPhase):
             ) / 1e3  # tonnes
 
         elif self.mooring_type == "Tlp":
-
             self.line_length = self.depth - draft
 
             self.line_mass = self.line_length * self.line_mass_per_m
 
         else:
-
             self.line_length = (
                 0.0002 * (self.depth**2) + 1.264 * self.depth + 47.776 + fixed
             )
@@ -238,7 +234,6 @@ class MooringSystemDesign(DesignPhase):
         """
 
         if self.mooring_type == "Semitaut":
-
             if self.anchor_type == "Drag Embedment":
                 self.anchor_mass = 20
 
@@ -256,7 +251,6 @@ class MooringSystemDesign(DesignPhase):
                 )
 
         else:
-
             if self.anchor_type == "Drag Embedment":
                 self.anchor_mass = 20
                 self.anchor_cost = self.breaking_load / 9.81 / 20.0 * 2000.0
@@ -280,7 +274,6 @@ class MooringSystemDesign(DesignPhase):
             )(self.depth).item()
 
         else:
-
             line_cost = self.line_length * self.line_cost_rate
 
         return line_cost

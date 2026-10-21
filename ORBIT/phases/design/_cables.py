@@ -415,7 +415,7 @@ class CableSystem(DesignPhase):
             return d
 
         if int(np.__version__[0]) < 2:
-            return np.trapz(np.sqrt(1 + np.gradient(y, x) ** 2), x)
+            return np.trapz(np.sqrt(1 + np.gradient(y, x) ** 2), x)  # noqa: NPY201
         else:
             return np.trapezoid(np.sqrt(1 + np.gradient(y, x) ** 2), x)
 
