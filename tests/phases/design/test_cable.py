@@ -1,9 +1,9 @@
 """Provides a testing framework for the `Cable` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 
 import copy
@@ -137,7 +137,6 @@ def test_power_factor():
         np.arange(0, 1, 0.15),  # inductance
         range(100, 1001, 150),  # capacitance
     ):
-
         c["conductor_size"] = i[0]
         c["ac_resistance"] = i[1]
         c["inductance"] = i[2]

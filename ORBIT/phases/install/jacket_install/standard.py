@@ -1,9 +1,9 @@
 """Provides the jacket installation class and model."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2021, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2021, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 import numpy as np
@@ -68,7 +68,6 @@ class JacketInstallation(InstallPhase):
             "enabled": "(optional, default: False)",
             "substructure_delivery_time": "h (optional, default: 168)",
             "num_substructures_delivered": "int (optional: default: 1)",
-            "substructure_storage": "int (optional, default: inf)",
         },
     }
 
@@ -132,12 +131,10 @@ class JacketInstallation(InstallPhase):
         self.supply_chain = self.config.get("jacket_supply_chain", {})
 
         if self.supply_chain.get("enabled", False):
-
             items = [jacket, self.tp] if self.tp else [jacket]
             delivery_time = self.supply_chain.get(
                 "substructure_delivery_time", 168
             )
-            # storage = self.supply_chain.get("substructure_storage", "inf")
             supply_chain = SubstructureDelivery(
                 "Jacket",
                 self.num_jackets,
@@ -250,7 +247,7 @@ class JacketInstallation(InstallPhase):
             for x in range(len(self.feeders))
         ]
 
-        for assigned, feeder in zip(assignments, self.feeders):
+        for assigned, feeder in zip(assignments, self.feeders, strict=False):
             shuttle_items_to_queue_wait(
                 feeder,
                 port=self.port,
@@ -380,7 +377,6 @@ def solo_install_jackets(
             vessel.at_site = True
 
         if vessel.at_site:
-
             if vessel.storage.items:
                 # Prep for jacket install
                 yield prep_for_site_operations(
@@ -453,9 +449,7 @@ def install_jackets_from_queue(
             wtiv.at_site = True
 
         if wtiv.at_site:
-
             if queue.vessel:
-
                 # Prep for jacket install
                 yield prep_for_site_operations(
                     wtiv,

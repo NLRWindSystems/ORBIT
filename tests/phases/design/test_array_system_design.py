@@ -1,9 +1,9 @@
 """Tests for the `ArraySystemDesign` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 
 from copy import deepcopy
@@ -41,19 +41,19 @@ config_missing_col = deepcopy(config_custom_base)
 config_missing_col["array_system_design"]["location_data"] = "missing_columns"
 
 config_incomplete_optional = deepcopy(config_custom_base)
-config_incomplete_optional["array_system_design"][
-    "location_data"
-] = "incomplete_optional"
+config_incomplete_optional["array_system_design"]["location_data"] = (
+    "incomplete_optional"
+)
 
 config_incomplete_required = deepcopy(config_custom_base)
-config_incomplete_required["array_system_design"][
-    "location_data"
-] = "incomplete_required"
+config_incomplete_required["array_system_design"]["location_data"] = (
+    "incomplete_required"
+)
 
 config_duplicate_coordinates = deepcopy(config_custom_base)
-config_duplicate_coordinates["array_system_design"][
-    "location_data"
-] = "duplicate_coordinates"
+config_duplicate_coordinates["array_system_design"]["location_data"] = (
+    "duplicate_coordinates"
+)
 
 
 def test_array_system_creation():

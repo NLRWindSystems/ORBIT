@@ -1,9 +1,9 @@
 """Initialize cable installation functionality."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 from .array import ArrayCableInstallation
 from .common import SimpleCable

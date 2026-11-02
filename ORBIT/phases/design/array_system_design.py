@@ -1,12 +1,13 @@
 """Provides the `ArraySystemDesign` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 
 import warnings
+from copy import deepcopy
 from collections import OrderedDict
 
 import numpy as np
@@ -208,7 +209,8 @@ class ArraySystemDesign(CableSystem):
         Calculates the required full and partial string design.
 
         .. note:: For custom layouts this is to provide guidance on the number
-        of strings.
+            of strings.
+
         """
 
         self._compute_maximum_turbines_per_cable()
@@ -347,11 +349,11 @@ class ArraySystemDesign(CableSystem):
             ix = row.sum()
             # Fill each string (row in array) with the cables names for valid
             # positions in the layout starting from the end
-            self.sections_cables[
-                i, 0 : self.num_turbines_full_string - ix
-            ] = self.full_string[::-1][: self.num_turbines_full_string - ix][
-                ::-1
-            ]  # noqa: E501
+            self.sections_cables[i, 0 : self.num_turbines_full_string - ix] = (
+                self.full_string[::-1][: self.num_turbines_full_string - ix][
+                    ::-1
+                ]
+            )  # noqa: E501
 
     def run(self):
         """Runs all the functions to create an array sytem."""
@@ -595,7 +597,6 @@ class ArraySystemDesign(CableSystem):
 
         for i, row in enumerate(self.sections_cables):
             for cable, width in zip(max_string, string_widths, strict=False):
-
                 ix_to_plot = np.where(row == cable)[0]
                 if ix_to_plot.size == 0:
                     continue
@@ -824,7 +825,8 @@ class CustomArraySystemDesign(ArraySystemDesign):
         ]
         rows.insert(0, first)
         rows.insert(0, self.COLUMNS)
-        print(f"Saving custom array to: <library_path>/cables/{save_name}.csv")
+        fp = folder if folder == "cables" else "project/plant"
+        print(f"Saving custom array to: <library_path>/{fp}/{save_name}.csv")
         export_library_specs(folder, save_name, rows, file_ext="csv")
 
     def _format_windfarm_data(self):
@@ -1129,3 +1131,39 @@ class CustomArraySystemDesign(ArraySystemDesign):
             for name in self.cables
         }
         return cables
+
+    def create_layout_df(self) -> pd.DataFrame:
+        """Creates a Pandas DataFrame layout.
+
+        Returns
+        -------
+        pd.DataFrame
+            The wind farm layout returned back in its original form.
+        """
+        layout_df = deepcopy(self.location_data)
+        substation_cols = [
+            "substation_id",
+            "substation_name",
+            "substation_latitude",
+            "substation_longitude",
+        ]
+        substations = (
+            layout_df[substation_cols]
+            .drop_duplicates()
+            .rename(
+                columns={
+                    col: col.replace("substation_", "")
+                    for col in layout_df.columns
+                }
+            )
+        )
+        layout_df = layout_df.drop(columns=substation_cols).rename(
+            columns={
+                col: col.replace("turbine_", "") for col in layout_df.columns
+            }
+        )
+        layout_df = (
+            pd.concat((layout_df, substations))
+            .reset_index(drop=True)
+            .fillna("")
+        )

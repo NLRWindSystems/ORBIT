@@ -1,9 +1,9 @@
 """`InstallPhase` base class."""
 
 __author__ = ["Jake Nunemaker", "Rob Hammond"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = ["Jake Nunemaker", "Rob Hammond"]
-__email__ = ["jake.nunemaker@nrel.gov", "rob.hammond@nrel.gov"]
+__email__ = ["jake.nunemaker@nlr.gov", "rob.hammond@nlr.gov"]
 
 
 from abc import abstractmethod
@@ -79,14 +79,10 @@ class InstallPhase(BasePhase):
     def initialize_port(self):
         """Initializes a Port object with N number of cranes."""
 
-        self.port = Port(self.env)
-
-        try:
-            cranes = self.config["port"]["num_cranes"]
-            self.port.crane = simpy.Resource(self.env, cranes)
-
-        except KeyError:
-            self.port.crane = simpy.Resource(self.env, 1)
+        port_config = self.config.get("port", {})
+        cranes = port_config.get("num_cranes", 1)
+        self.port = Port(self.env, **port_config)
+        self.port.crane = simpy.Resource(self.env, cranes)
 
     def run(self, until=None):
         """

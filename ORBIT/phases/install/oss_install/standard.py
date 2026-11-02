@@ -1,9 +1,9 @@
 """`OffshoreSubstationInstallation` and related processes."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 import simpy
@@ -224,9 +224,7 @@ def install_oss_from_queue(vessel, queue, substations, distance, **kwargs):
             vessel.at_site = True
 
         if vessel.at_site:
-
             if queue.vessel:
-
                 # Prep for monopile install
                 yield prep_for_site_operations(
                     vessel,

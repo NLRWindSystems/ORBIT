@@ -1,9 +1,9 @@
 """Installation strategies for mooring systems."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 from marmot import process
@@ -212,9 +212,7 @@ def install_mooring_systems(vessel, port, distance, depth, systems, **kwargs):
             vessel.at_site = True
 
         if vessel.at_site:
-
             if vessel.storage.items:
-
                 system = yield vessel.get_item_from_storage(
                     "MooringSystem", **kwargs
                 )

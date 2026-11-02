@@ -1,9 +1,9 @@
 """ORBIT specific marmot.Environment."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 from bisect import bisect
@@ -88,7 +88,6 @@ class OrbitEnvironment(Environment):
 
         names = []
         for name in list(_in.dtype.names):
-
             if "windspeed" in name:
                 try:
                     val = name.split("_")[1].replace("m", "")
@@ -139,7 +138,6 @@ class OrbitEnvironment(Environment):
             return {**constraints, "windspeed": list(ws.values())[0]}
 
         for k, v in ws.items():
-
             if k == "windspeed":
                 height = self.simplify_num(self.default_height)
 

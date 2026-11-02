@@ -1,7 +1,7 @@
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "Jake.Nunemaker@nrel.gov"
+__email__ = "Jake.Nunemaker@nlr.gov"
 
 
 from copy import deepcopy
@@ -55,7 +55,6 @@ def test_design_kwargs():
     base_cost = s.total_cost
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["spar_design"] = {}
         config["spar_design"][k] = v

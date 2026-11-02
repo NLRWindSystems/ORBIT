@@ -1,9 +1,9 @@
 """Provides the base `DesignPhase` class."""
 
 __author__ = ["Jake Nunemaker", "Rob Hammond"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 from abc import abstractmethod

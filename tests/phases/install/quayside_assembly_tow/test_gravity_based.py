@@ -1,9 +1,9 @@
 """Tests for the `GravityBasedInstallation` class and infrastructure."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 from copy import deepcopy
 
@@ -66,13 +66,13 @@ def test_deprecated_vessel():
     deprecated = deepcopy(config)
     deprecated["support_vessel"] = "test_support_vessel"
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = GravityBasedInstallation(deprecated)
         sim.run()
 
     deprecated2 = deepcopy(config)
     deprecated2["towing_vessel_groups"]["station_keeping_vessels"] = 2
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = GravityBasedInstallation(deprecated2)
         sim.run()

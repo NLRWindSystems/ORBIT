@@ -1,9 +1,9 @@
 """Testing framework for the `ScourProtectionInstallation` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "Jake.Nunemaker@nrel.gov"
+__email__ = "Jake.Nunemaker@nlr.gov"
 
 
 from copy import deepcopy
@@ -61,7 +61,6 @@ def test_kwargs():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         kwargs = {kw: default + 2}
 
@@ -96,7 +95,6 @@ def test_kwargs_in_ProjectManager():
     failed = []
 
     for kw in keywords:
-
         default = pt[kw]
         processes = {kw: default + 2}
 

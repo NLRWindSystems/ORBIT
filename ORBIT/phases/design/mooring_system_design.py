@@ -1,11 +1,10 @@
 """`MooringSystemDesign` and related functionality."""
 
 __author__ = "Jake Nunemaker, Becca Fuchs"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Nicholas Riccobono"
 __email__ = (
-    "jake.nunemaker@nrel.gov, rebecca.fuchs@nrel.gov,"
-    "nicholas.riccobono@nrel.gov"
+    "jake.nunemaker@nlr.gov, rebecca.fuchs@nlr.gov,nicholas.riccobono@nlr.gov"
 )
 
 from math import sqrt
@@ -15,11 +14,11 @@ from scipy.interpolate import interp1d
 from ORBIT.phases.design import DesignPhase
 
 """
-[1] Maness et al. 2017, NREL Offshore Balance-of-System Model.
-https://www.nrel.gov/docs/fy17osti/66874.pdf
+[1] Maness et al. 2017, NLR Offshore Balance-of-System Model.
+https://www.nlr.gov/docs/fy17osti/66874.pdf
 
 [2] Cooperman et al. (2022), Assessment of Offshore Wind Energy Leasing Areas
-for Humboldt and Morry Bay. https://www.nrel.gov/docs/fy22osti/82341.pdf
+for Humboldt and Morry Bay. https://www.nlr.gov/docs/fy22osti/82341.pdf
 """
 
 
@@ -128,7 +127,7 @@ class MooringSystemDesign(DesignPhase):
                 _key,
             ),
         )
-        if isinstance(mooring_line_cost_rate, (int, float)):
+        if isinstance(mooring_line_cost_rate, int | float):
             mooring_line_cost_rate = [mooring_line_cost_rate] * 3
 
         if fit <= 0.09:
@@ -158,7 +157,7 @@ class MooringSystemDesign(DesignPhase):
         Returns the mooring line length and mass.
 
         SemiTaut model based on:
-        https://github.com/NREL/MoorPy/blob/dev/moorpy/MoorProps_default.yaml
+        https://github.com/NLR/MoorPy/blob/dev/moorpy/MoorProps_default.yaml
 
         TODO: Improve TLP line length and mass
 
@@ -174,7 +173,6 @@ class MooringSystemDesign(DesignPhase):
         draft = self._design.get("draft_depth", 20)
 
         if self.mooring_type == "Semitaut":
-
             # Interpolation of rope and chain length at project depth
             self.chain_length = interp1d(
                 self._semitaut_params["depths"],
@@ -214,13 +212,11 @@ class MooringSystemDesign(DesignPhase):
             ) / 1e3  # tonnes
 
         elif self.mooring_type == "Tlp":
-
             self.line_length = self.depth - draft
 
             self.line_mass = self.line_length * self.line_mass_per_m
 
         else:
-
             self.line_length = (
                 0.0002 * (self.depth**2) + 1.264 * self.depth + 47.776 + fixed
             )
@@ -238,7 +234,6 @@ class MooringSystemDesign(DesignPhase):
         """
 
         if self.mooring_type == "Semitaut":
-
             if self.anchor_type == "Drag Embedment":
                 self.anchor_mass = 20
 
@@ -256,7 +251,6 @@ class MooringSystemDesign(DesignPhase):
                 )
 
         else:
-
             if self.anchor_type == "Drag Embedment":
                 self.anchor_mass = 20
                 self.anchor_cost = self.breaking_load / 9.81 / 20.0 * 2000.0
@@ -280,7 +274,6 @@ class MooringSystemDesign(DesignPhase):
             )(self.depth).item()
 
         else:
-
             line_cost = self.line_length * self.line_cost_rate
 
         return line_cost

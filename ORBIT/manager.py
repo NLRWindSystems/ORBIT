@@ -4,9 +4,9 @@ calculating results.
 """
 
 __author__ = ["Jake Nunemaker"]
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = ["jake.nunemaker@nrel.gov"]
+__email__ = ["jake.nunemaker@nlr.gov"]
 
 
 import re
@@ -17,7 +17,6 @@ from copy import deepcopy
 from math import ceil
 from numbers import Number
 from pathlib import Path
-from warnings import warn
 from itertools import product
 
 warnings.filterwarnings("default")
@@ -182,7 +181,7 @@ class ProjectManager:
 
         self.run_all_design_phases(design_phases, **kwargs)
 
-        if isinstance(install_phases, (list, set)):
+        if isinstance(install_phases, list | set):
             self.run_multiple_phases_in_serial(install_phases, **kwargs)
 
         elif isinstance(install_phases, dict):
@@ -196,19 +195,15 @@ class ProjectManager:
     def _print_warnings(self):
 
         if "contingency" in self.project_params:
-            warn(
-                "The 'contingency' project parameter will be deprecated"
-                " and replaced with two separate parameters:"
-                " 'installation_contingency' and 'procurement_contingency'."
-                " Specify the 'installation_contingency' and "
-                " 'procurement_contingency' in $/kW, or alternatively, use"
-                " 'procurement_contingency_factor' in '%' of the turbine "
-                " + system + project capex, and"
-                " 'installation_contingency_factor' in '%' of the"
-                " installation capex",
-                DeprecationWarning,
-                stacklevel=2,
+            msg = (
+                "The 'contingency' project parameter was replaced with"
+                " separate 'installation_contingency' and"
+                " 'procurement_contingency' in ($/kW). Alternatively, use"
+                " the 'procurement_contingency_factor' (% of turbine, system,"
+                " and project CapEx) or 'installation_contingency_factor'"
+                " (% of installation capex)."
             )
+            raise KeyError(msg)
 
         try:
             df = pd.DataFrame(self.logs)
@@ -216,7 +211,6 @@ class ProjectManager:
             df = df.loc[df["message"].str.contains("Exceeded")]
 
             for msg in df["message"].unique():
-
                 idx = df.loc[df["message"] == msg].index[0]
                 phase = df.loc[idx, "phase"]
                 print(f"{phase}:\n\t {msg}")
@@ -544,7 +538,6 @@ class ProjectManager:
         right = {k: right[k] for k in set(new).intersection(set(right))}
 
         for k, val in right.items():
-
             if isinstance(new.get(k, None), dict) and isinstance(val, dict):
                 new[k] = cls.remove_keys(new[k], val)
 
@@ -672,7 +665,7 @@ class ProjectManager:
 
         if phase.installation_capex:
             self.installation_costs[name] = phase.installation_capex
-        
+
         return time, logs
 
     def get_phase_class(self, phase):
@@ -749,8 +742,6 @@ class ProjectManager:
             self.detailed_outputs, phase.detailed_output
         )
 
-        
-
     def run_multiple_phases_in_serial(self, phase_list, **kwargs):
         """
         Runs multiple phases listed in self.config['install_phases'] in serial.
@@ -795,7 +786,6 @@ class ProjectManager:
 
         # Run defined
         for name, start in defined.items():
-
             _, logs = self.run_install_phase(name, start, **kwargs)
 
             if logs is None:
@@ -829,7 +819,6 @@ class ProjectManager:
         skipped = {}
 
         while True:
-
             phases = {**phases, **skipped}
             if not phases:
                 break
@@ -880,8 +869,7 @@ class ProjectManager:
         start = self.phase_starts[target]
         elapsed = self.phase_times[target]
 
-        if isinstance(perc, (int, float)):
-
+        if isinstance(perc, int | float):
             if (perc < 0.0) or (perc > 1.0):
                 raise ValueError(
                     "Dependent phase perc must be between 0. and 1."
@@ -890,7 +878,6 @@ class ProjectManager:
             return start + elapsed * perc
 
         if isinstance(perc, str):
-
             try:
                 delta = dt.timedelta(
                     **{
@@ -962,8 +949,7 @@ class ProjectManager:
         depends = {}
 
         for k, v in phases.items():
-
-            if isinstance(v, (int, float, str)):
+            if isinstance(v, int | float | str):
                 defined[k] = v
 
             elif isinstance(v, tuple) and len(v) == 2:
@@ -984,7 +970,6 @@ class ProjectManager:
             )
 
         for k, v in defined.items():
-
             if isinstance(v, int):
                 continue
 
@@ -1059,7 +1044,7 @@ class ProjectManager:
             "supply_chain_capex": self.supply_chain_capex,
             "supply_chain_capex_kw": self.supply_chain_capex_per_kw,
             "onshore_substation_capex": self.onshore_substation_capex,
-            "onshore_substation_capex_kw": self.onshore_substation_capex_per_kw,
+            "onshore_substation_capex_kw": self.onshore_substation_capex_per_kw,  # noqa: E501
         }
 
         if include_logs:
@@ -1165,7 +1150,7 @@ class ProjectManager:
             dig = list(np.digitize(times, self.month_bins))
 
         except ValueError:
-            return {i: 0.0 for i in range(1, lifetime * 12)}
+            return dict.fromkeys(range(1, lifetime * 12), 0.0)
 
         opex = {}
         for i in range(1, lifetime * 12):
@@ -1258,7 +1243,9 @@ class ProjectManager:
 
     @property
     def progress_summary(self):
-        """Returns a summary of progress by month."""
+        """Returns a summary of the number of completed component installations
+        by month.
+        """
 
         arr = np.array(
             self.progress_logs, dtype=[("progress", "U32"), ("time", "i4")]
@@ -1267,11 +1254,15 @@ class ProjectManager:
 
         summary = {}
         for i in range(1, len(self.month_bins)):
-
             unique, counts = np.unique(
                 arr["progress"][dig == i], return_counts=True
             )
-            summary[i] = dict(zip(unique, counts))
+            summary[i] = dict(zip(unique, counts, strict=False))
+
+        summary = {
+            k: {str(_k): int(_v) for _k, _v in v.items()}
+            for k, v in summary.items()
+        }
 
         return summary
 
@@ -1301,7 +1292,6 @@ class ProjectManager:
         dates = {}
 
         for phase, _start in self.config["install_phases"].items():
-
             try:
                 start = dt.datetime.strptime(_start, self.date_format_short)
 
@@ -1449,7 +1439,7 @@ class ProjectManager:
                 outputs[name] = cost
 
         outputs["Onshore Substation"] = self.onshore_substation_capex
-        
+
         outputs["Turbine"] = self.turbine_capex
 
         outputs["Soft"] = self.soft_capex
@@ -1499,7 +1489,11 @@ class ProjectManager:
     def bos_capex(self):
         """Returns total balance of system CapEx."""
 
-        return self.system_capex + self.installation_capex + self.onshore_substation_capex
+        return (
+            self.system_capex
+            + self.installation_capex
+            + self.onshore_substation_capex
+        )
 
     @property
     def bos_capex_per_kw(self):
@@ -1572,30 +1566,35 @@ class ProjectManager:
 
     @property
     def onshore_substation_capex(self):
-        """Returns the onshore substation CapEx if available in 'ElectricalDesign', otherwise 0."""
+        """Returns the onshore substation CapEx if available in
+        'ElectricalDesign', otherwise 0.
+        """
         if "ElectricalDesign" in self.phases:
             try:
-                return self.phases["ElectricalDesign"].detailed_output["export_system"]["onshore_substation_costs"]
+                return self.phases["ElectricalDesign"].detailed_output[
+                    "export_system"
+                ]["onshore_substation_costs"]
             except KeyError:
                 return 0
         return 0
 
     @property
     def onshore_substation_capex_per_kw(self):
-        """Returns the onshore substation CapEx/kW.
-        """
+        """Returns the onshore substation CapEx/kW."""
         if "ElectricalDesign" in self.phases:
             try:
                 return self.onshore_substation_capex / (self.capacity * 1000)
             except KeyError:
                 return None
         return None
-        
+
     @property
     def overnight_capex(self):
-        """Returns the overnight capital cost of the project."""
+        """Returns the overnight capital cost of the project, which is all
+        capital costs excluding grid connection and construction financing.
+        """
 
-        return self.system_capex + self.turbine_capex
+        return self.total_capex - self.construction_financing_capex()
 
     @property
     def soft_capex(self):
@@ -1932,8 +1931,7 @@ class ProjectManager:
 
         else:
             raise ValueError(
-                f"Unrecognized level '{level}'."
-                " Must be 'ACTION' or 'DEBUG'."
+                f"Unrecognized level '{level}'. Must be 'ACTION' or 'DEBUG'."
             )
 
         out.to_csv(filepath, index=False)
@@ -1985,7 +1983,7 @@ class ProjectProgress:
         turbines = self.chunk_max(_turbines, per_string)
         num_turbines = list(self.chunk_len(_turbines, per_string))
 
-        data = list(zip(strings, subs, turbines))
+        data = list(zip(strings, subs, turbines, strict=False))
 
         return [max(el) for el in data], num_turbines
 

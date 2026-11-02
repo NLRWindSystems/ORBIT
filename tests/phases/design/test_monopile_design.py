@@ -1,9 +1,9 @@
 """Tests for the `MonopileDesign` class."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 from copy import deepcopy
@@ -80,7 +80,6 @@ def test_monopile_kwargs():
     base_results = m._outputs["monopile"]
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["monopile_design"] = {}
         config["monopile_design"][k] = v
@@ -107,7 +106,6 @@ def test_transition_piece_kwargs():
     base_results = m._outputs["transition_piece"]
 
     for k, v in test_kwargs.items():
-
         config = deepcopy(base)
         config["monopile_design"] = {}
         config["monopile_design"][k] = v

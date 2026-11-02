@@ -1,9 +1,9 @@
 """Tests for the `ExportSystemDesign` class."""
 
 __author__ = "Rob Hammond"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Rob Hammond"
-__email__ = "rob.hammond@nrel.gov"
+__email__ = "rob.hammond@nlr.gov"
 
 import warnings
 from copy import deepcopy
@@ -141,6 +141,6 @@ def test_deprecated_landfall():
     deprecated = deepcopy(base)
     deprecated["landfall"] = {"interconnection_distance": 4}
 
-    with pytest.deprecated_call():
+    with pytest.raises(KeyError):
         sim = ExportSystemDesign(deprecated)
         sim.run()

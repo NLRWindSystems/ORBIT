@@ -6,13 +6,13 @@ build-backend = "setuptools.build_meta"
 name = "orbit-nrel"
 dynamic = ["version"]
 authors = [
-  {name = "Nick Riccobono", email = "nicholas.riccobono@nrel.gov"},
-  {name = "Rob Hammond", email = "rob.hammond@nrel.gov"},
-  {name = "Jake Nunemaker", email = "jacob.nunemaker@nrel.gov"},
+  {name = "Nick Riccobono", email = "nicholas.riccobono@nlr.gov"},
+  {name = "Rob Hammond", email = "rob.hammond@nlr.gov"},
+  {name = "Jake Nunemaker", email = "jacob.nunemaker@nlr.gov"},
 ]
-readme = {file = "README.rst", content-type = "text/x-rst"}
+readme = {file = "README.md", content-type = "text/markdown"}
 description = "Offshore Renewables Balance of system and Installation Tool"
-requires-python = ">3.9"
+requires-python = ">=3.11, <3.16"
 license = {file = "LICENSE"}
 dependencies = [
   "numpy",
@@ -23,6 +23,7 @@ dependencies = [
   "pyyaml",
   "python-benedict",
   "statsmodels",
+  "matplotlib",
 ]
 keywords = [
   "python3",
@@ -42,33 +43,41 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Scientific/Engineering",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [project.urls]
-source = "https://github.com/WISDEM/ORBIT"
-documentation = "https://wisdem.github.io/ORBIT/"
-issues = "https://github.com/WISDEM/ORBIT/issues"
-changelog = "https://github.com/WISDEM/ORBIT/blob/main/docs/source/changelog.rst"
+source = "https://github.com/NLRWindSystems/ORBIT"
+documentation = "https://nlrwindsystems.github.io/ORBIT/"
+issues = "https://github.com/NLRWindSystems/ORBIT/issues"
+changelog = "https://github.com/NLRWindSystems/ORBIT/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
   "pre-commit",
-  "black",
   "isort",
-  "pytest",
+  "pytest>=9",
   "pytest-cov",
-  "sphinx",
-  "sphinx-rtd-theme",
   "ruff",
 ]
-plot = ["matplotlib"]
+
+docs = [
+  "jupyter-book>=1,<2",
+  "myst-nb>=0.16",
+  "myst-parser>=0.17",
+  "linkify-it-py>=2",
+  "sphinx-autodoc-typehints",
+  "sphinxcontrib-autoyaml",
+  "sphinxcontrib-bibtex>=2.4",
+  "sphinxcontrib-spelling>=7",
+  "nbformat>=5.0.0",
+]
 
 [tool.setuptools]
 include-package-data = true
@@ -79,24 +88,6 @@ exclude = ["*.tests", "*.tests.*", "tests.*", "tests"]
 
 [tool.setuptools.dynamic]
 version = {attr = "ORBIT.__version__"}
-
-[tool.black]
-line-length = 79
-target-version = ['py310']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
 
 [tool.isort]
 multi_line_output = 3
@@ -120,16 +111,16 @@ length_sort = "1"
 
 [tool.ruff]
 line-length = 79
-target-version = "py310"
+target-version = "py311"
 exclude = [
   ".git",
   "__pycache__",
-  "docs/source/conf.py",
   "old",
   "build",
   "dist",
   "^tests/",
   ".ruff_cache",
+  "misc/"
 ]
 
 [tool.ruff.lint]
@@ -152,20 +143,22 @@ select = [
   "Q",
 ]
 ignore = [
+  "C901",
+  "D202",
+  "D205",
+  "D212",
+  "D301",
+  "D401",
   "E731",
   "E402",
-  "D202",
-  "D212",
-  "C901",
-  "D205",
-  "D401",
-  "PD901",
+  "PD011",
   "PERF203",
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "*/__init__.py" = ["D104", "F401"]
 "tests/*" = ["D100", "D101", "D102", "D103"]
+"**/*.ipynb" = ["E501", "D102", "D103", "PD010"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"

@@ -1,9 +1,9 @@
 """`TurbineInstallation` class and related processes."""
 
 __author__ = "Jake Nunemaker"
-__copyright__ = "Copyright 2020, National Renewable Energy Laboratory"
+__copyright__ = "Copyright 2026, National Laboratory of the Rockies"
 __maintainer__ = "Jake Nunemaker"
-__email__ = "jake.nunemaker@nrel.gov"
+__email__ = "jake.nunemaker@nlr.gov"
 
 
 from copy import deepcopy
@@ -326,7 +326,6 @@ def solo_install_turbines(
             vessel.at_site = True
 
         if vessel.at_site:
-
             if vessel.storage.items:
                 yield prep_for_site_operations(vessel, **kwargs)
 
@@ -426,9 +425,7 @@ def install_turbine_components_from_queue(
             wtiv.at_site = True
 
         if wtiv.at_site:
-
             if queue.vessel:
-
                 # Prep for turbine install
                 yield prep_for_site_operations(wtiv, **kwargs)
 
