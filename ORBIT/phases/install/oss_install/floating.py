@@ -46,11 +46,12 @@ class FloatingSubstationInstallation(InstallPhase):
             "towing_speed": "int | float (optional, default: 6 km/h)",
         },
         "mooring_system": {
-            "num_lines",
-            "int",
-            "line_cost",
-            "USD",
-            "anchor_cost",
+            "num_lines": "int (optional, standard design only)",
+            "line_cost": "USD (optional, standard design only)",
+            "anchor_cost": "USD (optional, standard design only)",
+            "total_line_cost": "USD (optional, custom design only)",
+            "total_anchor_cost": "USD (optional, custom design only)",
+            "design_class": "str (optional, default: 'standard')",
         },
     }
 
@@ -107,8 +108,8 @@ class FloatingSubstationInstallation(InstallPhase):
         elif design_class == "custom":
             # Custom design: values are project totals, so divide by number of platforms
             num_platforms = self.config["plant"]["num_turbines"]
-            total_line_cost = self.config["mooring_system"]["line_cost"]
-            total_anchor_cost = self.config["mooring_system"]["anchor_cost"]
+            total_line_cost = self.config["mooring_system"]["total_line_cost"]
+            total_anchor_cost = self.config["mooring_system"]["total_anchor_cost"]
             
             # Calculate average per-platform mooring cost
             mooring_system_for_each_oss = (total_line_cost + total_anchor_cost) / num_platforms

@@ -38,8 +38,8 @@ class MooringSystemSupplyChain(InstallPhase):
             "laydown_area": "m2",
         },
         "mooring_system": {
-            "num_lines": "int",
-            "line_cost": "int | float ",
+            "total_num_lines": "int",
+            "total_line_cost": "int | float ",
             "system_cost": "int | float ",
         },
     }
@@ -56,10 +56,7 @@ class MooringSystemSupplyChain(InstallPhase):
 
         self.mooring_system = self.config["mooring_system"]
 
-        try:
-            self.num_lines = self.mooring_system["num_lines"]
-        except KeyError:
-            self.num_lines = 1
+        self.total_num_lines = self.mooring_system["total_num_lines"]
 
         self.chain_supply = self.config.get("chain_supply", {})
         self.anchor_supply = self.config.get("anchor_supply", {})
@@ -489,7 +486,7 @@ class MooringSystemSupplyChain(InstallPhase):
             lines = 1
 
         day_rate = 0  #
-        to_assemble = self.num_lines * self.num_turbines
+        to_assemble = self.total_num_lines
 
         self.chain_assembly_lines = []
         for i in range(int(lines)):

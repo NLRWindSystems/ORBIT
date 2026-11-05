@@ -334,20 +334,20 @@ class CustomMooringSystemDesign(MooringSystemDesign):
     """
 
     expected_config = {
-        "plant": {"layout": "str", "num_turbines": "int"},
-        "mooring_system_design": {
-            "num_lines": "int | float (optional, default: 4)",
-            "anchor_type": "str (optional, default: 'Suction Pile')",
-            "mooring_type": "str (optional, default: 'Catenary')",
-            "mooring_line_cost_rate": "int | float (optional)",
-        },
+        "plant": {"num_turbines": "int"},
         "custom_filename": "str",
     }
 
     output_config = {
         "mooring_system": {
-            "num_lines": "int",
-            "line_cost": "USD",
+            "total_num_lines": "int",
+            "total_num_anchors": "int",
+            "has_shared_components": "bool",
+            "total_line_cost": "USD",
+            "total_anchor_cost": "USD",
+            "total_line_mass": "t",
+            "total_anchor_mass": "t",
+            "system_cost": "USD",
         }
     }
 
@@ -365,24 +365,28 @@ class CustomMooringSystemDesign(MooringSystemDesign):
     def __init__(self, config, **kwargs):
         """Creates an Instance of 'CustomMooringSystemDesign'."""
 
-        # Check for conflicting mooring_system section in config
+        # ProjectManager merges design results with overwrite=False, so any
+        # user-defined 'mooring_system' keys would silently override them.
         if "mooring_system" in config:
-            print("    WARNING: Config contains 'mooring_system' section. CustomMooringSystemDesign looks for "
-                  "     'mooring_system_design' as to not conflict with design results stored in 'mooring_system'")
+            warnings.warn(
+                "Config contains a 'mooring_system' section. Its keys will"
+                " override the CustomMooringSystemDesign results (which are"
+                " stored in 'mooring_system'). CustomMooringSystemDesign only"
+                " needs 'plant.num_turbines' and 'custom_filename', so remove"
+                " 'mooring_system' from the config. Set the installation"
+                " method with the top-level 'mooring_installation_method' key.",
+                stacklevel=2,
+            )
 
         self._design = config.get("mooring_system_design", {})
 
         self.num_turbines = config["plant"]["num_turbines"]
 
-        self.num_lines = self._design.get("num_lines", 1)
-
-        #self.filename = "inputs/" + config.get("custom_filename", None)
         input_filename = config.get("custom_filename", None)
+        self.filename = input_filename
         if input_filename and not os.path.isabs(input_filename):
             if not input_filename.startswith("inputs"):
                 self.filename = "inputs/" + input_filename
-        else:
-            self.filename = input_filename
 
         self._outputs = {}
 
@@ -390,23 +394,8 @@ class CustomMooringSystemDesign(MooringSystemDesign):
 
         self.filepath = os.path.abspath(self.filename)
 
-        self.df = pd.read_csv(self.filepath)
+        self.df = pd.read_csv(self.filepath, skipinitialspace=True)
 
-        # self.df.head())
-
-        # except FileExistsError:
-        #    print("File not found.")
-
-    def _check_number_lines(self):
-        """ """
-
-        _lines = self.df["line_id"].unique()
-
-        if len(_lines) != self.num_lines:
-            warnings.warn(
-                "\tnum_lines in config file does not match unique"
-                f" line_id in {self.filename}\n"
-            )
 
     def _check_number_turbines(self):
 
@@ -424,55 +413,84 @@ class CustomMooringSystemDesign(MooringSystemDesign):
             self.df["section_id"].str.contains(pattern.lower())
         ].reset_index(drop=True)
 
+    def _check_section_types(self):
+
+        known = self.df["section_id"].str.contains("chain|polyester|_anchor")
+        unknown = self.df.loc[~known, "section_id"].str.strip().unique()
+
+        if len(unknown) > 0:
+            warnings.warn(
+                f"Unrecognized section_id(s) {list(unknown)} in"
+                f" {self.filename}. Only 'chain', 'polyester' and '_anchor'"
+                " sections are currently included in mooring costs, masses "
+                " and deck space."
+            )
+
     def run(self):
 
         self.initialize_custom_data()
 
         #self._check_number_lines()
         self._check_number_turbines()
+        self._check_section_types()
 
         self.chain = self.df_by_section_id("chain")
         self.rope = self.df_by_section_id("polyester")
         self.anchors = self.df_by_section_id("_anchor")
-        
-        self.num_anchors = len(self.anchors)
-        self.num_lines = len(self.rope)
-        
-        self._outputs["mooring_system"] = {**self.design_result}
+
+        # A mooring line is a unique (turbine_id, line_id) pair, regardless
+        # of which section types (chain, rope, ...) it is made of.
+        self.lines = (
+            self.df[["turbine_id", "line_id"]]
+            .drop_duplicates()
+            .sort_values(["turbine_id", "line_id"])
+            .reset_index(drop=True)
+        )
+        self.lines_per_turbine = self.lines.groupby("turbine_id").size()
+
+        self.total_num_anchors = len(self.anchors)
+        self.total_num_lines = len(self.lines)
+
+        # Any line without exactly one anchor of its own means anchors and/or
+        # lines are shared between platforms.
+        anchors_per_line = (
+            self.anchors.groupby(["turbine_id", "line_id"])
+            .size()
+            .reindex(pd.MultiIndex.from_frame(self.lines), fill_value=0)
+        )
+        self.has_shared_components = bool((anchors_per_line != 1).any())
+
+        self._outputs = self.design_result
         
     @property
-    def line_cost(self):
-        """Returns cost of one line mooring line."""
+    def total_line_cost(self):
+        """Returns cost of all mooring lines in the project."""
 
-        return sum(
-            [
-                #(self.chain["length"] * self.chain["cost_rate"]).sum(),
-                (self.chain["cost_rate"]).sum(),
-                #(self.rope["length"] * self.rope["cost_rate"]).sum(),
-                (self.rope["cost_rate"]).sum(),
-            ]
-        )
-    
+        return self.chain["cost_rate"].sum() + self.rope["cost_rate"].sum()
+
     @property
-    def anchor_cost(self):
-        """Returns cost of one line mooring line."""
+    def total_anchor_cost(self):
+        """Returns cost of all anchors in the project."""
 
-        return sum(
-            [
-                self.anchors["cost_rate"].sum()
-            ]
-        )
+        return self.anchors["cost_rate"].sum()
+
+    @property
+    def total_line_mass(self):
+        """Returns mass of all mooring lines in the project (t)."""
+
+        return self.chain["mass"].sum() + self.rope["mass"].sum()
+
+    @property
+    def total_anchor_mass(self):
+        """Returns mass of all anchors in the project (t)."""
+
+        return self.anchors["mass"].sum()
 
     @property
     def total_cost(self):
         """Returns the total cost of the mooring system."""
 
-        return sum(
-            [
-                self.line_cost,
-                self.anchor_cost
-            ]
-        )
+        return self.total_line_cost + self.total_anchor_cost
 
     @property
     def detailed_output(self):
@@ -483,11 +501,15 @@ class CustomMooringSystemDesign(MooringSystemDesign):
             "chains": self.chain,
             "ropes": self.rope,
             "anchors": self.anchors,
-            "num_lines": self.num_lines,
-            "line_cost": self.line_cost,
-            "num_anchors": self.num_anchors,
-            "anchor_cost": self.anchor_cost,
-            "system_cost": self.total_cost      
+            "lines": self.lines,
+            "total_num_lines": self.total_num_lines,
+            "total_num_anchors": self.total_num_anchors,
+            "has_shared_components": self.has_shared_components,
+            "total_line_cost": self.total_line_cost,
+            "total_anchor_cost": self.total_anchor_cost,
+            "total_line_mass": self.total_line_mass,
+            "total_anchor_mass": self.total_anchor_mass,
+            "system_cost": self.total_cost,
         }
 
     @property
