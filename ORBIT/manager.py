@@ -44,6 +44,7 @@ from ORBIT.phases.design import (
     CustomArraySystemDesign,
     OffshoreSubstationDesign,
     OffshoreFloatingSubstationDesign,
+    CustomMooringSystemDesign,
 )
 from ORBIT.phases.install import (
     JacketInstallation,
@@ -57,6 +58,7 @@ from ORBIT.phases.install import (
     ScourProtectionInstallation,
     FloatingSubstationInstallation,
     OffshoreSubstationInstallation,
+    MooringSystemSupplyChain,
 )
 from ORBIT.core.exceptions import (
     PhaseNotFound,
@@ -80,6 +82,7 @@ class ProjectManager:
         OffshoreSubstationDesign,
         OffshoreFloatingSubstationDesign,
         MooringSystemDesign,
+        CustomMooringSystemDesign,
         SemiSubmersibleDesign,
         SparDesign,
         ElectricalDesign,
@@ -94,6 +97,7 @@ class ProjectManager:
         ScourProtectionInstallation,
         MooredSubInstallation,
         MooringSystemInstallation,
+        MooringSystemSupplyChain,
         GravityBasedInstallation,
         FloatingSubstationInstallation,
         JacketInstallation,
