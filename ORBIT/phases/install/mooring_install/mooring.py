@@ -124,8 +124,13 @@ class MooringSystemInstallation(InstallPhase):
         # install all anchors first, then mooring lines
         elif self.installation_method == "anchors-first":
             install_all_anchors_then_moorings(
-                self.vessel, self.port, distance, depth, 
-                self.total_num_anchors, self.total_num_lines, **kwargs
+                self.vessel,
+                self.port,
+                distance,
+                depth,
+                self.total_num_anchors,
+                self.total_num_lines,
+                **kwargs,
             )
 
     @property
@@ -269,9 +274,12 @@ def install_mooring_systems(vessel, port, distance, depth, systems, **kwargs):
 
 
 @process
-def install_all_anchors_then_moorings(vessel, port, distance, depth, nanchors, nmoorings, **kwargs):
+def install_all_anchors_then_moorings(
+    vessel, port, distance, depth, nanchors, nmoorings, **kwargs
+):
     """
-    Logic for mooring system installation - to install all anchors first
+    Logic for the Mooring System Installation Vessel when all anchors are
+    installed before any mooring lines are installed.
 
     Parameters
     ----------
@@ -280,8 +288,12 @@ def install_all_anchors_then_moorings(vessel, port, distance, depth, nanchors, n
     port : Port
     distance : int | float
         Distance between port and site (km).
+    depth : int | float
+        Depth at site (m).
     nanchors : int
         Total number of anchors to install.
+    nmoorings : int
+        Total number of mooring lines to install.
     """
 
     n = 0
@@ -320,7 +332,7 @@ def install_all_anchors_then_moorings(vessel, port, distance, depth, nanchors, n
                 )
 
                 yield position_onsite(vessel, **kwargs)
-                yield perform_mooring_site_survey(vessel, **kwargs)     # updated to only take 1 hour for 1 inspection of an anchor or mooring line
+                yield perform_mooring_site_survey(vessel, **kwargs)     # this defaults to 4 hrs unless 'process_times: mooring_site_survey_time: 1' is included in config
                 yield install_mooring_anchor(
                     vessel,
                     depth,
@@ -343,7 +355,7 @@ def install_all_anchors_then_moorings(vessel, port, distance, depth, nanchors, n
     while n < nmoorings:
         if vessel.at_port:
             try:
-                # Get mooring systems from port.
+                # Get mooring lines from port.
                 yield get_list_of_items_from_port(
                     vessel,
                     port,
@@ -375,8 +387,8 @@ def install_all_anchors_then_moorings(vessel, port, distance, depth, nanchors, n
                 )
 
                 yield position_onsite(vessel, **kwargs)
-                yield perform_mooring_site_survey(vessel, **kwargs)     # updated to only take 1 hour for 1 inspection of an anchor or mooring line
-                yield install_mooring_line(vessel, depth, **kwargs)                    
+                yield perform_mooring_site_survey(vessel, **kwargs)     # this defaults to 4 hrs unless 'process_times: mooring_site_survey_time: 1' is included in config     
+                yield install_mooring_line(vessel, depth, **kwargs)
 
                 n += 1
 
@@ -587,10 +599,19 @@ class Anchor(Cargo):
     """Single Anchor Cargo Component."""
 
     def __init__(self, i, anchors=None, **kwargs):
-        """Creates an instance of Anchor."""
+        """
+        Creates an instance of Anchor.
+
+        Parameters
+        ----------
+        i : int
+            Index label of the anchor row in `anchors`.
+        anchors : pd.DataFrame
+            Anchor sections from `CustomMooringSystemDesign`.
+        """
 
         self.anchors = anchors
-        anchor = self.anchors.iloc[i]
+        anchor = self.anchors.loc[i]
         self.turbine_id = anchor["turbine_id"]
         self.line_id = anchor["line_id"]
 
@@ -621,7 +642,7 @@ class Anchor(Cargo):
     def fasten(**kwargs):
         """Dummy method to work with `get_list_of_items_from_port`."""
         key = "anchor_load_time"
-        time = kwargs.get(key, pt["mooring_system_load_time"]/5)
+        time = kwargs.get(key, pt[key])
         return "Load Anchor", time
 
     @staticmethod
@@ -637,7 +658,14 @@ class Mooring(Cargo):
     """Single Mooring Line Cargo Component."""
 
     def __init__(self, i, **kwargs):
-        """Creates an instance of Mooring."""
+        """
+        Creates an instance of Mooring.
+
+        Parameters
+        ----------
+        i : int
+            Index label of the line row in `kwargs['lines']`.
+        """
 
         lines = kwargs["lines"]
         turbine_id = lines.loc[i, "turbine_id"]
@@ -677,7 +705,7 @@ class Mooring(Cargo):
     def fasten(**kwargs):
         """Dummy method to work with `get_list_of_items_from_port`."""
         key = "mooring_line_load_time"
-        time = kwargs.get(key, pt["mooring_system_load_time"]/2)
+        time = kwargs.get(key, pt[key])
         return "Load Mooring Line", time
 
     @staticmethod

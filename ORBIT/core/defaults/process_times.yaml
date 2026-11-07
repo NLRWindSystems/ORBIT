@@ -64,6 +64,8 @@
 
 # Mooring System
 "mooring_system_load_time": 5     # hr
+"anchor_load_time": 1             # hr # Single anchor, 'anchors-first' installation method
+"mooring_line_load_time": 2.5     # hr # Single mooring line, 'anchors-first' installation method
 "mooring_site_survey_time": 4     # hr
 "suction_pile_install_time": 11   # hr
 "drag_embed_install_time": 12      # hr # Increased from 5h so it now includes proof loading. This time increases with depth (in mooring.py)
