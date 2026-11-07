@@ -12,7 +12,7 @@ from ORBIT.core import Cargo
 from ORBIT.core.logic import position_onsite, get_list_of_items_from_port
 from ORBIT.core.defaults import process_times as pt
 from ORBIT.phases.install import InstallPhase
-from ORBIT.core.exceptions import ItemNotFound
+from ORBIT.core.exceptions import ItemNotFound, MissingInputs
 
 
 class MooringSystemInstallation(InstallPhase):
@@ -28,16 +28,20 @@ class MooringSystemInstallation(InstallPhase):
         "plant": {"num_turbines": "int"},
         "mooring_system": {
             "num_lines": "int (optional, per turbine, standard design only)",
+            "line_mass": "t (optional, per line, standard design only)",
+            "anchor_mass": "t (optional, per anchor, standard design only)",
+            "anchor_type": "str (optional, standard design only, default: 'Suction Pile')",
             "total_num_lines": "int (optional, custom design only)",
             "total_num_anchors": "int (optional, custom design only)",
             "line_cost": "USD (optional, per line, standard design only)",
             "anchor_cost": "USD (optional, per anchor, standard design only)",
             "total_line_cost": "USD (optional, custom design only)",
             "total_anchor_cost": "USD (optional, custom design only)",
+            "has_shared_components": "bool (optional, custom design only, default: False)",
             "system_cost": "USD (optional)",
             "design_class": "str (optional, default: 'standard')",
         },
-        "mooring_installation_method": "str (optional, default: 'basic')",
+        "mooring_installation_method": "str (optional, default: 'basic'; 'basic' | 'anchors-first')",
     }
 
     def __init__(self, config, weather=None, **kwargs):
@@ -74,6 +78,21 @@ class MooringSystemInstallation(InstallPhase):
         mooring_system = self.config["mooring_system"]
         self.design_class = mooring_system.get("design_class", "standard")
         self.num_systems = self.config["plant"]["num_turbines"]
+
+        # check the required 'mooring_system' keys here and compare to expected_config.
+        if self.design_class == "standard":
+            required = ["num_lines", "line_mass", "line_cost", "anchor_mass", "anchor_cost"]
+        elif self.design_class == "custom":
+            required = ["total_num_lines", "total_num_anchors", "total_line_cost",
+                        "total_anchor_cost", "lines", "anchors", "chains", "ropes"]
+        else:
+            raise ValueError(
+                f"Mooring system design_class '{self.design_class}' not"
+                " recognized. Valid options: 'standard', 'custom'"
+            )
+        missing = [f"mooring_system.{k}" for k in required if mooring_system.get(k) is None]
+        if missing:
+            raise MissingInputs(missing)
 
         if self.design_class == "standard":
             self.num_lines = mooring_system["num_lines"]
@@ -162,7 +181,8 @@ class MooringSystemInstallation(InstallPhase):
             if mooring_system.get("has_shared_components", False):
                 raise ValueError(
                     "The 'basic' installation method cannot be used with"
-                    " shared anchors or shared mooring lines."
+                    " shared anchors or shared mooring lines. Use"
+                    " 'anchors-first' instead."
                 )
 
             if self.design_class == "standard":
