@@ -1,6 +1,12 @@
 (changelog)=
 # Changelog
 
+## Unreleased
+
+- Fixes a bug in `CustomArraySystemDesign` where a substation or turbine with an x-coordinate
+  (longitude) of 0 was treated as an empty string position, which produced `nan` section distances,
+  dropped cable sections, and could yield a zero-length array system (#134).
+
 ## 1.3.1
 
 - Ends support for Python 3.10, and enables Python 3.15.

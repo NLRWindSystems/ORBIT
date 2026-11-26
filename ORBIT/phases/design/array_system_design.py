@@ -1023,12 +1023,16 @@ class CustomArraySystemDesign(ArraySystemDesign):
                 Shape: `n_strings` x `num_turbines_full_string`.
         """
 
-        self.location_data_x = np.zeros(
+        # Positions without a substation or turbine remain NaN, so that a
+        # coordinate of 0 is kept as a valid location.
+        self.location_data_x = np.full(
             (self.num_strings, self.num_turbines_full_string + 1),
+            np.nan,
             dtype=float,
         )
-        self.location_data_y = np.zeros(
+        self.location_data_y = np.full(
             (self.num_strings, self.num_turbines_full_string + 1),
+            np.nan,
             dtype=float,
         )
         self.sections_cable_lengths = np.zeros(
@@ -1075,11 +1079,8 @@ class CustomArraySystemDesign(ArraySystemDesign):
                 )
             i = string + 1
 
-        # Ensure any point in array without a turbine is set to None
-        no_turbines = self.location_data_x == 0
-        self.location_data_x[no_turbines] = None
-        self.location_data_y[no_turbines] = None
-
+        # Ensure any cable section without a turbine is set to None
+        no_turbines = np.isnan(self.location_data_x)
         self.sections_cable_lengths[no_turbines[:, 1:]] = None
         self.sections_bury_speeds[no_turbines[:, 1:]] = None
         self._check_optional_input()
