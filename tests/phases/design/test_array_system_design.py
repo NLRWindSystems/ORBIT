@@ -9,6 +9,7 @@ __email__ = "rob.hammond@nlr.gov"
 from copy import deepcopy
 
 import numpy as np
+import pandas as pd
 import pytest
 
 from ORBIT.core.library import extract_library_specs
@@ -247,3 +248,67 @@ def test_total_cable_cost():
     array.run()
 
     assert array.total_cable_cost == pytest.approx(12713999, abs=1e0)
+
+
+@pytest.mark.parametrize("distance", (True, False))
+def test_custom_array_zero_coordinates(distance):
+    """Tests that a substation or turbine with an x-coordinate (longitude) of
+    0 is kept in the layout, rather than treated as an empty string position.
+    """
+
+    def run(x_offset):
+        location_data = pd.DataFrame(
+            [
+                ["oss1", "oss1", "oss1", 0.0, 0.0, np.nan, np.nan, np.nan],
+                ["t1", "oss1", "t1", 0.0, 0.01, 0, 0, 0],
+                ["t2", "oss1", "t2", 0.0, 0.02, 0, 1, 0],
+                ["t3", "oss1", "t3", 0.0, 0.03, 0, 2, 0],
+                ["t4", "oss1", "t4", 0.01, 0.0, 1, 0, 0],
+                ["t5", "oss1", "t5", 0.01, 0.01, 1, 1, 0],
+            ],
+            columns=[
+                "id",
+                "substation_id",
+                "name",
+                "latitude",
+                "longitude",
+                "string",
+                "order",
+                "cable_length",
+            ],
+        )
+        location_data["bury_speed"] = location_data["cable_length"]
+        location_data["longitude"] += x_offset
+
+        config = deepcopy(config_custom_base)
+        config["plant"]["num_turbines"] = 5
+        config["array_system_design"]["location_data"] = location_data
+        config["array_system_design"]["distance"] = distance
+
+        array = CustomArraySystemDesign(config)
+        array.run()
+        return array
+
+    at_origin = run(0.0)
+    shifted = run(1.0)
+
+    # Only the unused position at the end of the partial string is empty
+    expected_empty = np.zeros((2, 3), dtype=bool)
+    expected_empty[1, 2] = True
+    np.testing.assert_array_equal(
+        np.isnan(at_origin.sections_distance), expected_empty
+    )
+    assert at_origin.sections_cables[1, 2] is None
+    assert None not in at_origin.sections_cables[~expected_empty]
+
+    # Moving the whole layout along the x-axis doesn't change the design
+    np.testing.assert_allclose(
+        at_origin.sections_distance, shifted.sections_distance
+    )
+    np.testing.assert_array_equal(
+        at_origin.sections_cables, shifted.sections_cables
+    )
+    assert at_origin.total_length == pytest.approx(shifted.total_length)
+    assert at_origin.total_cable_cost == pytest.approx(
+        shifted.total_cable_cost
+    )
