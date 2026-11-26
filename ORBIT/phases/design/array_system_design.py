@@ -920,7 +920,7 @@ class CustomArraySystemDesign(ArraySystemDesign):
             c
             for c in self.OPTIONAL
             if (
-                pd.isna(self.location_data[c]) | self.location_data[c] == 0
+                pd.isna(self.location_data[c]) | (self.location_data[c] == 0)
             ).sum()
             > 0
         ]
@@ -967,15 +967,20 @@ class CustomArraySystemDesign(ArraySystemDesign):
     def _check_optional_input(self):
         """
         Ensures that the optionally input parameters have valid data and were
-        all filled out.
+        all filled out. If a turbine's value is missing (blank or 0), all
+        values of that parameter are calculated instead.
         """
-        if np.any(self.sections_cable_lengths == 0):
+        has_turbine = ~np.isnan(self.location_data_x[:, 1:])
+
+        lengths = self.sections_cable_lengths[has_turbine]
+        if np.any(np.isnan(lengths) | (lengths == 0)):
             self.sections_cable_lengths = np.zeros(
                 (self.num_strings, self.num_turbines_full_string),
                 dtype=float,
             )
 
-        if np.any(self.sections_bury_speeds == 0):
+        speeds = self.sections_bury_speeds[has_turbine]
+        if np.any(np.isnan(speeds) | (speeds == 0)):
             self.sections_bury_speeds = np.zeros(
                 (self.num_strings, self.num_turbines_full_string),
                 dtype=float,

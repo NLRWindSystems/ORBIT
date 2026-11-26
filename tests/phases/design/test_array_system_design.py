@@ -9,6 +9,7 @@ __email__ = "rob.hammond@nlr.gov"
 from copy import deepcopy
 
 import numpy as np
+import pandas as pd
 import pytest
 
 from ORBIT.core.library import extract_library_specs
@@ -247,3 +248,57 @@ def test_total_cable_cost():
     array.run()
 
     assert array.total_cable_cost == pytest.approx(12713999, abs=1e0)
+
+
+@pytest.mark.parametrize("column", ("cable_length", "bury_speed"))
+def test_custom_array_blank_optional_values(column):
+    """Tests that a blank optional value is handled like a 0, so all values
+    in that column are calculated rather than leaving a ``nan`` section.
+    """
+
+    def run(value):
+        location_data = pd.DataFrame(
+            [
+                ["oss1", "oss1", "oss1", 1.0, 1.0, np.nan, np.nan, np.nan],
+                ["t1", "oss1", "t1", 1.0, 1.01, 0, 0, 1.2],
+                ["t2", "oss1", "t2", 1.0, 1.02, 0, 1, 1.3],
+                ["t3", "oss1", "t3", 1.01, 1.0, 1, 0, 1.5],
+                ["t4", "oss1", "t4", 1.01, 1.01, 1, 1, 1.1],
+            ],
+            columns=[
+                "id",
+                "substation_id",
+                "name",
+                "latitude",
+                "longitude",
+                "string",
+                "order",
+                "cable_length",
+            ],
+        )
+        location_data["bury_speed"] = 0.5
+        location_data.loc[0, "bury_speed"] = np.nan
+        location_data.loc[2, column] = value
+
+        config = deepcopy(config_custom_base)
+        config["plant"]["num_turbines"] = 4
+        config["array_system_design"]["location_data"] = location_data
+        config["array_system_design"]["distance"] = True
+
+        array = CustomArraySystemDesign(config)
+        with pytest.warns(UserWarning, match=column):
+            array.run()
+        return array
+
+    blank = run(np.nan)
+    zero = run(0.0)
+
+    assert not np.isnan(blank.sections_cable_lengths).any()
+    assert not np.isnan(blank.sections_bury_speeds).any()
+    np.testing.assert_allclose(
+        blank.sections_cable_lengths, zero.sections_cable_lengths
+    )
+    np.testing.assert_allclose(
+        blank.sections_bury_speeds, zero.sections_bury_speeds
+    )
+    assert blank.total_length == pytest.approx(zero.total_length)
