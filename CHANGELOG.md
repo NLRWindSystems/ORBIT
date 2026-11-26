@@ -1,6 +1,13 @@
 (changelog)=
 # Changelog
 
+## Unreleased
+
+- Fixes a bug in `CustomArraySystemDesign` where a blank `cable_length` or `bury_speed` value for a
+  turbine was passed to the installation phases as `nan`, which failed with
+  `ValueError: cannot convert float NaN to integer`. Blank values are now handled like 0, so all
+  values in that column are calculated, and the missing data warning reports them.
+
 ## 1.3.1
 
 - Ends support for Python 3.10, and enables Python 3.15.
